@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Accounts - Admin View</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    /* Custom context menu styling */
+    #custom-context-menu {
+      position: absolute;
+      z-index: 1000;
+      display: none;
+      min-width: 150px;
+      background-color: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.25rem;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    #custom-context-menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    #custom-context-menu li {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.15s;
+    }
+    #custom-context-menu li:hover {
+      background-color: #edf2f7;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 p-4">
+  <div class="max-w-7xl mx-auto bg-white p-6 rounded-lg shadow relative">
+    <!-- Breadcrumbs -->
+    <nav class="text-sm mb-4" aria-label="Breadcrumb">
+      <ol class="list-reset flex text-gray-600">
+        <li>
+          <a href="#" class="hover:underline">Dashboard</a>
+        </li>
+        <li><span class="mx-2">/</span></li>
+        <li class="text-gray-800 font-semibold">Users</li>
+      </ol>
+    </nav>
+
+    <h1 class="text-2xl font-bold mb-4">User Accounts</h1>
+
+    <!-- Search and Filter Controls -->
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-4">
+      <div class="flex items-center w-full sm:w-1/2">
+        <i class="fas fa-search text-gray-500 mr-2"></i>
+        <input type="text" id="live-search" placeholder="Live search by name, email or role..."
+          class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300" />
+      </div>
+      <div class="flex items-center">
+        <label for="role-filter" class="mr-2 text-gray-600">Filter by Role:</label>
+        <select id="role-filter" class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:border-blue-300">
+          <option value="">All</option>
+          <option value="Admin">Admin</option>
+          <option value="Staff">Staff</option>
+          <option value="Client">Client</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="mb-4 border-b border-gray-200">
+      <ul class="flex -mb-px" id="tabs">
+        <li class="mr-2">
+          <button id="tab-all" class="inline-block py-2 px-4 text-blue-600 border-b-2 border-blue-600 font-medium" onclick="showTab('all')">All</button>
+        </li>
+        <li class="mr-2">
+          <button id="tab-staff" class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 font-medium" onclick="showTab('staff')">Staff</button>
+        </li>
+        <li class="mr-2">
+          <button id="tab-clients" class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent hover:text-blue-600 hover:border-blue-600 font-medium" onclick="showTab('clients')">Clients</button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Tab Content -->
+    <!-- All Users Tab -->
+    <div id="content-all" class="tab-content">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200" id="table-all">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <!-- Dummy data -->
+            <tr class="data-row hover:bg-gray-50 cursor-context" data-name="Alice Admin" data-email="alice@example.com" data-role="Admin">
+              <td class="px-4 py-2 font-medium">Alice Admin</td>
+              <td class="px-4 py-2">alice@example.com</td>
+              <td class="px-4 py-2">
+                <span class="px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">Admin</span>
+              </td>
+              <td class="px-4 py-2 space-x-2">
+                <button title="View" class="text-green-500 hover:text-green-700"><i class="fas fa-eye"></i></button>
+                <button title="Edit" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
+                <button title="Delete" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+            <tr class="data-row hover:bg-gray-50 cursor-context" data-name="Bob Staff" data-email="bob@example.com" data-role="Staff">
+              <td class="px-4 py-2 font-medium">Bob Staff</td>
+              <td class="px-4 py-2">bob@example.com</td>
+              <td class="px-4 py-2">
+                <span class="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Staff</span>
+              </td>
+              <td class="px-4 py-2 space-x-2">
+                <button title="View" class="text-green-500 hover:text-green-700"><i class="fas fa-eye"></i></button>
+                <button title="Edit" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
+                <button title="Delete" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+            <tr class="data-row hover:bg-gray-50 cursor-context" data-name="Charlie Client" data-email="charlie@example.com" data-role="Client">
+              <td class="px-4 py-2 font-medium">Charlie Client</td>
+              <td class="px-4 py-2">charlie@example.com</td>
+              <td class="px-4 py-2">
+                <span class="px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">Client</span>
+              </td>
+              <td class="px-4 py-2 space-x-2">
+                <button title="View" class="text-green-500 hover:text-green-700"><i class="fas fa-eye"></i></button>
+                <button title="Edit" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
+                <button title="Delete" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Staff Tab (Admin and Staff) -->
+    <div id="content-staff" class="tab-content hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200" id="table-staff">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <!-- Dummy data: Only Admin and Staff -->
+            <tr class="data-row hover:bg-gray-50 cursor-context" data-name="Alice Admin" data-email="alice@example.com" data-role="Admin">
+              <td class="px-4 py-2 font-medium">Alice Admin</td>
+              <td class="px-4 py-2">alice@example.com</td>
+              <td class="px-4 py-2">
+                <span class="px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">Admin</span>
+              </td>
+              <td class="px-4 py-2 space-x-2">
+                <button title="View" class="text-green-500 hover:text-green-700"><i class="fas fa-eye"></i></button>
+                <button title="Edit" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
+                <button title="Delete" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+            <tr class="data-row hover:bg-gray-50 cursor-context" data-name="Bob Staff" data-email="bob@example.com" data-role="Staff">
+              <td class="px-4 py-2 font-medium">Bob Staff</td>
+              <td class="px-4 py-2">bob@example.com</td>
+              <td class="px-4 py-2">
+                <span class="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Staff</span>
+              </td>
+              <td class="px-4 py-2 space-x-2">
+                <button title="View" class="text-green-500 hover:text-green-700"><i class="fas fa-eye"></i></button>
+                <button title="Edit" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
+                <button title="Delete" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Clients Tab -->
+    <div id="content-clients" class="tab-content hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200" id="table-clients">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
+              <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <!-- Dummy data: Only Clients -->
+            <tr class="data-row hover:bg-gray-50 cursor-context" data-name="Charlie Client" data-email="charlie@example.com" data-role="Client">
+              <td class="px-4 py-2 font-medium">Charlie Client</td>
+              <td class="px-4 py-2">charlie@example.com</td>
+              <td class="px-4 py-2">
+                <span class="px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">Client</span>
+              </td>
+              <td class="px-4 py-2 space-x-2">
+                <button title="View" class="text-green-500 hover:text-green-700"><i class="fas fa-eye"></i></button>
+                <button title="Edit" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
+                <button title="Delete" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Custom Context Menu -->
+    <div id="custom-context-menu">
+      <ul>
+        <li onclick="handleContextAction('view')"><i class='fas fa-eye mr-2'></i>View</li>
+        <li onclick="handleContextAction('edit')"><i class='fas fa-edit mr-2'></i>Edit</li>
+        <li onclick="handleContextAction('delete')"><i class='fas fa-trash-alt mr-2'></i>Delete</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- JavaScript for tab functionality, live search, filters and custom context menu -->
+  <script>
+    let currentRowData = null;
+
+    // Tab switching function
+    function showTab(tab) {
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+      // Reset all tab buttons to inactive state
+      document.querySelectorAll('#tabs button').forEach(btn => {
+        btn.classList.remove('text-blue-600', 'border-blue-600');
+        btn.classList.add('text-gray-500', 'border-transparent');
+      });
+      // Show selected tab content and mark the button active
+      document.getElementById('content-' + tab).classList.remove('hidden');
+      const selectedTab = document.getElementById('tab-' + tab);
+      selectedTab.classList.add('text-blue-600', 'border-blue-600');
+      selectedTab.classList.remove('text-gray-500', 'border-transparent');
+      // Reset search input and filter (optional)
+      document.getElementById('live-search').value = '';
+      document.getElementById('role-filter').value = '';
+      filterRows();
+    }
+
+    // Live search and filter functionality
+    function filterRows() {
+      const searchTerm = document.getElementById('live-search').value.toLowerCase();
+      const roleFilter = document.getElementById('role-filter').value;
+      // Determine the visible table (only one tab is visible at a time)
+      const visibleTable = document.querySelector('.tab-content:not(.hidden) table');
+      if (!visibleTable) return;
+      visibleTable.querySelectorAll('tbody tr.data-row').forEach(row => {
+        const name = row.getAttribute('data-name')?.toLowerCase() || '';
+        const email = row.getAttribute('data-email')?.toLowerCase() || '';
+        const role = row.getAttribute('data-role') || '';
+        const matchesSearch = name.includes(searchTerm) || email.includes(searchTerm) || role.toLowerCase().includes(searchTerm);
+        const matchesRoleFilter = roleFilter === '' || role === roleFilter;
+        row.style.display = (matchesSearch && matchesRoleFilter) ? '' : 'none';
+      });
+      updateEmptyState(visibleTable);
+    }
+
+    // Function to update the empty state row when no data rows are visible
+    function updateEmptyState(table) {
+      const tbody = table.querySelector('tbody');
+      const dataRows = tbody.querySelectorAll('tr.data-row');
+      let visibleCount = 0;
+      dataRows.forEach(row => {
+        if (row.style.display !== 'none') visibleCount++;
+      });
+      // Look for an existing empty state row
+      let emptyStateRow = tbody.querySelector('.empty-state');
+      if (visibleCount === 0) {
+        if (!emptyStateRow) {
+          emptyStateRow = document.createElement('tr');
+          emptyStateRow.classList.add('empty-state');
+          const td = document.createElement('td');
+          td.colSpan = table.querySelector('thead tr').children.length;
+          td.className = "py-8 text-center";
+          td.innerHTML = `
+            <div class="flex flex-col items-center">
+              <svg class="w-16 h-16 mb-4" viewBox="0 0 24 24" fill="none" stroke="#a0aec0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+              </svg>
+              <div class="text-gray-600 font-medium">Uhoh, no users found!</div>
+            </div>`;
+          tbody.appendChild(emptyStateRow);
+        }
+      } else {
+        if (emptyStateRow) {
+          emptyStateRow.remove();
+        }
+      }
+    }
+
+    document.getElementById('live-search').addEventListener('input', filterRows);
+    document.getElementById('role-filter').addEventListener('change', filterRows);
+
+    // Custom context menu functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      // Attach right-click listener to all rows (using event delegation)
+      document.body.addEventListener('contextmenu', (e) => {
+        const row = e.target.closest('.data-row');
+        if (row) {
+          e.preventDefault();
+          currentRowData = row;
+          showContextMenu(e.pageX, e.pageY);
+        } else {
+          hideContextMenu();
+        }
+      });
+
+      // Hide context menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('#custom-context-menu')) {
+          hideContextMenu();
+        }
+      });
+    });
+
+    function showContextMenu(x, y) {
+      const menu = document.getElementById('custom-context-menu');
+      menu.style.top = y + 'px';
+      menu.style.left = x + 'px';
+      menu.style.display = 'block';
+    }
+
+    function hideContextMenu() {
+      document.getElementById('custom-context-menu').style.display = 'none';
+    }
+
+    function handleContextAction(action) {
+      if (!currentRowData) return;
+      const name = currentRowData.getAttribute('data-name');
+      if (action === 'view') {
+        alert(`Viewing details for ${name}`);
+      } else if (action === 'edit') {
+        alert(`Editing ${name}`);
+      } else if (action === 'delete') {
+        if (confirm(`Are you sure you want to delete ${name}?`)) {
+          currentRowData.remove();
+          filterRows();
+        }
+      }
+      hideContextMenu();
+    }
+  </script>
+</body>
+</html>

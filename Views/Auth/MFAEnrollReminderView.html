@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Set Up Multi-Factor Authentication</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN for icons -->
+  <link rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+    <!-- Page 1: Enrollment Method Selection -->
+    <div id="mfaEnrollmentSelection">
+      <div class="flex flex-col items-center mb-6">
+        <i class="fa-solid fa-shield-halved text-green-500 text-4xl mb-2"></i>
+        <h1 class="text-2xl font-bold">Set Up MFA</h1>
+        <p class="text-sm text-gray-600 mt-2 text-center">
+          Protect your account with an extra layer of security. Multi-factor authentication (MFA)
+          helps ensure that only you can access your account, even if your password is compromised.
+        </p>
+      </div>
+
+      <!-- Enrollment Options -->
+      <div class="space-y-4">
+        <!-- Option 1: Authenticator App with QR Code -->
+        <button onclick="showQR()" class="w-full flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100 focus:outline-none">
+          <i class="fa-solid fa-mobile-screen-button text-green-500 text-xl mr-3"></i>
+          <span class="flex-1 text-left">Use an Authenticator App</span>
+          <i class="fa-solid fa-chevron-right text-gray-400"></i>
+        </button>
+        <!-- Option 2: SMS Verification -->
+        <button class="w-full flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100 focus:outline-none">
+          <i class="fa-solid fa-sms text-green-500 text-xl mr-3"></i>
+          <span class="flex-1 text-left">Receive SMS Code</span>
+          <i class="fa-solid fa-chevron-right text-gray-400"></i>
+        </button>
+        <!-- Option 3: Email Verification -->
+        <button class="w-full flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100 focus:outline-none">
+          <i class="fa-solid fa-envelope text-green-500 text-xl mr-3"></i>
+          <span class="flex-1 text-left">Verify via Email</span>
+          <i class="fa-solid fa-chevron-right text-gray-400"></i>
+        </button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="mt-6 flex flex-col space-y-3">
+        <button type="button" class="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+          Enroll Now
+        </button>
+        <a href="MFAVerifyView.html" class="w-full text-center text-sm text-gray-700 hover:underline">
+          Skip for now
+        </a>
+      </div>
+
+      <!-- Footer / Additional Info -->
+      <p class="text-xs text-gray-500 mt-6 text-center">
+        You can always enable MFA later from your account settings.
+      </p>
+    </div>
+
+    <!-- Page 2: Authenticator App (QR Code Enrollment) -->
+    <div id="mfaEnrollmentQR" class="hidden">
+      <div class="flex flex-col items-center mb-6">
+        <i class="fa-solid fa-qrcode text-green-500 text-4xl mb-2"></i>
+        <h1 class="text-2xl font-bold">Authenticator App</h1>
+        <p class="text-sm text-gray-600 mt-2 text-center">
+          Scan the QR code below using your authenticator app (like Google Authenticator or Authy).
+          This helps secure your account by requiring a time-based code every time you log in.
+        </p>
+      </div>
+
+      <!-- QR Code Preview (Placeholder) -->
+      <div class="flex justify-center mb-6">
+        <div class="w-40 h-40 bg-gray-200 rounded-md flex items-center justify-center">
+          <span class="text-gray-500 text-sm">QR Code</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="mt-6 flex flex-col space-y-3">
+        <button type="button" class="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+          I've Scanned the Code
+        </button>
+        <button type="button" onclick="backToSelection()" class="w-full py-2 border border-gray-300 text-center text-sm text-gray-700 rounded-md hover:bg-gray-100 transition-colors">
+          Change Method
+        </button>
+      </div>
+
+      <!-- Footer / Additional Info -->
+      <p class="text-xs text-gray-500 mt-6 text-center">
+        MFA is an important step to keep your account safe. If you have any issues, please contact support.
+      </p>
+    </div>
+  </div>
+
+  <!-- JavaScript for toggling between views -->
+  <script>
+    function showQR() {
+      document.getElementById('mfaEnrollmentSelection').classList.add('hidden');
+      document.getElementById('mfaEnrollmentQR').classList.remove('hidden');
+    }
+
+    function backToSelection() {
+      document.getElementById('mfaEnrollmentQR').classList.add('hidden');
+      document.getElementById('mfaEnrollmentSelection').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

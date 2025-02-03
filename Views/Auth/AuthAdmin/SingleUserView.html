@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Details - Comprehensive View</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- Custom Styles -->
+    <style>
+      /* Tab styles for dropdown */
+      .tab-active {
+        border-bottom: 2px solid #2563eb;
+        color: #2563eb;
+      }
+      .tab-inactive {
+        border-bottom: 2px solid transparent;
+        color: #6b7280;
+      }
+      .tab-inactive:hover {
+        color: #2563eb;
+        border-bottom: 2px solid #2563eb;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 p-4">
+    <!-- Header: Compact with more data -->
+    <header class="bg-blue-600 rounded-lg p-4 text-white shadow">
+      <div class="flex items-center">
+        <img
+          class="w-16 h-16 rounded-full border-4 border-white"
+          src="https://via.placeholder.com/150"
+          alt="User profile picture"
+        />
+        <div class="ml-4">
+          <h1 class="text-2xl font-bold">Alice Admin</h1>
+          <p class="flex items-center text-sm">
+            <i class="fas fa-user-shield mr-1"></i> Admin
+          </p>
+        </div>
+        <!-- Additional header details -->
+        <div class="ml-auto grid grid-cols-2 gap-4 text-sm">
+          <div><span class="font-semibold">Username:</span> alice.admin</div>
+          <div>
+            <span class="font-semibold">Status:</span>
+            <span class="text-green-200">
+              <i class="fas fa-check-circle mr-1"></i>Active
+            </span>
+          </div>
+          <div><span class="font-semibold">Joined:</span> Mar 10, 2010</div>
+          <div><span class="font-semibold">Last Login:</span> Feb 25, 2025, 11:45 AM</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content: Two-column layout -->
+    <div class="flex mt-4 space-x-4">
+      <!-- Left Sidebar Navigation (Compact with dropdowns) -->
+      <aside class="w-1/4 bg-white shadow rounded-lg p-4">
+        <nav class="space-y-3 text-gray-700">
+          <a href="#personal" class="block hover:text-blue-600">Personal Information</a>
+          <a href="#account" class="block hover:text-blue-600">Account Details</a>
+          <!-- Dropdown for Role Details -->
+          <details class="group">
+            <summary class="cursor-pointer hover:text-blue-600 flex items-center">
+              <i class="fas fa-briefcase mr-2"></i>Role Details
+            </summary>
+            <ul class="mt-1 pl-4 space-y-1">
+              <li>
+                <a href="#employee" class="block text-gray-600 hover:text-blue-500">Employee Details</a>
+              </li>
+              <li>
+                <a href="#customer" class="block text-gray-600 hover:text-blue-500">Customer Details</a>
+              </li>
+            </ul>
+          </details>
+          <a href="#notes" class="block hover:text-blue-600">Additional Notes</a>
+          <a href="#management" class="block hover:text-blue-600">User Management Actions</a>
+          <a href="#activity" class="block hover:text-blue-600">Activity &amp; Devices</a>
+        </nav>
+      </aside>
+
+      <!-- Right Main Content: All Details in a compact, re-arranged layout -->
+      <section class="w-3/4 bg-white shadow rounded-lg p-6 space-y-6">
+        <!-- Personal Information -->
+        <div id="personal">
+          <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+            <i class="fas fa-info-circle mr-2"></i>Personal Information
+          </h2>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div><span class="font-medium">Full Name:</span> Alice Admin</div>
+            <div><span class="font-medium">Date of Birth:</span> January 15, 1985</div>
+            <div><span class="font-medium">Email Address:</span> alice.admin@example.com</div>
+            <div><span class="font-medium">Phone Number:</span> (555) 123-4567</div>
+            <div class="col-span-2"><span class="font-medium">Address:</span> 123 Main Street, Springfield, USA</div>
+          </div>
+        </div>
+
+        <!-- Account Details -->
+        <div id="account">
+          <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+            <i class="fas fa-user-lock mr-2"></i>Account Details
+          </h2>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div><span class="font-medium">Username:</span> alice.admin</div>
+            <div>
+              <span class="font-medium">Status:</span>
+              <span class="text-green-600 font-semibold">
+                <i class="fas fa-check-circle mr-1"></i>Active
+              </span>
+            </div>
+            <div><span class="font-medium">Date Joined:</span> March 10, 2010</div>
+            <div><span class="font-medium">Last Login:</span> February 25, 2025, 11:45 AM</div>
+          </div>
+        </div>
+
+        <!-- Role-Specific Details -->
+        <div id="employee">
+          <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+            <i class="fas fa-briefcase mr-2"></i>Employee Details
+          </h2>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div><span class="font-medium">Employee ID:</span> EMP-00123</div>
+            <div><span class="font-medium">Department:</span> Administration</div>
+            <div><span class="font-medium">Job Title:</span> System Administrator</div>
+            <div><span class="font-medium">Manager:</span> Bob Manager</div>
+            <div class="col-span-2 mt-2">
+              <a
+                href="employee-record.html"
+                class="inline-flex items-center text-blue-600 hover:underline text-sm"
+              >
+                <i class="fas fa-external-link-alt mr-1"></i>View Full Employee Record
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div id="customer">
+          <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+            <i class="fas fa-shopping-cart mr-2"></i>Customer Details
+          </h2>
+          <div class="grid grid-cols-2 gap-4 text-sm">
+            <div><span class="font-medium">Customer ID:</span> CUST-04567</div>
+            <div><span class="font-medium">Loyalty Status:</span> Gold Member</div>
+            <div><span class="font-medium">Preferred Contact Method:</span> Email</div>
+            <div><span class="font-medium">Account Created:</span> July 5, 2018</div>
+            <div class="col-span-2 mt-2">
+              <a
+                href="customer-record.html"
+                class="inline-flex items-center text-blue-600 hover:underline text-sm"
+              >
+                <i class="fas fa-external-link-alt mr-1"></i>View Full Customer Record
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Notes -->
+        <div id="notes">
+          <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+            <i class="fas fa-sticky-note mr-2"></i>Additional Notes
+          </h2>
+          <p class="text-sm text-gray-700">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
+            Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh
+            elementum imperdiet.
+          </p>
+        </div>
+
+        <!-- User Management Actions -->
+        <div id="management">
+          <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+            <i class="fas fa-tools mr-2"></i>User Management Actions
+          </h2>
+          <!-- A compact dropdown list for actions -->
+          <div class="relative inline-block text-sm">
+            <button class="bg-gray-100 text-gray-800 px-3 py-2 rounded flex items-center focus:outline-none">
+              Actions <i class="fas fa-chevron-down ml-2"></i>
+            </button>
+            <div class="absolute left-0 mt-1 w-full bg-white border rounded shadow-lg hidden dropdown-actions">
+              <button onclick="forcePasswordReset()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                <i class="fas fa-key mr-2"></i>Force PW Reset on Next Login
+              </button>
+              <button onclick="toggleUserStatus()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                <i class="fas fa-toggle-on mr-2"></i>Change User Status
+              </button>
+              <button onclick="lockUnlockAccount()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                <i class="fas fa-lock mr-2"></i>Lock/Unlock Account
+              </button>
+              <button onclick="resendConfirmationEmail()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                <i class="fas fa-envelope mr-2"></i>Resend Confirmation Email
+              </button>
+              <button onclick="deleteUser()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                <i class="fas fa-trash-alt mr-2"></i>Delete User
+              </button>
+              <button onclick="impersonateUser()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                <i class="fas fa-user-secret mr-2"></i>Impersonate User
+              </button>
+              <button onclick="editUserProfile()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                <i class="fas fa-edit mr-2"></i>Edit Profile
+              </button>
+              <button onclick="suspendUserAccount()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                <i class="fas fa-ban mr-2"></i>Suspend Account
+              </button>
+              <button onclick="revokeUserSessions()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                <i class="fas fa-sign-out-alt mr-2"></i>Revoke Active Sessions
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity & Devices / Sessions (Tabbed Section) -->
+        <div id="activity">
+          <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex items-center justify-between border-b pb-2 mb-4">
+              <h2 class="text-xl font-semibold flex items-center">
+                <i class="fas fa-chart-line mr-2"></i>Activity
+              </h2>
+              <!-- Dropdown for Activity sub-tabs -->
+              <div class="relative inline-block text-sm">
+                <button class="bg-gray-100 px-3 py-2 rounded flex items-center focus:outline-none">
+                  <span id="active-subtab-label">Login History</span>
+                  <i class="fas fa-chevron-down ml-2"></i>
+                </button>
+                <div class="absolute right-0 mt-1 w-48 bg-white border rounded shadow-lg hidden dropdown-activity">
+                  <button onclick="showActivitySubTab('login'); updateSubtabLabel('Login History')" class="w-full text-left px-3 py-2 hover:bg-gray-200">Login History</button>
+                  <button onclick="showActivitySubTab('actions'); updateSubtabLabel('User Actions')" class="w-full text-left px-3 py-2 hover:bg-gray-200">User Actions</button>
+                </div>
+              </div>
+            </div>
+            <!-- Activity Content -->
+            <div id="activity-tab-content">
+              <!-- Login History -->
+              <div id="login-history" class="activity-subtab">
+                <table class="min-w-full text-sm divide-y divide-gray-200">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Date</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">IP Address</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Location</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td class="px-4 py-2">February 25, 2025</td>
+                      <td class="px-4 py-2">192.168.1.12</td>
+                      <td class="px-4 py-2">Springfield, USA</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-2">February 20, 2025</td>
+                      <td class="px-4 py-2">192.168.1.15</td>
+                      <td class="px-4 py-2">Springfield, USA</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- User Actions -->
+              <div id="user-actions" class="activity-subtab hidden">
+                <table class="min-w-full text-sm divide-y divide-gray-200">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Date</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Action</th>
+                      <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Details</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td class="px-4 py-2">February 24, 2025</td>
+                      <td class="px-4 py-2">Updated Profile</td>
+                      <td class="px-4 py-2">Changed profile picture</td>
+                    </tr>
+                    <tr>
+                      <td class="px-4 py-2">February 23, 2025</td>
+                      <td class="px-4 py-2">Password Change</td>
+                      <td class="px-4 py-2">User updated password</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- Devices &amp; Sessions (Below Activity Dropdown) -->
+          <div id="devices-content" class="mt-4 hidden">
+            <table class="min-w-full text-sm divide-y divide-gray-200">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Device</th>
+                  <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">IP Address</th>
+                  <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Last Active</th>
+                  <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Status</th>
+                </tr>
+              </thead>
+              <tbody class="bg-white divide-y divide-gray-200">
+                <tr>
+                  <td class="px-4 py-2">Chrome on Windows</td>
+                  <td class="px-4 py-2">192.168.1.12</td>
+                  <td class="px-4 py-2">February 25, 2025, 11:45 AM</td>
+                  <td class="px-4 py-2">Active</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2">Safari on iOS</td>
+                  <td class="px-4 py-2">192.168.1.22</td>
+                  <td class="px-4 py-2">February 20, 2025, 09:30 AM</td>
+                  <td class="px-4 py-2">Inactive</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- JavaScript for Dropdowns, Tabs, and Accordion Functionality -->
+    <script>
+      // Management actions dropdown
+      document.querySelectorAll('.relative').forEach(function(el) {
+        el.addEventListener('click', function(e) {
+          const dropdown = this.querySelector('.dropdown-actions');
+          if(dropdown) {
+            dropdown.classList.toggle('hidden');
+          }
+          e.stopPropagation();
+        });
+      });
+      document.addEventListener('click', function() {
+        document.querySelectorAll('.dropdown-actions').forEach(function(drop) {
+          drop.classList.add('hidden');
+        });
+        document.querySelectorAll('.dropdown-activity').forEach(function(drop) {
+          drop.classList.add('hidden');
+        });
+      });
+      // Activity dropdown
+      document.querySelector('.dropdown-activity')?.parentElement.addEventListener('click', function(e) {
+        const dropdown = this.querySelector('.dropdown-activity');
+        if(dropdown) {
+          dropdown.classList.toggle('hidden');
+        }
+        e.stopPropagation();
+      });
+      // Update the label for the activity sub-tab
+      function updateSubtabLabel(text) {
+        document.getElementById('active-subtab-label').innerText = text;
+      }
+      // Toggle Activity sub-tabs (Login History vs. User Actions)
+      function showActivitySubTab(subTab) {
+        const loginHistory = document.getElementById("login-history");
+        const userActions = document.getElementById("user-actions");
+        if (subTab === "login") {
+          loginHistory.classList.remove("hidden");
+          userActions.classList.add("hidden");
+        } else if (subTab === "actions") {
+          userActions.classList.remove("hidden");
+          loginHistory.classList.add("hidden");
+        }
+      }
+    </script>
+
+    <!-- Role-specific toggle (preserved from original) -->
+    <script>
+      /**
+       * In a real-world scenario, the user record would be loaded dynamically.
+       * For demo purposes, we simulate switching between an Employee and Customer view.
+       *
+       * Map Admin/Staff as Employee, and Client as Customer.
+       *
+       * Change the value of 'userType' to either 'employee' or 'customer' to see the difference.
+       */
+      const userType = "employee"; // Change to "customer" to view Customer details
+      const employeeSection = document.getElementById("employee-info");
+      const customerSection = document.getElementById("customer-info");
+      if (userType === "employee") {
+        // If there were elements with id "employee-info" they would be unhidden here.
+      } else if (userType === "customer") {
+        // Similarly, toggle visibility accordingly.
+      }
+    </script>
+
+    <!-- JavaScript Handlers for User Management Actions -->
+    <script>
+      function forcePasswordReset() {
+        alert("Action: Force password reset on next login.");
+      }
+      function toggleUserStatus() {
+        alert("Action: Change user status (e.g., Active/Inactive/Suspended).");
+      }
+      function lockUnlockAccount() {
+        alert("Action: Toggle account lock/unlock.");
+      }
+      function resendConfirmationEmail() {
+        alert("Action: Resend confirmation email to the user.");
+      }
+      function deleteUser() {
+        if (
+          confirm(
+            "Are you sure you want to delete this user? This action is irreversible."
+          )
+        ) {
+          alert("User deleted.");
+        }
+      }
+      function impersonateUser() {
+        alert("Action: Impersonate this user.");
+      }
+      function editUserProfile() {
+        alert("Action: Edit user profile.");
+      }
+      function suspendUserAccount() {
+        alert("Action: Suspend user account.");
+      }
+      function revokeUserSessions() {
+        alert("Action: Revoke all active sessions for this user.");
+      }
+    </script>
+  </body>
+</html>

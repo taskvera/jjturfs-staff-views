@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JJ Turfs Login</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+         />
+  <style>
+    /* Transition for smooth border color changes */
+    input {
+      transition: border-color 0.2s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+    <!-- Logo and Title -->
+    <div class="flex flex-col items-center mb-6">
+      <i class="fa-solid fa-leaf text-green-500 text-4xl mb-2"></i>
+      <h1 class="text-2xl font-bold">JJ Turfs</h1>
+    </div>
+
+    <!-- Alert Box for Errors/Return Messages -->
+    <div id="alertBox" class="hidden mb-4 px-4 py-3 rounded relative bg-red-100 border border-red-400 text-red-700">
+      <!-- Message will be injected here -->
+      <span id="alertMessage"></span>
+      <button id="closeAlert" class="absolute top-0 bottom-0 right-0 px-2 text-red-700 font-bold">&times;</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm" class="space-y-4" action="MFAEnrollReminderView.html" novalidate>
+      <!-- Email Input with Icon -->
+      <div>
+        <label for="email" class="block text-gray-700 mb-1">Email</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+            <i class="fa-solid fa-envelope"></i>
+          </span>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="you@example.com"
+            class="w-full px-4 py-2 pl-10 border rounded-md focus:outline-none focus:border-green-500"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Password Input with Icon and Show/Hide Toggle -->
+      <div>
+        <label for="password" class="block text-gray-700 mb-1">Password</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+            <i class="fa-solid fa-lock"></i>
+          </span>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            class="w-full px-4 py-2 pl-10 border rounded-md focus:outline-none focus:border-green-500 pr-10"
+            required
+          />
+          <button
+            type="button"
+            id="togglePassword"
+            class="absolute inset-y-0 right-0 flex items-center px-3 text-gray-600"
+          >
+            <i class="fa-solid fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Trouble Logging In Link -->
+      <div class="text-right">
+        <a href="TroubleLoggingInView.html" class="text-sm text-blue-500 hover:underline">
+          Trouble logging in?
+        </a>
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button type="submit" class="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+          Login
+        </button>
+      </div>
+    </form>
+
+    <!-- Disclaimer -->
+    <p class="text-xs text-gray-500 mt-4">
+      Disclaimer: Your data is secure and encrypted. By logging in you agree to our terms and conditions.
+    </p>
+
+    <!-- IP Address and Location below HR -->
+    <hr class="my-4" />
+    <div class="text-center text-sm text-gray-600">
+      <p>IP Address: <span id="ipAddress">Loading...</span></p>
+      <p>Location: <span id="location">Loading...</span></p>
+    </div>
+  </div>
+
+  <!-- JavaScript for Toggle, Alerts, Form Validation, and IP/Location Retrieval -->
+  <script>
+    // Toggle password visibility using an eye icon
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    togglePassword.addEventListener('click', () => {
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      // Toggle between eye and eye-slash icons
+      togglePassword.innerHTML = type === 'password' 
+        ? '<i class="fa-solid fa-eye"></i>' 
+        : '<i class="fa-solid fa-eye-slash"></i>';
+    });
+
+    // Alert box elements
+    const alertBox = document.getElementById('alertBox');
+    const alertMessage = document.getElementById('alertMessage');
+    const closeAlert = document.getElementById('closeAlert');
+    closeAlert.addEventListener('click', () => {
+      alertBox.classList.add('hidden');
+    });
+
+    // Form validation and displaying alerts
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+
+    loginForm.addEventListener('submit', (e) => {
+      let valid = true;
+      let messages = [];
+
+      // Reset input error states and hide alert box
+      emailInput.classList.remove('border-red-500');
+      passwordInput.classList.remove('border-red-500');
+      alertBox.classList.add('hidden');
+
+      // Validate email
+      const emailValue = emailInput.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailValue || !emailRegex.test(emailValue)) {
+        emailInput.classList.add('border-red-500');
+        valid = false;
+        messages.push("Please enter a valid email address.");
+      }
+
+      // Validate password (non-empty)
+      const passwordValue = passwordInput.value.trim();
+      if (!passwordValue) {
+        passwordInput.classList.add('border-red-500');
+        valid = false;
+        messages.push("Password cannot be empty.");
+      }
+
+      // If not valid, show alert box with errors
+      if (!valid) {
+        e.preventDefault();
+        alertMessage.innerHTML = messages.join("<br>");
+        alertBox.classList.remove('hidden');
+      } else {
+// Simulate a controller response (demo code)
+e.preventDefault();
+alertMessage.innerHTML = "Login successful (demo message)!";
+alertBox.classList.remove('hidden');
+alertBox.classList.replace('bg-red-100', 'bg-green-100');
+alertBox.classList.replace('border-red-400', 'border-green-400');
+alertBox.classList.replace('text-red-700', 'text-green-700');
+
+// Redirect to MFAEnrollReminderView.html after 2 seconds
+setTimeout(() => {
+  window.location.href = 'MFAEnrollReminderView.html';
+}, 2000);
+
+      }
+    });
+
+    // Retrieve IP address and location using ip-api.com
+    fetch('http://ip-api.com/json')
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          document.getElementById('ipAddress').textContent = data.query;
+          document.getElementById('location').textContent = data.city + ", " + data.regionName + ", " + data.country;
+        } else {
+          document.getElementById('ipAddress').textContent = "Unavailable";
+          document.getElementById('location').textContent = "Unavailable";
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching IP/location data:', error);
+        document.getElementById('ipAddress').textContent = "Unavailable";
+        document.getElementById('location').textContent = "Unavailable";
+      });
+  </script>
+</body>
+</html>
