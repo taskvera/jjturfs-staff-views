@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>All Customers</title>
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (Dev CDN) -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"
+    crossorigin="anonymous"
+  ></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+  <!-- Main wrapper -->
+  <div id="main_content" class="w-full">
+
+    <!-- Top Navigation Bar (Mobile-first) -->
+    <nav
+      id="header"
+      class="bg-white text-gray-500 shadow-sm px-4 py-2 flex items-center justify-between"
+    >
+      <!-- Left side: title and mobile toggle -->
+      <div class="flex items-center space-x-3">
+        <!-- Hamburger toggle (mobile only) -->
+        <button class="md:hidden text-gray-500 focus:outline-none">
+          <i class="fa fa-bars"></i>
+        </button>
+
+        <!-- Title / Page Heading -->
+        <div class="py-1" id="pageHeading">
+          <h2
+            class="text-xl font-semibold flex items-center space-x-2"
+            id="pageTitle"
+          >
+            <!-- Icon + dynamic title -->
+            <i class="fa fa-lg fa-users" aria-hidden="true"></i>
+            <span id="main-title">All Customers</span>
+          </h2>
+        </div>
+      </div>
+
+      <!-- Right side icons -->
+      <div class="flex space-x-4 items-center text-gray-500">
+        <!-- Example nav icons: to-do, messages, settings, notifications, profile -->
+        <a
+          href="#"
+          title="Create a To-Do"
+          class="hover:text-gray-800"
+        >
+          <i class="fas fa-tasks"></i>
+        </a>
+
+        <a
+          href="#"
+          id="messenger-open"
+          class="relative hover:text-gray-800"
+        >
+          <i class="fas fa-comment"></i>
+          <div
+            id="notify-badge-msg"
+            class="absolute top-0 right-0 hidden"
+          >
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+
+        <a href="#" class="hover:text-gray-800">
+          <i class="fa fa-lg fa-cog"></i>
+        </a>
+
+        <a href="#" class="relative hover:text-gray-800">
+          <i class="fa fa-lg fa-bell"></i>
+          <div
+            id="notify-badge"
+            class="absolute top-0 right-0 hidden"
+          >
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+
+        <a href="#" class="hover:text-gray-800">
+          <i class="fa fa-lg fa-user"></i>
+        </a>
+      </div>
+    </nav>
+    <!-- End Top Nav -->
+
+    <!-- Sticky footer menu (mobile nav) -->
+    <div
+      class="sticky-menu sticky-menu-footer fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 md:hidden"
+    >
+      <ul class="flex justify-around text-center py-2 text-sm">
+        <li>
+          <a
+            class="flex flex-col items-center text-gray-600 text-xs"
+            href="#"
+          >
+            <i class="fas fa-calendar-alt"></i>
+            <span>Schedule</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="flex flex-col items-center text-gray-600 text-xs"
+            href="#"
+          >
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Invoices</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="flex flex-col items-center text-gray-600 text-xs"
+            href="#"
+          >
+            <i class="fas fa-dollar-sign"></i>
+            <span>Payments</span>
+          </a>
+        </li>
+        <li class="relative">
+          <a
+            class="flex flex-col items-center text-gray-600 text-xs"
+            href="#"
+          >
+            <i class="fas fa-ellipsis"></i>
+            <span>More</span>
+          </a>
+          <!-- Add a dropdown if needed -->
+        </li>
+      </ul>
+    </div>
+    <!-- End Sticky Footer Mobile Nav -->
+
+    <!-- Main content container -->
+    <div
+      class="container-fluid dashboard pl-0 pr-0 mb-5 mb-lg-0"
+    >
+      <!-- Optional top margin/padding, or placeholders for hidden fields -->
+      <div class="mb-5 md:mb-0">
+        <!-- (Optional) Breadcrumb (shown on md+ screens) -->
+        <div class="hidden md:block px-4">
+          <nav class="py-2 text-sm" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+              <li>
+                <a
+                  href="#"
+                  class="text-blue-600 hover:underline hover:text-blue-800"
+                >
+                  Home
+                </a>
+              </li>
+              <li class="text-gray-400">
+                <svg
+                  class="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 
+                      4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </li>
+              <li class="text-gray-500" aria-current="page">
+                Customers
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+
+      <!-- =========================================== -->
+      <!-- MAIN_CONTENT_START (docblock placeholder) -->
+      <!-- =========================================== -->
+
+<!-- Quick Stats Container (full width) -->
+<div class="w-full bg-white shadow-sm rounded border border-gray-200 my-4 px-4 py-4">
+    <!-- Cards in a responsive grid: single col on mobile, 4 cols on md+ -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <!-- 1) Combined #1 and #2: Total Customers & Active vs. Inactive -->
+      <div class="bg-white p-4 rounded shadow-sm border border-gray-100 flex flex-col">
+        <div class="text-sm text-gray-500 mb-1">All Customers</div>
+        <div class="text-2xl font-bold text-gray-700">325</div>
+        <div class="mt-2 text-sm text-gray-500">
+          Active: 280 &middot; Inactive: 45
+        </div>
+      </div>
+  
+      <!-- 2) #3: New Customers (Last 30 Days) -->
+      <div class="bg-white p-4 rounded shadow-sm border border-gray-100 flex flex-col">
+        <div class="text-sm text-gray-500 mb-1">New (Last 30 Days)</div>
+        <div class="text-2xl font-bold text-green-600">12</div>
+        <div class="mt-2 text-xs text-gray-400">
+          Recently added
+        </div>
+      </div>
+  
+      <!-- 3) #4: Past-Due Customers -->
+      <div class="bg-white p-4 rounded shadow-sm border border-gray-100 flex flex-col">
+        <div class="text-sm text-gray-500 mb-1">Past-Due Customers</div>
+        <div class="text-2xl font-bold text-red-600">18</div>
+        <div class="mt-2 text-xs text-gray-400">
+          Carrying overdue balances
+        </div>
+      </div>
+  
+      <!-- 4) #5: Total Outstanding Balance -->
+      <div class="bg-white p-4 rounded shadow-sm border border-gray-100 flex flex-col">
+        <div class="text-sm text-gray-500 mb-1">Total Outstanding</div>
+        <div class="text-2xl font-bold text-blue-600">$1,230.00</div>
+        <div class="mt-2 text-xs text-gray-400">
+          Across all customers
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+      <!-- ========================================= -->
+      <!-- MAIN_CONTENT_END (docblock placeholder) -->
+      <!-- ========================================= -->
+
+    </div>
+    <!-- End .container-fluid.dashboard -->
+  </div>
+  <!-- end #main_content -->
+</body>
+</html>
