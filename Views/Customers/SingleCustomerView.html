@@ -1,0 +1,2563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customer Details - Jeremy Evans</title>
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (Dev CDN) -->
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"
+    crossorigin="anonymous"
+  ></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+  <!-- Main content container -->
+  <div id="main_content" class="w-full">
+
+    <!-- Top Navigation Bar -->
+    <nav
+      id="header"
+      class="bg-white text-gray-500 shadow-sm px-4 py-2 flex items-center justify-between"
+    >
+      <!-- Left side: title and mobile toggle -->
+      <div class="flex items-center space-x-3">
+        <!-- Hamburger toggle (mobile only) -->
+        <button class="md:hidden text-gray-500 focus:outline-none">
+          <i class="fa fa-bars"></i>
+        </button>
+
+        <!-- Title / Page Heading -->
+        <div class="page-heading py-1" id="pageHeading">
+          <h2
+            class="page-title text-xl font-semibold flex items-center space-x-2"
+            id="pageTitle"
+          >
+            <i class="fa fa-lg fa-users" aria-hidden="true"></i>
+            <span id="main-title">Jeremy Evans</span>
+          </h2>
+        </div>
+      </div>
+
+      <!-- Right side: icon links -->
+      <div class="flex space-x-4 items-center text-gray-500">
+        <!-- To-Do List -->
+        <a
+          href="/scheduler/add-new-todo"
+          title="Create a To-Do"
+          class="hover:text-gray-800"
+        >
+          <i class="fas fa-tasks" aria-hidden="true"></i>
+        </a>
+
+        <!-- Messaging/Inbox -->
+        <a
+          href="#"
+          id="messenger-open"
+          class="relative hover:text-gray-800"
+        >
+          <i class="fas fa-comment" aria-hidden="true"></i>
+          <!-- If you need a badge/pulse for unread messages: -->
+          <div
+            id="notify-badge-msg"
+            class="absolute top-0 right-0"
+            style="display: none;"
+          >
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+
+        <!-- Settings -->
+        <a href="/settings" class="hover:text-gray-800">
+          <i class="fa fa-lg fa-cog" aria-hidden="true"></i>
+        </a>
+
+        <!-- Notifications -->
+        <a href="/notifications" class="relative hover:text-gray-800">
+          <i class="fa fa-lg fa-bell" aria-hidden="true"></i>
+          <!-- Notification badge if needed -->
+          <div
+            id="notify-badge"
+            class="absolute top-0 right-0"
+            style="display: none;"
+          >
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+
+        <!-- Profile -->
+        <a
+          href="/resources/employees/edit/62149"
+          class="hover:text-gray-800"
+        >
+          <i class="fa fa-lg fa-user" aria-hidden="true"></i>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Sticky footer menu (mobile nav) -->
+    <div
+      class="sticky-menu sticky-menu-footer fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 md:hidden"
+    >
+      <ul class="flex justify-around text-center py-2 text-sm">
+        <li>
+          <a
+            class="sticky-menu-item flex flex-col items-center text-gray-600"
+            href="/scheduler/month"
+            style="font-size: 12px;"
+          >
+            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+            <span>Schedule</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="sticky-menu-item flex flex-col items-center text-gray-600"
+            href="/finances/invoices"
+            style="font-size: 12px;"
+          >
+            <i class="fas fa-file-invoice-dollar" aria-hidden="true"></i>
+            <span>Invoices</span>
+          </a>
+        </li>
+        <li>
+          <a
+            class="sticky-menu-item flex flex-col items-center text-gray-600"
+            href="/finances/payments"
+            style="font-size: 12px;"
+          >
+            <i class="fas fa-lg fa-dollar-sign mr-1" aria-hidden="true"></i>
+            <span>Payments</span>
+          </a>
+        </li>
+        <li class="dropdown relative">
+          <a
+            class="sticky-menu-item flex flex-col items-center text-gray-600"
+            href="#"
+            data-toggle="dropdown"
+            style="font-size: 12px;"
+          >
+            <i class="fas fa-ellipsis" aria-hidden="true"></i>
+            <span>More</span>
+          </a>
+          <!-- "More" dropdown (hidden by default) -->
+          <div
+            class="dropdown-menu absolute bg-white border border-gray-200 shadow-md mt-2 text-sm w-48 z-50"
+            style="display:none;"
+          >
+            <a
+              class="dropdown-item block px-4 py-2 hover:bg-gray-100"
+              href="/customers"
+            >
+              <i class="fal fa-users mr-1" aria-hidden="true"></i> Customers
+            </a>
+            <a
+              class="dropdown-item block px-4 py-2 hover:bg-gray-100"
+              href="/assets"
+            >
+              <i class="fal fa-home mr-2" aria-hidden="true"></i>Properties
+            </a>
+            <a
+              class="dropdown-item block px-4 py-2 hover:bg-gray-100"
+              href="/finances/estimates"
+            >
+              <i class="fal fa-file-alt ml-1 mr-2" aria-hidden="true"></i>
+              Estimates
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Main (Dashboard) content container -->
+    <div class="container-fluid dashboard pl-0 pr-0 mb-5 mb-lg-0">
+      <!-- Hidden fields + placeholders from original code -->
+      <div class="mb-5 mb-md-0">
+        <!-- Breadcrumb -->
+        <div class="hidden md:block px-4">
+          <nav class="py-2 text-sm" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+              <!-- Home -->
+              <li>
+                <a
+                  href="/"
+                  class="text-blue-600 hover:underline hover:text-blue-800"
+                >
+                  Home
+                </a>
+              </li>
+              <!-- Separator -->
+              <li class="text-gray-400">
+                <svg
+                  class="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 
+              4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </li>
+
+              <!-- Customers -->
+              <li>
+                <a
+                  href="/customers"
+                  class="text-blue-600 hover:underline hover:text-blue-800"
+                >
+                  Customers
+                </a>
+              </li>
+              <!-- Separator -->
+              <li class="text-gray-400">
+                <svg
+                  class="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  aria-hidden="true"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 
+              4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </li>
+
+              <!-- Current page -->
+              <li class="text-gray-500" aria-current="page">
+                Jeremy Evans
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+        <!-- OPTIONS CARD (Tailwind) -->
+<!-- Options Toolbar -->
+<div class="bg-white shadow rounded border border-gray-200 mb-2 mt-2 mx-3 px-4 py-3">
+    <div class="flex items-center justify-between">
+      <!-- Left side buttons -->
+      <div class="flex space-x-2">
+        <!-- Return to List -->
+        <a
+          href="/customers"
+          class="inline-flex items-center bg-gray-800 text-white px-3 py-2 rounded hover:bg-gray-900"
+        >
+          <i class="fa fa-arrow-left mr-2"></i>
+          Back to List
+        </a>
+        <!-- Print -->
+        <a
+          href="/pdf/customer/1240765"
+          class="inline-flex items-center bg-gray-100 text-gray-700 border border-gray-300 px-3 py-2 rounded hover:bg-gray-200"
+        >
+          <i class="fas fa-print mr-2"></i>
+          Print
+        </a>
+  
+        
+      </div>
+  
+      <!-- Right side buttons -->
+      <div class="flex space-x-2">
+        <!-- Create Invoice -->
+        <a
+          href="/finances/invoices/add?customer=1240765"
+          class="inline-flex items-center bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700"
+        >
+          <i class="fa fa-plus mr-2"></i>
+          Create Invoice
+        </a>
+        <!-- Create Estimate -->
+        <a
+          href="/finances/estimates/add?customer=1240765"
+          class="inline-flex items-center bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700"
+        >
+          <i class="fa fa-plus mr-2"></i>
+          Create Estimate
+        </a>
+        <!-- Add Payment -->
+        <a
+          href="/finances/invoices/add-payment?customer=1240765"
+          class="inline-flex items-center bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700"
+        >
+          <i class="fa fa-plus mr-2"></i>
+          Add Payment
+        </a>
+  
+        <!-- "Send" dropdown -->
+        <div class="relative">
+          <!-- Dropdown toggle -->
+          <button
+            id="sendDropdownBtn"
+            class="inline-flex items-center bg-green-600 text-white px-3 py-2 rounded hover:bg-green-700 focus:outline-none"
+          >
+            <i class="fa fa-envelope mr-1"></i>
+            <i class="fa fa-comment mr-2"></i>
+            Send
+            <i class="fa fa-caret-down ml-2"></i>
+          </button>
+  
+          <!-- Dropdown menu (hidden by default) -->
+          <ul
+            id="sendDropdownMenu"
+            class="hidden absolute right-0 mt-1 w-32 bg-white border border-gray-200 shadow-md rounded text-sm z-50"
+          >
+            <li>
+              <a
+                id="emailCust"
+                href="1240765"
+                class="block px-4 py-2 hover:bg-gray-100"
+              >
+                Email
+              </a>
+            </li>
+            <li>
+              <a
+                id="smsCust"
+                href="1240765"
+                class="block px-4 py-2 hover:bg-gray-100"
+              >
+                Text Message
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Click-based dropdown toggle (closing on outside click) -->
+  <script>
+    document.addEventListener('click', function (e) {
+      const dropdownBtn = document.getElementById('sendDropdownBtn');
+      const dropdownMenu = document.getElementById('sendDropdownMenu');
+  
+      // If clicked on the "Send" button, toggle the menu.
+      if (dropdownBtn.contains(e.target)) {
+        dropdownMenu.classList.toggle('hidden');
+      } else {
+        // If click is outside, close the menu.
+        if (!dropdownMenu.contains(e.target)) {
+          dropdownMenu.classList.add('hidden');
+        }
+      }
+    });
+  </script>
+  
+
+        <!-- NAV TABS -->
+        <div class="row mx-auto mb-3">
+          <div class="col-12 px-0 md:px-3">
+            <div
+              class="flex items-center border-b border-gray-200 mb-2 px-3 md:px-0 mt-3"
+            >
+              <!-- Tabs container -->
+              <div class="flex space-x-4">
+                <!-- 1. Active Tab -->
+                <a
+                  class="inline-block py-2 px-2 text-blue-600 border-b-2 border-blue-600 font-semibold"
+                  id="details"
+                  href="/customers/details/1240765"
+                >
+                  Customer Details
+                </a>
+                <!-- 2. Communication -->
+                <a
+                  class="inline-block py-2 px-2 text-gray-500 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600"
+                  id="communication"
+                  href="/customers/details/communication-messages/1240765"
+                >
+                  Communication
+                </a>
+                <!-- 3. Documents -->
+                <a
+                  class="inline-block py-2 px-2 text-gray-500 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600"
+                  id="documents"
+                  href="/customers/details/documents/1240765"
+                >
+                  Documents
+                </a>
+                <!-- 4. Images -->
+                <a
+                  class="inline-block py-2 px-2 text-gray-500 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600"
+                  id="images"
+                  href="/customers/details/images/1240765"
+                >
+                  Images
+                </a>
+                <!-- 5. Automations -->
+                <a
+                  class="inline-block py-2 px-2 text-gray-500 hover:text-blue-600 border-b-2 border-transparent hover:border-blue-600"
+                  id="automations"
+                  href="/customers/details/automations/1240765"
+                >
+                  Automations
+                </a>
+              </div>
+
+              <!-- Right arrow icon (optionally hidden on small screens) -->
+              <div class="ml-auto text-gray-400">
+                <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SINGLE CARD: Main Info + Aging Summary (100% width) -->
+        <div class="bg-white shadow-sm rounded border border-gray-200 w-full mb-4">
+          <!-- Card Header -->
+          <div class="bg-gray-50 px-4 py-2 font-semibold text-gray-700">
+            Main Info
+          </div>
+
+          <!-- Card Body -->
+          <div class="p-4">
+            <!-- Top row: Pic + Main Info Table + Aging Summary -->
+            <div class="flex flex-col lg:flex-row lg:space-x-4">
+              <!-- Picture & Upload -->
+              <div
+                class="flex-initial w-full md:w-auto mb-4 lg:mb-0 flex flex-col items-start"
+              >
+                <div
+                  class="progress progress-striped hidden"
+                  id="progress1"
+                  style="display:none;"
+                >
+                  <div
+                    class="bar"
+                    id="progressSlide"
+                    style="width: 0;"
+                  >
+                    loading
+                  </div>
+                </div>
+                <div id="containerpic" class="relative">
+                  <!-- Thumbnail -->
+                  <div class="mb-2">
+                    <a
+                      href="#"
+                      id="upic"
+                      class="thumbnail border rounded bg-gray-100 w-20 h-20 flex items-center justify-center"
+                    >
+                      <div class="text-gray-500 text-2xl">
+                        <i class="fa-solid fa-camera-retro"></i>
+                      </div>
+                    </a>
+                  </div>
+                  <!-- Upload / Delete Buttons -->
+                  <div class="flex space-x-2">
+                    <a
+                      id="pickfiles"
+                      href="#"
+                      class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+                      style="position: relative; z-index: 0;"
+                    >
+                      <i class="far fa-lg fa-image"></i>
+                    </a>
+                    <a
+                      id="delpic"
+                      href="#"
+                      class="bg-red-600 text-white p-2 rounded hover:bg-red-700"
+                    >
+                      <i class="fa fa-times"></i>
+                    </a>
+                  </div>
+                  <!-- Hidden Form for Upload -->
+                  <form
+                    id="form_p1ijb717qg1n061fc316vd59i1di31"
+                    method="post"
+                    enctype="multipart/form-data"
+                    encoding="multipart/form-data"
+                    target="p1ijb717qfftgodn1rd9udntre0_iframe"
+                    class="absolute overflow-hidden"
+                    style="top: 159px; left: 3px; width: 48px; height: 40px; z-index: -1;"
+                  >
+                    <input
+                      id="input_p1ijb717qg1n061fc316vd59i1di31"
+                      type="file"
+                      accept="image/jpeg,image/gif,image/png"
+                      size="1"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        opacity: 0;
+                        font-size: 99px;
+                        cursor: pointer;
+                      "
+                    />
+                  </form>
+                </div>
+              </div>
+
+              <!-- Main Info Table -->
+              <div class="flex-1 mb-4 lg:mb-0">
+                <table class="min-w-full text-sm text-gray-700">
+                  <tbody>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">Status</td>
+                      <td class="py-2">
+                        <a
+                          id="custom_status"
+                          href="#"
+                          data-type="select"
+                          data-value="1"
+                          data-pk="1240765"
+                          data-source="{'1': 'Active', '0': 'Inactive', '2': 'Written off With Balance Remaining'}"
+                          data-url="/customers/update"
+                          class="editable editable-click"
+                        >
+                          Active
+                        </a>
+                      </td>
+                    </tr>
+                    <!-- Lines hidden by default -->
+                    <tr
+                      id="custom_date_inactive_line"
+                      style="display:none;"
+                    >
+                      <td class="text-gray-500 py-2 pr-3">
+                        Inactive Since
+                      </td>
+                      <td class="py-2">
+                        <div class="form-group">
+                          <div
+                            class="row-fluid col-md-6 col-lg-4 pl-0"
+                            style="min-width: 250px; max-width: 200px;"
+                          >
+                            <div class="input-group">
+                              <input
+                                id="date"
+                                data-date-format="M d, Y"
+                                data-date="1738764490"
+                                name="sdate"
+                                type="text"
+                                class="form-control qdate input-disabled hasDatepicker"
+                                value="Feb 05, 2025"
+                              />
+                              <div
+                                class="input-group-append"
+                                id="startDateCalendarIconContainer"
+                              >
+                                <span
+                                  class="input-group-text"
+                                  id="basic-addon2"
+                                  ><i class="fal fa-calendar-alt"></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      id="custom_inactive_reason_line"
+                      style="display:none;"
+                    >
+                      <td class="text-gray-500 py-2 pr-3">
+                        Inactive Reason
+                      </td>
+                      <td class="py-2">
+                        <a
+                          id="custom_inactive_reason"
+                          class="custom_inactive_reason editable editable-click editable-empty"
+                          href="#"
+                          >Empty</a
+                        >
+                      </td>
+                    </tr>
+                    <tr id="custom_written_off_line" style="display:none;">
+                      <td colspan="2" class="text-gray-500 py-2">
+                        <div class="row" id="written_off_popup">
+                          <div class="col-lg-12">
+                            <form
+                              id="customWrittenOffForm"
+                              name="customWrittenOffForm"
+                            >
+                              <input
+                                type="hidden"
+                                id="custom_woff_id"
+                                value="1240765"
+                              />
+                              <div class="form-check-inline checkInp">
+                                <input
+                                  id="custom_change_invoice"
+                                  class="form-check-input form-control-lg"
+                                  type="checkbox"
+                                  name="custom_change_invoice"
+                                  value="1"
+                                />
+                                <label
+                                  for="custom_change_invoice"
+                                  class="form-check-label text-gray-600"
+                                >
+                                  Would you like to change all invoices that
+                                  aren't paid to this status?
+                                </label>
+                              </div>
+                              <div class="form-check-inline checkInp">
+                                <input
+                                  id="custom_schedule_visit"
+                                  class="form-check-input form-control-lg"
+                                  type="checkbox"
+                                  name="custom_schedule_visit"
+                                  value="1"
+                                />
+                                <label
+                                  for="custom_schedule_visit"
+                                  class="form-check-label text-gray-600"
+                                >
+                                  Would you like to remove all visits from
+                                  the schedule for this customer?
+                                </label>
+                              </div>
+
+                              <div class="mt-3 mb-3">
+                                <h4>Automation Settings</h4>
+                              </div>
+
+                              <div class="form-check-inline checkInp">
+                                <input
+                                  id="customer_auto_stop"
+                                  class="form-check-input form-control-lg"
+                                  type="checkbox"
+                                  name="customer_auto_stop"
+                                  value="1"
+                                />
+                                <label
+                                  for="customer_auto_stop"
+                                  class="form-check-label text-gray-600"
+                                >
+                                  Would you like to stop automations for this
+                                  customer?
+                                </label>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">Title</td>
+                      <td class="py-2">
+                        <a
+                          id="custom_title"
+                          href="#"
+                          data-type="select"
+                          data-value="no"
+                          data-pk="1240765"
+                          data-source="{'no': 'No Title', 'Mr.': 'Mr.','Mrs.':'Mrs','Mr. &amp; Mrs.':'Mr. &amp; Mrs.', 'Mr. &amp; Mr.':'Mr. &amp; Mr.', 'Mrs. &amp; Mrs.':'Mrs. &amp; Mrs.','Ms.':'Ms.','Dr.':'Dr.'}"
+                          data-url="/customers/update"
+                          class="editable editable-click"
+                        >
+                          no
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">Client ID</td>
+                      <td class="py-2">1240765</td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">Number</td>
+                      <td class="py-2">
+                        <a
+                          id="custom_number"
+                          class="custom_number editable editable-click"
+                          href="#"
+                          >875256</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">
+                        Business Name or
+                        <br />
+                        Customer's Full Name
+                      </td>
+                      <td class="py-2">
+                        <a
+                          id="custom_company_name"
+                          href="#"
+                          class="editable editable-click"
+                          >Jeremy Evans</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">
+                        Customer's First Name or
+                        <br />
+                        Contact Person's First Name
+                      </td>
+                      <td class="py-2">
+                        <a
+                          href="#"
+                          id="custom_firstname"
+                          data-pk="1240765"
+                          data-url="/customers/update"
+                          class="editText editable editable-click editable-empty"
+                          >Empty</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">
+                        Customer's Last Name or
+                        <br />
+                        Contact Person's Last Name
+                      </td>
+                      <td class="py-2">
+                        <a
+                          href="#"
+                          id="custom_lastname"
+                          data-pk="1240765"
+                          data-url="/customers/update"
+                          class="editText editable editable-click editable-empty"
+                          >Empty</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3" width="25%">
+                        Type
+                      </td>
+                      <td class="py-2">
+                        <a
+                          href="#"
+                          id="custom_type"
+                          data-type="select"
+                          data-pk="1240765"
+                          data-source="/customers/details/getCutomersTypes"
+                          data-value="1"
+                          data-url="/customers/update"
+                          class="editable editable-click"
+                        >
+                          Customer
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3" width="25%">
+                        How This Customer Found Out About Us
+                      </td>
+                      <td class="py-2">
+                        <div>
+                          <a
+                            href="#"
+                            id="custom_source_id"
+                            data-type="select"
+                            data-pk="1240765"
+                            data-source="/customers/details/getCutomerSources?visibleOnly=true&amp;sourceId="
+                            data-value=""
+                            data-url="/customers/update"
+                            class="mr-2 editable editable-click editable-empty"
+                            >Empty</a
+                          >
+                          <button
+                            id="addCustomerSource"
+                            type="button"
+                            class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700 text-sm"
+                          >
+                            <i class="fa fa-plus"></i>
+                            Add New
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">Since</td>
+                      <td class="py-2">
+                        <a
+                          id="date_since_click"
+                          href="javascript:void(0)"
+                          class="editable editable-click"
+                          >Jun 19, 2022</a
+                        >
+                        <div
+                          id="date_since_input"
+                          class="form-group hidden"
+                          style="display: none;"
+                        >
+                          <div
+                            class="row-fluid col-md-6 col-lg-4 pl-0"
+                            style="min-width: 250px; max-width: 200px;"
+                          >
+                            <div class="input-group">
+                              <input
+                                id="date_since"
+                                data-date-format="M d, Y"
+                                data-date="2022-06-19 05:00:00"
+                                name="sdate"
+                                type="text"
+                                class="form-control input-disabled hasDatepicker"
+                                value="Jun 19, 2022"
+                              />
+                              <div
+                                class="input-group-append"
+                                id="startDateCalendarIconContainer"
+                              >
+                                <span
+                                  class="input-group-text"
+                                  id="basic-addon2"
+                                  ><i class="fal fa-calendar-alt"></i
+                                ></span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">Is Tax Exempt</td>
+                      <td class="py-2">
+                        <a
+                          id="custom_is_tax_exempt"
+                          href="#"
+                          data-type="select"
+                          data-value="2"
+                          data-pk="1240765"
+                          data-source="{'1': 'No', '2': 'Yes'}"
+                          data-url="/customers/update"
+                          class="editable editable-click"
+                        >
+                          Yes
+                        </a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">Discount</td>
+                      <td class="py-2">
+                        %
+                        <a
+                          class="editTextNumber editable editable-click"
+                          href="#"
+                          id="custom_discount"
+                          >0.00</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">
+                        Has Credit Card on File or ACH Enabled
+                      </td>
+                      <td class="py-2"></td>
+                    </tr>
+                    <tr>
+                      <td class="text-gray-500 py-2 pr-3">
+                        <div class="mb-3">Tags</div>
+                      </td>
+                      <td class="py-2">
+                        <div class="form-group mb-0">
+                          <input
+                            type="hidden"
+                            id="isTagEditing"
+                            value="1"
+                          />
+                          <input
+                            type="hidden"
+                            id="tagType"
+                            value="customers"
+                          />
+                          <input
+                            type="hidden"
+                            id="tagObjId"
+                            value="1240765"
+                          />
+                          <input
+                            id="tagsAttached"
+                            hidden
+                            name="tagslist"
+                            value=""
+                            style="display: none;"
+                          />
+                          <div
+                            id="tagsAttached_tagsinput"
+                            class="tagsinput"
+                            style="width: auto; min-height: auto; height: auto;"
+                          >
+                            <div id="tagsAttached_addTag">
+                              <input
+                                id="tagsAttached_tag"
+                                class="tag-input ui-autocomplete-input"
+                                value=""
+                                placeholder="Add a tag"
+                                autocomplete="off"
+                              />
+                            </div>
+                          </div>
+                          <input
+                            id="str_taglist"
+                            name="str_taglist"
+                            type="hidden"
+                            value="Rental Turn,Rental"
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Aging Summary (right column in same card) -->
+              <div class="flex-none w-full lg:w-auto lg:ml-4 mt-4 lg:mt-0">
+                <table
+                  class="min-w-full bg-white border border-gray-200 shadow rounded text-gray-700 text-sm"
+                >
+                  <tbody>
+                    <tr class="border-b">
+                      <td class="p-3 text-gray-500 align-top">
+                        <h4 class="font-semibold text-red-600 m-0">
+                          Past Due
+                        </h4>
+                      </td>
+                      <td class="p-3">
+                        <h4 class="text-red-600 m-0">420.00</h4>
+                        <small class="text-red-400"
+                          >Owed for More Than 31 Days</small
+                        >
+                      </td>
+                    </tr>
+                    <tr class="border-b">
+                      <td class="p-3 text-gray-500 align-top">
+                        <h4 class="font-semibold text-blue-500 m-0">
+                          Outstanding
+                        </h4>
+                      </td>
+                      <td class="p-3">
+                        <h4 class="text-blue-500 m-0">0.00</h4>
+                        <input
+                          type="hidden"
+                          id="wisetack_outstanding"
+                          value="true"
+                        />
+                        <input
+                          type="hidden"
+                          id="wisetack_loan_amount"
+                          value="0"
+                        />
+                      </td>
+                    </tr>
+                    <tr class="border-b">
+                      <td class="p-3 text-gray-500 align-top">
+                        <h4 class="font-semibold m-0">Paid</h4>
+                      </td>
+                      <td class="p-3">
+                        <h4 class="m-0">0.00</h4>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 text-gray-500 align-top">
+                        <h4 class="font-semibold text-green-600 m-0">
+                          Credit
+                        </h4>
+                      </td>
+                      <td class="p-3">
+                        <h4 class="text-green-600 m-0">
+                          <a
+                            id="custom_credit"
+                            href="#"
+                            data-type="text"
+                            data-pk="1240765"
+                            data-value="0.00"
+                            data-url="/customers/update"
+                            class="editable editable-click"
+                          >
+                            0.00
+                          </a>
+                        </h4>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        
+<!-- End of single Main Info card -->
+<!-- Next row: Contact / Communication Preferences -->
+<div class="mt-6 flex flex-col lg:flex-row gap-6 px-4 pb-4">
+    <!-- Left side: Contact -->
+    <div class="w-full lg:w-1/2 bg-white shadow rounded border border-gray-200">
+      <div class="border-b px-4 py-3 font-semibold text-gray-700">
+        Contact
+      </div>
+      <div class="p-4">
+        <table class="min-w-full text-gray-700">
+          <tbody>
+            <tr class="border-b">
+              <td class="p-3 text-sm text-gray-500 w-1/3">
+                Business / Home Phone
+              </td>
+              <td class="p-3 text-sm">
+                <a
+                  href="#"
+                  id="custom_phone"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                  class="editText editable editable-click editable-empty"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-3 text-sm text-gray-500">
+                Mobile / Cell Phone
+              </td>
+              <td class="p-3 text-sm">
+                <a
+                  href="#"
+                  id="custom_cell"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                  class="editText editable editable-click editable-empty"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-3 text-sm text-gray-500">Fax</td>
+              <td class="p-3 text-sm">
+                <a
+                  href="#"
+                  id="custom_fax"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                  class="editText editable editable-click editable-empty"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="p-3 text-sm text-gray-500 border-t border-white"
+              >
+                Email
+              </td>
+              <td
+                class="p-3 text-sm border-t border-white"
+              >
+                <a
+                  href="#"
+                  id="custom_email"
+                  class="editTextEmailReq editable editable-click editable-empty"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="p-3 text-sm text-gray-500 border-t border-white"
+              >
+                CC Email
+              </td>
+              <td
+                class="p-3 text-sm border-t border-white"
+              >
+                <a
+                  href="#"
+                  id="custom_ccemail"
+                  class="editTextEmailReq editable editable-click editable-empty"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="p-3 text-sm text-gray-500 border-t border-white"
+              >
+                CC Email
+              </td>
+              <td
+                class="p-3 text-sm border-t border-white"
+              >
+                <a
+                  href="#"
+                  id="custom_ccemail2"
+                  class="editTextEmailReq editable editable-click editable-empty"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td
+                class="p-3 text-sm text-gray-500 border-t border-white"
+              >
+                CC Email
+              </td>
+              <td
+                class="p-3 text-sm border-t border-white"
+              >
+                <a
+                  href="#"
+                  id="custom_ccemail3"
+                  class="editTextEmailReq editable editable-click editable-empty"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-3 text-sm text-gray-500">
+                Street
+              </td>
+              <td class="p-3 text-sm">
+                <a
+                  href="#"
+                  id="custom_addr"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                  class="editTextMap editable editable-click"
+                >
+                  2712 Pavonia North Rd
+                </a>
+              </td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-3 text-sm text-gray-500">Street2</td>
+              <td class="p-3 text-sm">
+                <a
+                  href="#"
+                  id="custom_addr2"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                  class="editText editable editable-click editable-empty"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-3 text-sm text-gray-500">
+                County / Parish
+              </td>
+              <td class="p-3 text-sm">
+                <a
+                  href="#"
+                  id="custom_county"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                  class="editTextMap editable editable-click editable-empty"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-3 text-sm text-gray-500">City</td>
+              <td class="p-3 text-sm">
+                <a
+                  href="#"
+                  id="custom_city"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                  class="editTextMap editable editable-click"
+                >
+                  Mansfield
+                </a>
+              </td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-3 text-sm text-gray-500">State</td>
+              <td class="p-3 text-sm">
+                <div id="sl">
+                  <a
+                    href="#"
+                    data-value="OH"
+                    id="custom_state"
+                    data-source="/misc/getStatesList/US"
+                    data-type="select"
+                    data-pk="1240765"
+                    data-url="/customers/updateStates"
+                    class="editable editable-click"
+                  >
+                    Ohio
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="p-3 text-sm text-gray-500">
+                Postal Code
+              </td>
+              <td class="p-3 text-sm">
+                <a
+                  href="#"
+                  id="custom_zip"
+                  data-pk="1240765"
+                  data-url="/customers/update"
+                  class="editTextMap editable editable-click editable-empty"
+                >
+                  Empty
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <!-- Right side: Communication / Invoice Delivery Preference -->
+    <div class="w-full lg:w-1/2 bg-white shadow rounded border border-gray-200">
+      <div class="border-b px-4 py-3 font-semibold text-gray-700">
+        Communication / Invoice Delivery Preference
+      </div>
+      <div class="p-4">
+        <div class="mb-3">
+          <label class="text-gray-600 font-medium text-sm">
+            How This Customer Wants to Receive Invoices:
+          </label>
+          <div>
+            <a
+              href="#"
+              id="custom_invoice_delivery_preference"
+              data-type="select"
+              data-pk="1240765"
+              data-source="/customers/details/getCutomerInvoiceDeliveryPreferences"
+              data-value="1"
+              data-url="/customers/update"
+              class="editable editable-click"
+            >
+              No Preference
+            </a>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="text-gray-600 font-medium text-sm">
+            When We Invoice This Customer:
+          </label>
+          <div>
+            <a
+              href="#"
+              id="custom_when_to_invoice"
+              data-type="select"
+              data-pk="1240765"
+              data-source="/customers/getWhenCustomerInvoicedPreferences"
+              data-value="1"
+              data-url="/customers/update"
+              class="editable editable-click"
+            >
+              No Preference
+            </a>
+          </div>
+        </div>
+        <div class="mt-4 mb-3 border-t pt-3">
+          <label class="text-gray-600 font-medium text-sm block mb-2">
+            How This Customer Prefers to Receive Communications:
+          </label>
+          <div class="flex flex-wrap items-center ml-3 space-x-4">
+            <label class="inline-flex items-center space-x-1">
+              <input
+                id="custom_is_receive_phone"
+                class="form-check-input form-control-lg customer_rec_pref"
+                type="checkbox"
+                name="custom_is_receive_phone"
+                value="1"
+              />
+              <span class="text-gray-700 text-sm">Phone Call</span>
+            </label>
+            <label class="inline-flex items-center space-x-1">
+              <input
+                id="custom_is_receive_email"
+                class="form-check-input form-control-lg customer_rec_pref"
+                type="checkbox"
+                name="custom_is_receive_email"
+                value="1"
+              />
+              <span class="text-gray-700 text-sm">Email</span>
+            </label>
+            <label class="inline-flex items-center space-x-1">
+              <input
+                id="custom_is_receive_text"
+                class="form-check-input form-control-lg customer_rec_pref"
+                type="checkbox"
+                name="custom_is_receive_text"
+                value="1"
+              />
+              <span class="text-gray-700 text-sm">Text Message</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Custom Fields Section -->
+  <div class="mt-6">
+    <div class="bg-white shadow rounded border border-gray-200">
+      <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+        Custom Fields
+      </div>
+      <div class="p-4">
+        <div class="dynamic-custom-fields" id="f-customfield-edit">
+          <input
+            type="hidden"
+            value="customers"
+            id="appliesTo"
+            name="appliesTo"
+          />
+          <input
+            type="hidden"
+            value="1240765"
+            id="dcf_obj_id"
+            name="dcf_obj_id"
+          />
+        </div>
+        <div class="flex items-center justify-end space-x-2 mt-2">
+          <a
+            id="resetCustomField"
+            href="#"
+            class="bg-blue-500 text-white py-1 px-3 rounded"
+          >
+            Reset Custom Fields
+          </a>
+          <a
+            id="removeCustomField"
+            href="#"
+            class="bg-red-500 text-white py-1 px-3 rounded"
+          >
+            Remove Custom Fields
+          </a>
+          <a
+            id="addCustomField"
+            href="#"
+            class="bg-green-600 text-white py-1 px-3 rounded flex items-center space-x-1"
+          >
+            <i class="fa fa-plus"></i>
+            <span>Add Custom Field</span>
+          </a>
+          <a
+            id="saveCustomFields"
+            href="#"
+            class="bg-indigo-600 text-white py-1 px-3 rounded"
+          >
+            Save Custom Fields
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End of Custom Fields Section -->
+  
+  </div>
+  <!-- end .mb-5 -->
+  </div>
+  <!-- Customer Notes (Internal) -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Customer Notes (For internal use. Not visible to customer.)
+    </div>
+    <div class="p-4">
+      <table class="min-w-full">
+        <thead>
+          <tr>
+            <td class="border-t-0 p-0">
+              <!-- The large text editor block -->
+              <textarea
+                id="custom_desc"
+                name="custom_desc"
+                hidden
+                class="input-block-level"
+                data-pk="1240765"
+              ></textarea>
+              <div class="mt-3 clearfix">
+                <button
+                  class="bg-green-600 text-white py-2 px-4 rounded float-right notes-update"
+                  id="e-tmp-primary-button"
+                >
+                  <i class="fa fa-check"></i>
+                  <span id="e-tmp-button-title">Update Notes</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Default Notes on Invoices -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Default Notes on Invoices
+    </div>
+    <div class="p-4">
+      <table class="min-w-full">
+        <thead>
+          <tr>
+            <td class="border-t-0 p-0">
+              <!-- Another text editor block -->
+              <textarea
+                id="custom_inv_notes"
+                name="custom_inv_notes"
+                hidden
+                class="input-block-level"
+                data-pk="1240765"
+              ></textarea>
+              <div class="mt-3 clearfix">
+                <button
+                  class="bg-green-600 text-white py-2 px-4 rounded float-right notes-update"
+                  id="e-tmp-primary-button"
+                >
+                  <i class="fa fa-check"></i>
+                  <span id="e-tmp-button-title">Update Notes</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Default Terms on Invoices -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Default Terms on Invoices
+    </div>
+    <div class="p-4">
+      <table class="min-w-full">
+        <thead>
+          <tr>
+            <td class="border-t-0 p-0">
+              <textarea
+                id="custom_inv_terms"
+                name="custom_inv_terms"
+                hidden
+                class="input-block-level"
+                data-pk="1240765"
+              ></textarea>
+              <div class="mt-3 clearfix">
+                <button
+                  class="bg-green-600 text-white py-2 px-4 rounded float-right notes-update"
+                  id="e-tmp-primary-button"
+                >
+                  <i class="fa fa-check"></i>
+                  <span id="e-tmp-button-title">Update Notes</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Default Email for Invoices -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Default Email for Invoices
+    </div>
+    <div class="p-4">
+      <table class="min-w-full">
+        <thead>
+          <tr>
+            <td class="border-t-0 p-0">
+              <div class="mb-2">
+                <label class="block text-gray-600 font-medium mb-2">
+                  Email Templates
+                </label>
+                <select
+                  name="invoice_email_template_id"
+                  id="invoice_email_template_id"
+                  class="border border-gray-300 rounded w-full md:w-1/2"
+                >
+                  <option value="" selected>Please Select</option>
+                  <!-- Dummy data template options -->
+                  <option value="752734">Chemical Application Record</option>
+                  <option value="202173"
+                    >Estimate # {{ESTIMATE_NUMBER}} accepted</option
+                  >
+                  <option value="153444"
+                    >Estimate # {{ESTIMATE_NUMBER}} declined</option
+                  >
+                  <option value="336154">Estimate Changes Requested</option>
+                  <option value="305682">Estimate Follow Up</option>
+                  <option value="600424">Follow-Up Reminder (IE-0102)</option>
+                  <option value="361407">Link to Work Request Form</option>
+                  <option value="459241">New Invoice</option>
+                  <option value="227749">New visit added to the schedule</option>
+                  <option value="429474">Payment Receipt</option>
+                  <option value="277896">Property Not Serviced</option>
+                  <option value="253306">Property Will Be Serviced Tomorrow</option>
+                  <option value="23111">Add their credit card on file</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Default Text Message for Invoices -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Default Text Message for Invoices
+    </div>
+    <div class="p-4">
+      <table class="min-w-full">
+        <thead>
+          <tr>
+            <td class="border-t-0 p-0">
+              <div class="mb-2">
+                <label class="block text-gray-600 font-medium mb-2">
+                  Text Message Templates
+                </label>
+                <select
+                  name="invoice_sms_template_id"
+                  id="invoice_sms_template_id"
+                  class="border border-gray-300 rounded w-full md:w-1/2"
+                >
+                  <option value="" selected>Please Select</option>
+                  <!-- Dummy data template options -->
+                  <option value="109243">New visit added to schedule</option>
+                  <option value="134573">Property Will Be Serviced Tomorrow</option>
+                  <option value="159162">Property Not Serviced</option>
+                  <option value="188930">Requested changes to an estimate</option>
+                  <option value="239024">New Invoice</option>
+                  <option value="342342">Follow-Up Reminder (IS-0101)</option>
+                  <option value="533739">On My Way SMS</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Default Text Message for Estimates -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Default Text Message for Estimates
+    </div>
+    <div class="p-4">
+      <table class="min-w-full">
+        <thead>
+          <tr>
+            <td class="border-t-0 p-0">
+              <div class="mb-2">
+                <label class="block text-gray-600 font-medium mb-2">
+                  Text Message Templates
+                </label>
+                <select
+                  name="estimate_sms_template_id"
+                  id="estimate_sms_template_id"
+                  class="border border-gray-300 rounded w-full md:w-1/2"
+                >
+                  <option value="" selected>Please Select</option>
+                  <!-- Dummy data template options -->
+                  <option value="109243">New visit added to schedule</option>
+                  <option value="134573">Property Will Be Serviced Tomorrow</option>
+                  <option value="159162">Property Not Serviced</option>
+                  <option value="188930">Requested changes to an estimate</option>
+                  <option value="239024">New Invoice</option>
+                  <option value="342342">Follow-Up Reminder (IS-0101)</option>
+                  <option value="533739">On My Way SMS</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Customer Stat -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Customer Stat
+    </div>
+    <div class="p-4">
+      <table class="min-w-full text-gray-700">
+        <tbody>
+          <tr class="border-b">
+            <td class="p-3 w-2/5 text-gray-500">
+              Total revenue (Collected)
+            </td>
+            <td class="p-3">2,425.00</td>
+          </tr>
+          <tr class="border-b">
+            <td class="p-3 text-gray-500">Balance Owed</td>
+            <td class="p-3">0.00</td>
+          </tr>
+          <tr class="border-b">
+            <td class="p-3 text-gray-500">Average Visit Value</td>
+            <td class="p-3">1.91</td>
+          </tr>
+          <tr class="border-b">
+            <td class="p-3 text-gray-500">Total # of Visits</td>
+            <td class="p-3">84</td>
+          </tr>
+          <tr>
+            <td class="p-3 text-gray-500">Past Due Invoices</td>
+            <td class="p-3">2</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Properties -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Properties
+    </div>
+    <div class="p-4">
+      <table class="min-w-full text-gray-700 property-table">
+        <thead class="border-b bg-gray-50">
+          <tr>
+            <th class="py-3 px-4 text-left">Property Name</th>
+            <th class="py-3 px-4 text-left">Lawn Size</th>
+            <th class="py-3 px-4 text-left">Last Serviced</th>
+            <th class="py-3 px-4 text-left">Next Service</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4">
+              <a
+                data-fancybox
+                data-type="ajax"
+                data-src="/assets/getDetails/?id=897751&bs4=1"
+                class="preview text-blue-600"
+                href="javascript:;"
+              >
+                Jeremy Evans Home
+              </a>
+            </td>
+            <td class="py-3 px-4">0 Sq. Feet</td>
+            <td class="py-3 px-4">Nov 05, 2024</td>
+            <td class="py-3 px-4"></td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="py-3 px-4">
+              <a
+                data-fancybox
+                data-type="ajax"
+                data-src="/assets/getDetails/?id=880599&bs4=1"
+                class="preview text-blue-600"
+                href="javascript:;"
+              >
+                Jeremy Evans Rental
+              </a>
+            </td>
+            <td class="py-3 px-4">0 Sq. Feet</td>
+            <td class="py-3 px-4">Sep 29, 2023</td>
+            <td class="py-3 px-4"></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" class="py-3 px-4">
+              <a
+                class="bg-blue-500 text-white py-1 px-3 rounded float-right ml-2"
+                href="/assets/?cid=1240765"
+              >
+                View all Properties
+              </a>
+              <button
+                id="addNewProp"
+                type="button"
+                class="bg-green-600 text-white py-1 px-3 rounded float-right"
+              >
+                <i class="fa fa-plus"></i> Add New
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Invoice Counts -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Invoice Counts
+    </div>
+    <div class="p-4" id="chartInvCount">
+      <!-- Placeholder for chart -->
+    </div>
+  </div>
+  
+  <!-- Invoice Total Amounts -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Invoice Total Amounts
+    </div>
+    <div class="p-4" id="chartPie">
+      <!-- Placeholder for chart -->
+    </div>
+  </div>
+  
+  <!-- Right column content: Client Portal, Payment Methods, etc. -->
+  <!-- (Wrap in a flex or stacked container as needed) -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Client Portal
+    </div>
+    <div class="p-4">
+      <div class="bg-green-100 text-green-800 p-3 rounded mb-3">
+        To view the client portal as your client will see it,
+        <a
+          class="text-blue-600 underline"
+          target="_blank"
+          href="https://secure.lawnprosoftware.com/client/62af5bcfa2630"
+          ><b>click here</b></a
+        >.
+      </div>
+      <div
+        class="form-check flex items-center border-t pt-2 mt-2 space-x-2"
+      >
+        <input
+          class="form-check-input form-control-lg"
+          type="checkbox"
+          id="enable_credit_client"
+          data-name="custom_enable_credit_client"
+          data-pk="1240765"
+          value="1"
+        />
+        <label
+          for="enable_credit_client"
+          class="form-check-label text-gray-700"
+        >
+          Allow customer to add a payment as a customer credit
+        </label>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Invoice Settings (Late Fee, Terms, etc.) -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Invoice Settings
+    </div>
+    <div class="p-4">
+      <!-- Late Fee Explanation -->
+      <div class="bg-blue-50 border border-blue-200 p-3 rounded mb-4">
+        <p class="mb-3">
+          <i class="fas fa-info-circle"></i>
+          Set <strong>different late fees</strong> for invoices as time passes.
+        </p>
+        <p>
+          Late fees can be set as a dollar
+          <strong>amount</strong> or a <strong>percentage</strong> of the invoice
+          amount. Changing late fee rules here will apply to newly created
+          invoices only.
+        </p>
+      </div>
+  
+      <!-- Late Fee Rules -->
+      <div
+        class="bg-white border border-gray-200 rounded p-3 mb-4"
+        id="lateFeeRules"
+      >
+        <!-- Single rule example -->
+        <div class="mb-3 p-2 border-b" data-index="0">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3">
+            <div>
+              <label class="block text-sm text-gray-700 mb-1">
+                Days After the Invoice is Sent
+              </label>
+              <input
+                type="number"
+                class="border border-gray-300 rounded p-2 w-full"
+                autocomplete="off"
+                value="31"
+              />
+            </div>
+            <div>
+              <label class="block text-sm text-gray-700 mb-1">
+                Set Late Fee to be a Set Amount or %.
+              </label>
+              <select
+                class="border border-gray-300 rounded p-2 w-full lateFeeOption"
+              >
+                <option value="amount" selected>Exact Amount</option>
+                <option value="percentage">Percentage</option>
+                <option value="no_late_fee">No Late Fee</option>
+              </select>
+            </div>
+          </div>
+          <div class="mt-3 md:w-1/2">
+            <label class="block text-sm text-gray-700 mb-1">
+              Late Fee Amount
+            </label>
+            <div class="flex items-center">
+              <span
+                class="inline-block bg-gray-100 border border-gray-300 px-2 py-1 mr-1"
+                >$
+              </span>
+              <input
+                type="number"
+                class="border border-gray-300 rounded p-2 w-2/3"
+                value="35.00"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="flex justify-between items-center">
+        <button
+          id="newLateFeeRule"
+          type="button"
+          class="bg-green-600 text-white py-1 px-3 rounded"
+        >
+          <i class="fas fa-plus"></i> Add Late Fee Rule
+        </button>
+        <button
+          id="saveLateFeeRules"
+          type="button"
+          class="bg-blue-600 text-white py-1 px-3 rounded"
+        >
+          <i class="fas fa-check"></i> Save
+        </button>
+      </div>
+  
+      <!-- Old Past Due Terms / Past Due Late Fee (deprecated row) -->
+      <div
+        class="alert alert-warning mt-3 hidden"
+        role="alert"
+        style="display: none;"
+      >
+        ...
+      </div>
+  
+      <!-- More invoice checkboxes -->
+      <form id="form_invoice_settings" class="mt-4">
+        <input type="hidden" id="c_id" name="c_id" value="1240765" />
+        <input type="hidden" id="custom_inv_cust_settings_val" value="1" />
+        <div class="space-y-2">
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="show_out"
+              name="custom_inv_out"
+              value="1"
+            />
+            <label for="show_out" class="text-gray-700">
+              Hide Outstanding Balance
+            </label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="show_total_due"
+              name="custom_total_due"
+              value="1"
+            />
+            <label for="show_total_due" class="text-gray-700">
+              Hide Total Due on Account
+            </label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="co_stamp_pdf_view"
+              name="custom_stamp_pdf_view"
+              value="1"
+              checked
+            />
+            <label for="co_stamp_pdf_view" class="text-gray-700">
+              Show Pending, Draft, Paid in Full and Past Due Stamp on Invoices
+            </label>
+          </div>
+          <div class="flex items-center space-x-2 deprecated-row">
+            <label
+              for="co_pastdue_terms_wrap"
+              class="text-gray-700 mr-2 mt-1"
+            >
+              Past Due Terms
+            </label>
+            <a
+              id="co_pastdue_terms_wrap"
+              href="#"
+              data-type="select"
+              data-value="20"
+              data-pk="20"
+              data-source="{'0':'0','7':'7','10':'10','15':'15','20':'20','25':'25','30':'30','40':'40','50':'50'}"
+              class="editable editable-click"
+            >
+              31
+            </a>
+            <input
+              type="hidden"
+              name="custom_pastdue_terms"
+              id="co_pastdue_terms"
+              value="31"
+            />
+          </div>
+          <div class="flex items-center space-x-2 deprecated-row">
+            <label for="past_due_late_fee" class="text-gray-700">
+              Past Due Late Fee
+            </label>
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="past_due_late_fee"
+              name="custom_past_due_late_fee"
+              value="1"
+              checked
+            />
+            <div class="ml-2 past_due_val_edit_show flex items-center space-x-1">
+              <span>$</span>
+              <a
+                href="#"
+                id="past_due_val_edit"
+                class="editable editable-click"
+              >
+                35.00
+              </a>
+            </div>
+            <input
+              type="hidden"
+              name="custom_past_due_val"
+              id="past_due_val"
+              value="35.00"
+            />
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="co_inv_due_date"
+              name="custom_inv_due_date"
+              value="1"
+              checked
+            />
+            <label for="co_inv_due_date" class="text-gray-700">
+              Show Invoice Due Date
+            </label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="custom_inv_time_visit_show"
+              name="custom_inv_time_visit_show"
+              value="1"
+              checked
+            />
+            <label for="custom_inv_time_visit_show" class="text-gray-700">
+              Show Invoice Time Of Visit
+            </label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="co_credit_available_show"
+              name="custom_credit_available_show"
+              value="1"
+              disabled
+            />
+            <label
+              for="co_credit_available_show"
+              class="text-gray-500"
+            >
+              Show "Credit Available"
+            </label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="accept_ach_pay"
+              name="cust_accept_ach_pay"
+              value="1"
+              checked
+            />
+            <label for="accept_ach_pay" class="text-gray-700">
+              Accept ACH Payments
+            </label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="accept_credit_card_pay"
+              name="cust_accept_credit_card"
+              value="1"
+              checked
+            />
+            <label for="accept_credit_card_pay" class="text-gray-700">
+              Accept Credit Card Payments
+            </label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="custom_auto_credit_apply"
+              name="custom_auto_credit_apply"
+              value="1"
+            />
+            <label for="custom_auto_credit_apply" class="text-gray-700">
+              Automatically Apply Customer Credit to Invoices
+            </label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              class="form-check-input form-control-lg update_cinvs"
+              type="checkbox"
+              id="co_show_tips"
+              name="custom_show_tips"
+              value="1"
+              disabled
+            />
+            <label for="co_show_tips" class="text-gray-500">
+              Show Tips on Invoices and Allow Customers to Leave Tips
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Auto-Send Invoices -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Auto-Send Invoices
+    </div>
+    <div class="p-4">
+      <form id="form_invoice_auto_sending">
+        <input type="hidden" name="c_id" value="1240765" />
+        <div class="bg-gray-50 border border-gray-200 p-3 rounded">
+          <label class="inline-flex items-center space-x-2">
+            <input
+              id="is_invoice_auto_sending"
+              class="form-check-input form-control-lg"
+              type="checkbox"
+              value="1"
+              name="is_invoice_auto_sending"
+            />
+            <span>Enable Auto-Sending Invoices</span>
+          </label>
+        </div>
+        <!-- More auto-sending fields appear conditionally below -->
+        <div id="auto_sending_recurring" class="mt-3 hidden">
+          <div class="bg-blue-50 border border-blue-200 p-3 rounded mb-3">
+            <p>
+              <strong>Invoices will be sent out via</strong>
+              <span id="auto_sending_method">e-mail</span>.
+            </p>
+            <p>
+              If you'd like to change how invoices are sent, please adjust
+              "How This Customer Wants to Receive Invoices."
+            </p>
+          </div>
+          <div class="form-group">
+            <label class="text-gray-700 font-medium">
+              How Often to Send Out Invoices
+            </label>
+            <select
+              id="auto_sending_recurring_options"
+              name="recoptions"
+              class="border border-gray-300 rounded p-2 w-full md:w-1/2"
+            >
+              <option value="d">Daily</option>
+              <option value="w">Weekly</option>
+              <option value="m">Monthly</option>
+            </select>
+          </div>
+          <legend class="text-gray-700 font-semibold mt-4">Options</legend>
+          <!-- day / week / month options here -->
+          <div class="panel panel-default form-panel mt-4">
+            <div class="panel-body">
+              <button
+                type="submit"
+                id="save_auto_sending"
+                class="bg-blue-600 text-white py-2 px-4 rounded float-right"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Auto-Create Invoices -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Auto-Create Invoices
+    </div>
+    <div class="p-4">
+      <form id="fautobill">
+        <input type="hidden" name="c_id" value="1240765" />
+        <div class="bg-gray-50 border border-gray-200 p-3 rounded">
+          <label class="inline-flex items-center space-x-2">
+            <input
+              id="is_autobill"
+              class="form-check-input form-control-lg"
+              type="checkbox"
+              value="1"
+              name="is_autobill"
+            />
+            <span>Enable Auto-Creating Invoices</span>
+          </label>
+        </div>
+        <div id="recurring" class="mt-3 hidden">
+          <div class="bg-blue-50 border border-blue-200 p-3 rounded mb-3">
+            <p>Only <b>completed events</b> will be invoiced.</p>
+            <p>
+              <b>Old events</b> will not be invoiced—only events after enabling.
+            </p>
+          </div>
+          <div class="form-group mb-3">
+            <label class="text-gray-700 font-medium">
+              How Often to Create Invoices
+            </label>
+            <select
+              id="recOptions"
+              name="recoptions"
+              class="border border-gray-300 rounded p-2 w-full md:w-1/2"
+            >
+              <option value="d">Daily</option>
+              <option value="w">Weekly</option>
+              <option value="m">Monthly</option>
+            </select>
+          </div>
+          <legend class="text-gray-700 font-semibold mt-4">Options</legend>
+          <!-- dayOptionBox / weekOptionBox / monthOptionBox appear conditionally -->
+          <div class="panel panel-default form-panel mt-4">
+            <div class="panel-body">
+              <button
+                type="submit"
+                id="saveAutobill"
+                class="bg-blue-600 text-white py-2 px-4 rounded float-right"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Customer Portal Login -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Customer Portal Login
+    </div>
+    <div class="p-4">
+      <table class="min-w-full text-gray-700">
+        <tbody>
+          <tr id="login-data" class="border-b">
+            <td class="p-3 w-1/3 text-gray-500">Email</td>
+            <td class="p-3">
+              <a
+                href="#"
+                id="custom_login"
+                class="editTextEmailReq editable editable-click editable-empty"
+                data-pk="1240765"
+                data-url="/customers/update"
+              >
+                Empty
+              </a>
+            </td>
+          </tr>
+          <tr class="border-b">
+            <td class="p-3 text-gray-500">Password</td>
+            <td class="p-3">
+              <a href="#" class="btn btn-primary passdiv" id="changePassword">
+                Change Password
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td class="p-3 text-gray-500">Login Required</td>
+            <td class="p-3">
+              <input
+                style="font-size:xx-large"
+                data-pk="1240765"
+                data-fname="custom_portal_need_login"
+                type="checkbox"
+                value="1"
+                id="custom_portal_need_login"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- ACH / Credit Cards / Payment Method History -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      ACH
+    </div>
+    <div class="p-4">
+      <div
+        class="bg-yellow-100 text-yellow-800 border-l-4 border-yellow-300 p-3 mb-3"
+      >
+        You can enable ACH Payments for only $12 / month.
+      </div>
+      <a
+        id="ach-enable"
+        href="javascript:;"
+        data-sku="LP_ACH_PAYMENTS"
+        data-desc="ACH Payments"
+        data-price100="1200"
+        data-price="12.00"
+        data-email="anthony@dfrgrp.com"
+        class="bg-green-600 text-white py-2 px-4 rounded inline-flex items-center space-x-2"
+      >
+        <i class="fa fa-plus"></i>
+        <span>Enable ACH Payments</span>
+      </a>
+    </div>
+  </div>
+  
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Credit Cards
+    </div>
+    <div class="p-4">
+      <div class="bg-red-100 text-red-800 border-l-4 border-red-300 p-4 mb-3">
+        <div class="text-center">
+          You need to set up LawnPro payments before adding a credit card.
+          <br /><br />
+          <a href="/settings/pay" class="btn btn-primary"
+            >Connect LawnPro Payments</a
+          >
+        </div>
+      </div>
+      <table class="min-w-full"></table>
+    </div>
+  </div>
+  
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Payment Method History
+    </div>
+    <div class="p-4">
+      <table class="min-w-full">
+        <tbody>
+          <tr>
+            <td
+              class="p-3 text-center text-gray-500 border border-white"
+            >
+              No History Found
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Payments -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Payments
+    </div>
+    <div class="p-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <select
+          id="payMonth"
+          class="border border-gray-300 rounded p-2 w-full"
+          disabled
+        >
+          <option value="1">January</option>
+          <option value="2" selected>February</option>
+          <option value="3">March</option>
+          <!-- etc. -->
+        </select>
+        <select
+          id="payYear"
+          class="border border-gray-300 rounded p-2 w-full"
+        >
+          <option value="All">All</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <!-- etc. -->
+        </select>
+      </div>
+      <div id="chartPay" class="mb-6">
+        <!-- Payment chart placeholder -->
+      </div>
+      <table class="min-w-full text-gray-700">
+        <tbody>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="p-3 text-sm text-gray-500">Oct 23, 2024</td>
+            <td class="p-3 text-sm text-gray-500">100.00</td>
+            <td class="p-3 text-sm text-gray-500">Cash</td>
+            <td class="p-3 text-sm">
+              <strong
+                ><span class="text-green-600">100.00</span></strong
+              >
+              for Invoice#
+              <a
+                data-fancybox
+                data-type="ajax"
+                data-src="/finances/invoices/getDetails/?invoiceID=1371617224&bs4=1"
+                class="preview text-blue-600"
+                href="javascript:;"
+              >
+                898
+              </a>
+            </td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="p-3 text-sm text-gray-500">Jul 18, 2024</td>
+            <td class="p-3 text-sm text-gray-500">250.00</td>
+            <td class="p-3 text-sm text-gray-500">Cash</td>
+            <td class="p-3 text-sm">
+              <strong
+                ><span class="text-green-600">250.00</span></strong
+              >
+              for Invoice#
+              <a
+                data-fancybox
+                data-type="ajax"
+                data-src="/finances/invoices/getDetails/?invoiceID=1371272120&bs4=1"
+                class="preview text-blue-600"
+                href="javascript:;"
+              >
+                849
+              </a>
+            </td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="p-3 text-sm text-gray-500">Jun 02, 2023</td>
+            <td class="p-3 text-sm text-gray-500">240.00</td>
+            <td class="p-3 text-sm text-gray-500">Cash</td>
+            <td class="p-3 text-sm">
+              <strong
+                ><span class="text-green-600">240.00</span></strong
+              >
+              for Invoice#
+              <a
+                data-fancybox
+                data-type="ajax"
+                data-src="/finances/invoices/getDetails/?invoiceID=13874238&bs4=1"
+                class="preview text-blue-600"
+                href="javascript:;"
+              >
+                676
+              </a>
+            </td>
+          </tr>
+          <!-- more rows omitted for brevity -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" class="p-3 text-sm">
+              <strong>Total Records: 7</strong><br />
+              <a
+                class="bg-blue-500 text-white py-1 px-3 rounded mt-2 inline-block"
+                href="/finances/payments/?cid=1240765"
+              >
+                View all Payments
+              </a>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Invoices -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Invoices
+    </div>
+    <div class="p-4">
+      <table class="min-w-full text-gray-700">
+        <thead>
+          <tr>
+            <th colspan="3" class="p-3 text-left border-b bg-gray-50">
+              Recent Past Due Invoices
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b bg-red-50">
+            <td class="p-3 text-center text-gray-500">
+              <a
+                data-fancybox
+                data-type="ajax"
+                data-src="/finances/invoices/getDetails/?invoiceID=1371739077&bs4=1"
+                class="preview text-blue-600"
+                href="javascript:;"
+              >
+                918
+              </a>
+            </td>
+            <td class="p-3 text-center text-gray-500">Nov 07, 2024</td>
+            <td class="p-3 text-gray-500">185.00</td>
+          </tr>
+          <tr class="border-b bg-red-50">
+            <td class="p-3 text-center text-gray-500">
+              <a
+                data-fancybox
+                data-type="ajax"
+                data-src="/finances/invoices/getDetails/?invoiceID=1371806607&bs4=1"
+                class="preview text-blue-600"
+                href="javascript:;"
+              >
+                928
+              </a>
+            </td>
+            <td class="p-3 text-center text-gray-500">Dec 04, 2024</td>
+            <td class="p-3 text-gray-500">235.00</td>
+          </tr>
+        </tbody>
+        <thead>
+          <tr>
+            <th colspan="3" class="p-3 text-left border-b bg-gray-50">
+              Recent Paid Invoices
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b bg-green-50">
+            <td class="p-3 text-center text-gray-500">
+              <a
+                data-fancybox
+                data-type="ajax"
+                data-src="/finances/invoices/getDetails/?invoiceID=1371617224&bs4=1"
+                class="preview text-blue-600"
+                href="javascript:;"
+              >
+                898
+              </a>
+            </td>
+            <td class="p-3 text-center text-gray-500">Oct 03, 2024</td>
+            <td class="p-3 text-gray-500">100.00</td>
+          </tr>
+          <!-- more paid rows similarly -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="2" class="p-3">
+              <strong>Total Records: 9</strong>
+            </td>
+            <td class="p-3">
+              <a
+                class="bg-blue-500 text-white py-1 px-3 rounded float-right ml-2"
+                href="/finances/invoices/?cid=1240765"
+              >
+                View all Invoices
+              </a>
+              <button
+                id="addNewInvoice"
+                type="button"
+                class="bg-green-600 text-white py-1 px-3 rounded float-right"
+              >
+                <i class="fa fa-plus"></i> Create Invoice
+              </button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Estimates -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Estimates
+    </div>
+    <div class="p-4">
+      <table class="min-w-full text-gray-700">
+        <tbody>
+          <tr>
+            <td
+              class="p-3 text-center text-gray-500 border border-white"
+            >
+              No Estimates Found
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <!-- Timeline -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Timeline
+    </div>
+    <div class="p-4 timeline-details-tab">
+      <ul class="customTimeline text-sm text-gray-700">
+        <!-- Timeline items (none shown) -->
+      </ul>
+      <div class="spinner-div hidden">
+        <span
+          class="spinner-border spinner-border-sm"
+          role="status"
+          aria-hidden="true"
+        ></span>
+        Loading...
+      </div>
+    </div>
+  </div>
+  
+  <!-- Photos / Documents -->
+  <div class="mt-6 bg-white shadow rounded border border-gray-200">
+    <div class="px-4 py-3 font-semibold text-gray-700 border-b">
+      Photos / Documents
+    </div>
+    <div class="p-4">
+      <div class="pb-4">
+        <!-- Dummy "filepond" style area for file uploads -->
+        <label
+          class="block text-gray-600 font-medium mb-2"
+          for="uploaded_file"
+        >
+          Upload File
+        </label>
+        <input
+          class="border border-gray-300 rounded p-2 w-full"
+          type="file"
+          id="uploaded_file"
+          multiple
+        />
+      </div>
+      <div id="custPictures" class="clearfix">
+        <!-- No pictures yet -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- end #main_content -->
+</body>
+</html>
+
+
+                            
+
