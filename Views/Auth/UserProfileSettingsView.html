@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile & Settings</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    /* Utility class to hide elements for tab switching */
+    .hidden { display: none; }
+
+    /* Simple dropdown toggles (demo) */
+    .dropdown-actions,
+    .dropdown-activity {
+      display: none;
+      z-index: 50; /* Just above normal stacking */
+    }
+    .dropdown-actions.show,
+    .dropdown-activity.show {
+      display: block;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+  <!-- HEADER (Top Navbar) -->
+  <header class="bg-green-700 text-white px-4 py-3 flex items-center justify-between shadow">
+    <!-- Brand -->
+    <div class="flex items-center space-x-2">
+      <i class="fa-solid fa-leaf text-2xl"></i>
+      <span class="font-bold text-xl">JJ Turfs</span>
+    </div>
+    <!-- User Menu (Placeholder) -->
+    <div class="relative">
+      <button class="flex items-center space-x-2 focus:outline-none">
+        <img 
+          src="https://via.placeholder.com/32" 
+          alt="User Avatar" 
+          class="w-8 h-8 rounded-full"
+        />
+        <span class="hidden sm:inline">JohnDoe</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <!-- Example dropdown menu (not fully implemented) -->
+      <!--
+      <div class="absolute right-0 mt-2 w-48 bg-white text-green-700 rounded shadow hidden">
+        <a href="#" class="block px-4 py-2 hover:bg-green-50">Logout</a>
+      </div>
+      -->
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT -->
+  <div class="flex flex-1">
+
+    <!-- GLOBAL APP SIDEBAR (far left) -->
+    <nav class="w-16 bg-white border-r border-gray-200 flex flex-col items-center py-6">
+      <!-- Example: app-level icons/links (Dashboard, Projects, etc.) -->
+      <a href="#"
+         class="mb-6 p-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+         title="Dashboard"
+      >
+        <i class="fa-solid fa-house text-xl"></i>
+      </a>
+      <a href="#"
+         class="mb-6 p-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+         title="Projects"
+      >
+        <i class="fa-solid fa-briefcase text-xl"></i>
+      </a>
+      <a href="#"
+         class="mb-6 p-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors"
+         title="Analytics"
+      >
+        <i class="fa-solid fa-chart-bar text-xl"></i>
+      </a>
+      <!-- "User Settings" (where we are) -->
+      <a href="#"
+         class="mb-6 p-2 text-green-700 hover:bg-green-100 rounded-md transition-colors"
+         title="User Settings"
+      >
+        <i class="fa-solid fa-user-cog text-xl"></i>
+      </a>
+      <!-- Add more global-level icons/links as needed -->
+    </nav>
+
+    <!-- WRAPPER for the User Settings Sidebar + Content -->
+    <div class="flex flex-1 overflow-hidden">
+
+      <!-- USER SETTINGS SIDEBAR -->
+      <nav class="w-64 bg-white border-r border-green-200 p-4 overflow-y-auto">
+        <ul class="space-y-2">
+          <li>
+            <button
+              class="w-full flex items-center p-2 text-green-700 hover:bg-green-100 rounded-md transition-colors"
+              onclick="showSection('profileSection')"
+            >
+              <i class="fa-solid fa-user mr-3"></i>
+              <span>Profile</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="w-full flex items-center p-2 text-green-700 hover:bg-green-100 rounded-md transition-colors"
+              onclick="showSection('securitySection')"
+            >
+              <i class="fa-solid fa-shield-halved mr-3"></i>
+              <span>Security</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="w-full flex items-center p-2 text-green-700 hover:bg-green-100 rounded-md transition-colors"
+              onclick="showSection('notificationsSection')"
+            >
+              <i class="fa-solid fa-bell mr-3"></i>
+              <span>Notifications</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="w-full flex items-center p-2 text-green-700 hover:bg-green-100 rounded-md transition-colors"
+              onclick="showSection('billingSection')"
+            >
+              <i class="fa-solid fa-credit-card mr-3"></i>
+              <span>Billing</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="w-full flex items-center p-2 text-green-700 hover:bg-green-100 rounded-md transition-colors"
+              onclick="showSection('preferencesSection')"
+            >
+              <i class="fa-solid fa-gear mr-3"></i>
+              <span>Preferences</span>
+            </button>
+          </li>
+          <li>
+            <button
+              class="w-full flex items-center p-2 text-green-700 hover:bg-green-100 rounded-md transition-colors"
+              onclick="showSection('privacySection')"
+            >
+              <i class="fa-solid fa-user-shield mr-3"></i>
+              <span>Privacy</span>
+            </button>
+          </li>
+        </ul>
+        <!-- "Close Account" link at bottom -->
+        <div class="mt-6 pt-6 border-t border-green-200">
+          <button
+            class="w-full flex items-center p-2 text-red-600 hover:bg-red-50 rounded-md transition-colors"
+            onclick="closeAccountHandler()"
+          >
+            <i class="fa-solid fa-trash mr-3"></i>
+            <span>Close Account</span>
+          </button>
+        </div>
+      </nav>
+      <!-- END USER SETTINGS SIDEBAR -->
+
+      <!-- CONTENT AREA -->
+      <main class="flex-1 p-6 overflow-y-auto bg-gray-50">
+        
+        <!-- SECTION: PROFILE -->
+        <section id="profileSection">
+          <!-- 2-Card Layout for Profile (One 1/3 + One 2/3) -->
+          <div class="flex flex-col md:flex-row gap-4">
+
+            <!-- CARD 1: Basic Info + Profile Picture -->
+            <div class="md:w-1/3 w-full bg-white rounded-md shadow p-4 border border-green-200">
+              <h2 class="text-xl font-bold text-green-800 mb-4">User Overview</h2>
+          
+              <!-- User Type -->
+              <div class="mb-4">
+                <label for="userType" class="block text-green-800 mb-1">User Type</label>
+                <select
+                  id="userType"
+                  class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                >
+                  <option value="admin">Admin</option>
+                  <option value="staff">Staff</option>
+                  <option value="member">Member</option>
+                </select>
+              </div>
+          
+              <!-- Basic Info (Name, Username, Email, Phone) -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div>
+                  <label for="firstName" class="block text-green-800 mb-1">First Name</label>
+                  <input
+                    type="text"
+                    id="firstName"
+                    class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                    placeholder="John"
+                  />
+                </div>
+                <div>
+                  <label for="lastName" class="block text-green-800 mb-1">Last Name</label>
+                  <input
+                    type="text"
+                    id="lastName"
+                    class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                    placeholder="Doe"
+                  />
+                </div>
+              </div>
+              <div class="mb-4">
+                <label for="userName" class="block text-green-800 mb-1">Username</label>
+                <input
+                  type="text"
+                  id="userName"
+                  class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                  placeholder="john.doe"
+                />
+              </div>
+              <div class="mb-4">
+                <label for="email" class="block text-green-800 mb-1">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                  placeholder="john@example.com"
+                />
+              </div>
+              <div class="mb-4">
+                <label for="phone" class="block text-green-800 mb-1">Phone</label>
+                <input
+                  type="text"
+                  id="phone"
+                  class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                  placeholder="+1 (555) 123-4567"
+                />
+              </div>
+          
+              <!-- Profile Picture Upload -->
+              <h3 class="text-lg font-semibold text-green-800 mt-4 mb-2">Profile Picture</h3>
+              <div class="flex items-center space-x-4 mb-4">
+                <img 
+                  src="https://via.placeholder.com/80" 
+                  alt="Profile Pic"
+                  class="w-20 h-20 rounded-full border border-green-200"
+                />
+                <div>
+                  <label class="block text-green-800 mb-1">Upload new photo</label>
+                  <input type="file" class="text-green-700" />
+                </div>
+              </div>
+          
+              <!-- (Optional) Save Button just for Card 1 -->
+              <button
+                type="button"
+                class="py-2 px-6 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+              >
+                Save Basic Info
+              </button>
+            </div>
+            <!-- END CARD 1 -->
+          
+            <!-- CARD 2: Address & Extended Details -->
+            <div class="md:w-2/3 w-full bg-white rounded-md shadow p-4 border border-green-200">
+              <h2 class="text-xl font-bold text-green-800 mb-4">Address & Details</h2>
+          
+              <!-- Address Section -->
+              <div class="border-b border-green-200 pb-4 mb-4">
+                <h3 class="text-lg font-semibold text-green-800 mb-2">Address</h3>
+                <div class="space-y-4">
+                  <div>
+                    <label for="addressLine" class="block text-green-800 mb-1">Street Address</label>
+                    <input
+                      type="text"
+                      id="addressLine"
+                      class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                      placeholder="1234 Green St."
+                    />
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label for="city" class="block text-green-800 mb-1">City</label>
+                      <input
+                        type="text"
+                        id="city"
+                        class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                        placeholder="Springfield"
+                      />
+                    </div>
+                    <div>
+                      <label for="state" class="block text-green-800 mb-1">State/Province</label>
+                      <input
+                        type="text"
+                        id="state"
+                        class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                        placeholder="IL"
+                      />
+                    </div>
+                  </div>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label for="postalCode" class="block text-green-800 mb-1">Postal Code</label>
+                      <input
+                        type="text"
+                        id="postalCode"
+                        class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                        placeholder="12345"
+                      />
+                    </div>
+                    <div>
+                      <label for="country" class="block text-green-800 mb-1">Country</label>
+                      <input
+                        type="text"
+                        id="country"
+                        class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                        placeholder="USA"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Additional Fields (Optional) -->
+              <div class="border-b border-green-200 pb-4 mb-4">
+                <h3 class="text-lg font-semibold text-green-800 mb-2">Additional Info</h3>
+                <div class="mb-4">
+                  <label for="jobTitle" class="block text-green-800 mb-1">Job Title</label>
+                  <input
+                    type="text"
+                    id="jobTitle"
+                    class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                    placeholder="e.g., Project Manager"
+                  />
+                </div>
+                <div class="mb-4">
+                  <label for="department" class="block text-green-800 mb-1">Department</label>
+                  <input
+                    type="text"
+                    id="department"
+                    class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                    placeholder="e.g., Operations"
+                  />
+                </div>
+                <div>
+                  <label for="notes" class="block text-green-800 mb-1">Notes</label>
+                  <textarea
+                    id="notes"
+                    class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                    rows="3"
+                    placeholder="Any additional notes or details..."
+                  ></textarea>
+                </div>
+              </div>
+          
+              <!-- Final Save Button -->
+              <button
+                type="button"
+                class="py-2 px-6 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+              >
+                Save All Changes
+              </button>
+            </div>
+            <!-- END CARD 2 -->
+          </div>
+
+          <!-- ===================================== -->
+          <!-- ADDITIONAL TOP INFO + 2-COLUMN LAYOUT -->
+          <!-- (From the snippet you wanted to merge) -->
+          <!-- ===================================== -->
+
+          <!-- Top Info: Joined + Last Login, plus name/avatar -->
+          <header class="mt-8 bg-white shadow rounded-lg p-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+              <img
+                src="https://via.placeholder.com/64"
+                alt="Profile Photo"
+                class="w-16 h-16 rounded-full"
+              />
+              <div>
+                <span class="block text-lg font-semibold">Alice Admin</span>
+                <div><span class="font-semibold">Joined:</span> Mar 10, 2010</div>
+                <div><span class="font-semibold">Last Login:</span> Feb 25, 2025, 11:45 AM</div>
+              </div>
+            </div>
+          </header>
+
+          <!-- Main Content: Two-column layout -->
+          <div class="flex mt-4 space-x-4">
+            <!-- Left Sidebar Navigation (Compact with dropdowns) -->
+            <aside class="w-1/4 bg-white shadow rounded-lg p-4">
+              <nav class="space-y-3 text-gray-700 text-sm">
+                <a href="#personal" class="block hover:text-blue-600">Personal Information</a>
+                <a href="#account" class="block hover:text-blue-600">Account Details</a>
+                <!-- Dropdown for Role Details -->
+                <details class="group">
+                  <summary class="cursor-pointer hover:text-blue-600 flex items-center">
+                    <i class="fas fa-briefcase mr-2"></i>Role Details
+                  </summary>
+                  <ul class="mt-1 pl-4 space-y-1">
+                    <li>
+                      <a href="#employee" class="block text-gray-600 hover:text-blue-500">Employee Details</a>
+                    </li>
+                    <li>
+                      <a href="#customer" class="block text-gray-600 hover:text-blue-500">Customer Details</a>
+                    </li>
+                  </ul>
+                </details>
+                <a href="#notes" class="block hover:text-blue-600">Additional Notes</a>
+                <a href="#management" class="block hover:text-blue-600">User Management Actions</a>
+                <a href="#activity" class="block hover:text-blue-600">Activity &amp; Devices</a>
+              </nav>
+            </aside>
+
+            <!-- Right Main Content: All Details in a compact layout -->
+            <section class="w-3/4 bg-white shadow rounded-lg p-6 space-y-6">
+              <!-- Personal Information -->
+              <div id="personal">
+                <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+                  <i class="fas fa-info-circle mr-2"></i>Personal Information
+                </h2>
+                <div class="grid grid-cols-2 gap-4 text-sm mt-2">
+                  <div><span class="font-medium">Full Name:</span> Alice Admin</div>
+                  <div><span class="font-medium">Date of Birth:</span> January 15, 1985</div>
+                  <div><span class="font-medium">Email Address:</span> alice.admin@example.com</div>
+                  <div><span class="font-medium">Phone Number:</span> (555) 123-4567</div>
+                  <div class="col-span-2"><span class="font-medium">Address:</span> 123 Main Street, Springfield, USA</div>
+                </div>
+              </div>
+
+              <!-- Account Details -->
+              <div id="account">
+                <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+                  <i class="fas fa-user-lock mr-2"></i>Account Details
+                </h2>
+                <div class="grid grid-cols-2 gap-4 text-sm mt-2">
+                  <div><span class="font-medium">Username:</span> alice.admin</div>
+                  <div>
+                    <span class="font-medium">Status:</span>
+                    <span class="text-green-600 font-semibold">
+                      <i class="fas fa-check-circle mr-1"></i>Active
+                    </span>
+                  </div>
+                  <div><span class="font-medium">Date Joined:</span> March 10, 2010</div>
+                  <div><span class="font-medium">Last Login:</span> February 25, 2025, 11:45 AM</div>
+                </div>
+              </div>
+
+              <!-- Employee Details -->
+              <div id="employee">
+                <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+                  <i class="fas fa-briefcase mr-2"></i>Employee Details
+                </h2>
+                <div class="grid grid-cols-2 gap-4 text-sm mt-2">
+                  <div><span class="font-medium">Employee ID:</span> EMP-00123</div>
+                  <div><span class="font-medium">Department:</span> Administration</div>
+                  <div><span class="font-medium">Job Title:</span> System Administrator</div>
+                  <div><span class="font-medium">Manager:</span> Bob Manager</div>
+                  <div class="col-span-2 mt-2">
+                    <a
+                      href="employee-record.html"
+                      class="inline-flex items-center text-blue-600 hover:underline text-sm"
+                    >
+                      <i class="fas fa-external-link-alt mr-1"></i>View Full Employee Record
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Customer Details -->
+              <div id="customer">
+                <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+                  <i class="fas fa-shopping-cart mr-2"></i>Customer Details
+                </h2>
+                <div class="grid grid-cols-2 gap-4 text-sm mt-2">
+                  <div><span class="font-medium">Customer ID:</span> CUST-04567</div>
+                  <div><span class="font-medium">Loyalty Status:</span> Gold Member</div>
+                  <div><span class="font-medium">Preferred Contact Method:</span> Email</div>
+                  <div><span class="font-medium">Account Created:</span> July 5, 2018</div>
+                  <div class="col-span-2 mt-2">
+                    <a
+                      href="customer-record.html"
+                      class="inline-flex items-center text-blue-600 hover:underline text-sm"
+                    >
+                      <i class="fas fa-external-link-alt mr-1"></i>View Full Customer Record
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Additional Notes -->
+              <div id="notes">
+                <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+                  <i class="fas fa-sticky-note mr-2"></i>Additional Notes
+                </h2>
+                <p class="text-sm text-gray-700 mt-2">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
+                  Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh
+                  elementum imperdiet.
+                </p>
+              </div>
+
+              <!-- User Management Actions -->
+              <div id="management">
+                <h2 class="text-xl font-semibold border-b pb-2 flex items-center">
+                  <i class="fas fa-tools mr-2"></i>User Management Actions
+                </h2>
+                <!-- A compact dropdown list for actions -->
+                <div class="relative inline-block text-sm mt-2">
+                  <button
+                    class="bg-gray-100 text-gray-800 px-3 py-2 rounded flex items-center focus:outline-none"
+                    onclick="toggleActionsDropdown()"
+                  >
+                    Actions <i class="fas fa-chevron-down ml-2"></i>
+                  </button>
+                  <div
+                    id="actionsDropdown"
+                    class="absolute left-0 mt-1 w-full bg-white border rounded shadow-lg dropdown-actions"
+                  >
+                    <button onclick="forcePasswordReset()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                      <i class="fas fa-key mr-2"></i>Force PW Reset on Next Login
+                    </button>
+                    <button onclick="toggleUserStatus()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                      <i class="fas fa-toggle-on mr-2"></i>Change User Status
+                    </button>
+                    <button onclick="lockUnlockAccount()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                      <i class="fas fa-lock mr-2"></i>Lock/Unlock Account
+                    </button>
+                    <button onclick="resendConfirmationEmail()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                      <i class="fas fa-envelope mr-2"></i>Resend Confirmation Email
+                    </button>
+                    <button onclick="deleteUser()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                      <i class="fas fa-trash-alt mr-2"></i>Delete User
+                    </button>
+                    <button onclick="impersonateUser()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                      <i class="fas fa-user-secret mr-2"></i>Impersonate User
+                    </button>
+                    <button onclick="editUserProfile()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                      <i class="fas fa-edit mr-2"></i>Edit Profile
+                    </button>
+                    <button onclick="suspendUserAccount()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                      <i class="fas fa-ban mr-2"></i>Suspend Account
+                    </button>
+                    <button onclick="revokeUserSessions()" class="w-full text-left px-3 py-2 hover:bg-gray-200">
+                      <i class="fas fa-sign-out-alt mr-2"></i>Revoke Active Sessions
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Activity & Devices / Sessions (Tabbed Section) -->
+              <div id="activity">
+                <div class="bg-gray-50 rounded-lg p-4 mt-2">
+                  <div class="flex items-center justify-between border-b pb-2 mb-4">
+                    <h2 class="text-xl font-semibold flex items-center">
+                      <i class="fas fa-chart-line mr-2"></i>Activity
+                    </h2>
+                    <!-- Dropdown for Activity sub-tabs -->
+                    <div class="relative inline-block text-sm">
+                      <button
+                        class="bg-gray-100 px-3 py-2 rounded flex items-center focus:outline-none"
+                        onclick="toggleActivityDropdown()"
+                      >
+                        <span id="active-subtab-label">Login History</span>
+                        <i class="fas fa-chevron-down ml-2"></i>
+                      </button>
+                      <div
+                        id="activityDropdown"
+                        class="absolute right-0 mt-1 w-48 bg-white border rounded shadow-lg dropdown-activity"
+                      >
+                        <button
+                          onclick="showActivitySubTab('login'); updateSubtabLabel('Login History')"
+                          class="w-full text-left px-3 py-2 hover:bg-gray-200"
+                        >
+                          Login History
+                        </button>
+                        <button
+                          onclick="showActivitySubTab('actions'); updateSubtabLabel('User Actions')"
+                          class="w-full text-left px-3 py-2 hover:bg-gray-200"
+                        >
+                          User Actions
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Activity Content -->
+                  <div id="activity-tab-content">
+                    <!-- Login History -->
+                    <div id="login-history" class="activity-subtab">
+                      <table class="min-w-full text-sm divide-y divide-gray-200">
+                        <thead class="bg-gray-100">
+                          <tr>
+                            <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Date</th>
+                            <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">IP Address</th>
+                            <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Location</th>
+                          </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                          <tr>
+                            <td class="px-4 py-2">February 25, 2025</td>
+                            <td class="px-4 py-2">192.168.1.12</td>
+                            <td class="px-4 py-2">Springfield, USA</td>
+                          </tr>
+                          <tr>
+                            <td class="px-4 py-2">February 20, 2025</td>
+                            <td class="px-4 py-2">192.168.1.15</td>
+                            <td class="px-4 py-2">Springfield, USA</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- User Actions -->
+                    <div id="user-actions" class="activity-subtab hidden">
+                      <table class="min-w-full text-sm divide-y divide-gray-200">
+                        <thead class="bg-gray-100">
+                          <tr>
+                            <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Date</th>
+                            <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Action</th>
+                            <th class="px-4 py-2 text-left font-medium text-gray-500 uppercase">Details</th>
+                          </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                          <tr>
+                            <td class="px-4 py-2">February 24, 2025</td>
+                            <td class="px-4 py-2">Updated Profile</td>
+                            <td class="px-4 py-2">Changed profile picture</td>
+                          </tr>
+                          <tr>
+                            <td class="px-4 py-2">February 23, 2025</td>
+                            <td class="px-4 py-2">Password Change</td>
+                            <td class="px-4 py-2">User updated password</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- END Activity & Devices -->
+            </section>
+          </div>
+          <!-- END Two-column snippet -->
+        </section>
+        <!-- END PROFILE SECTION -->
+
+        <!-- SECTION: SECURITY -->
+        <section id="securitySection" class="hidden">
+          <h2 class="text-2xl font-bold text-green-800 mb-4">Security Settings</h2>
+          
+          <!-- Change Password -->
+          <div class="border-b border-green-200 pb-4 mb-4">
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Change Password</h3>
+            <form class="space-y-2 max-w-md">
+              <div>
+                <label class="block text-green-800 mb-1" for="currentPassword">Current Password</label>
+                <input
+                  type="password"
+                  id="currentPassword"
+                  class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                />
+              </div>
+              <div>
+                <label class="block text-green-800 mb-1" for="newPassword">New Password</label>
+                <input
+                  type="password"
+                  id="newPassword"
+                  class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                />
+              </div>
+              <div>
+                <label class="block text-green-800 mb-1" for="confirmPassword">Confirm New Password</label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                />
+              </div>
+              <button
+                type="button"
+                class="mt-2 py-2 px-6 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+              >
+                Update Password
+              </button>
+            </form>
+          </div>
+
+          <!-- Two-Factor Authentication (MFA) -->
+          <div class="border-b border-green-200 pb-4 mb-4">
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Two-Factor Authentication</h3>
+            <p class="text-sm text-green-700 mb-2">
+              Enable 2FA to add an extra layer of security to your account.
+            </p>
+            <button
+              class="py-2 px-4 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+            >
+              Manage 2FA
+            </button>
+          </div>
+          
+          <!-- Active Sessions -->
+          <div class="border-b border-green-200 pb-4 mb-4">
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Active Sessions</h3>
+            <p class="text-sm text-green-700">
+              Below are the devices currently logged in to your account.
+            </p>
+            <ul class="mt-2 space-y-2">
+              <li class="flex justify-between items-center p-2 bg-green-50 border border-green-200 rounded-md">
+                <div>
+                  <div class="font-semibold text-green-800">Chrome on Windows</div>
+                  <div class="text-sm text-green-600">Logged in 2 days ago • IP: 192.168.1.100</div>
+                </div>
+                <button
+                  class="text-sm text-red-600 hover:underline"
+                >
+                  Log out
+                </button>
+              </li>
+              <li class="flex justify-between items-center p-2 bg-green-50 border border-green-200 rounded-md">
+                <div>
+                  <div class="font-semibold text-green-800">Safari on iPhone</div>
+                  <div class="text-sm text-green-600">Logged in 1 hour ago • IP: 192.168.1.105</div>
+                </div>
+                <button
+                  class="text-sm text-red-600 hover:underline"
+                >
+                  Log out
+                </button>
+              </li>
+            </ul>
+            <button
+              class="mt-3 py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+            >
+              Log Out of All Sessions
+            </button>
+          </div>
+
+          <!-- Security Questions (Optional) -->
+          <div>
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Security Questions</h3>
+            <form class="space-y-2 max-w-md">
+              <div>
+                <label class="block text-green-800 mb-1">Question 1</label>
+                <input
+                  type="text"
+                  placeholder="Your childhood pet's name?"
+                  class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                />
+              </div>
+              <div>
+                <label class="block text-green-800 mb-1">Answer 1</label>
+                <input
+                  type="text"
+                  placeholder="Enter your answer"
+                  class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+                />
+              </div>
+              <!-- Add more Q/A pairs as needed -->
+              <button
+                class="mt-2 py-2 px-6 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+              >
+                Save Questions
+              </button>
+            </form>
+          </div>
+        </section>
+        <!-- END SECURITY SECTION -->
+
+        <!-- SECTION: NOTIFICATIONS -->
+        <section id="notificationsSection" class="hidden">
+          <h2 class="text-2xl font-bold text-green-800 mb-4">Notification Settings</h2>
+          <form class="space-y-4 max-w-2xl">
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" id="emailNotifications" class="form-checkbox h-5 w-5 text-green-700">
+              <label for="emailNotifications" class="text-green-800">Email Notifications</label>
+            </div>
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" id="smsNotifications" class="form-checkbox h-5 w-5 text-green-700">
+              <label for="smsNotifications" class="text-green-800">SMS Notifications</label>
+            </div>
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" id="pushNotifications" class="form-checkbox h-5 w-5 text-green-700">
+              <label for="pushNotifications" class="text-green-800">Push Notifications</label>
+            </div>
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" id="marketingEmails" class="form-checkbox h-5 w-5 text-green-700">
+              <label for="marketingEmails" class="text-green-800">Marketing & Promotions</label>
+            </div>
+            <div class="flex items-center space-x-2">
+              <input type="checkbox" id="weeklyNews" class="form-checkbox h-5 w-5 text-green-700">
+              <label for="weeklyNews" class="text-green-800">Weekly Newsletter</label>
+            </div>
+            <div class="mt-4">
+              <button
+                type="button"
+                class="py-2 px-6 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+              >
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </section>
+        <!-- END NOTIFICATIONS SECTION -->
+
+        <!-- SECTION: BILLING -->
+        <section id="billingSection" class="hidden">
+          <h2 class="text-2xl font-bold text-green-800 mb-4">Billing & Subscription</h2>
+          
+          <!-- Subscription Plan -->
+          <div class="border-b border-green-200 pb-4 mb-4">
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Current Plan</h3>
+            <p class="text-green-700 mb-2">You are on the <strong>Pro</strong> plan.</p>
+            <button
+              class="py-2 px-4 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+            >
+              Upgrade / Change Plan
+            </button>
+          </div>
+
+          <!-- Payment Methods -->
+          <div class="border-b border-green-200 pb-4 mb-4">
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Payment Methods</h3>
+            <ul class="mb-3">
+              <li class="flex items-center justify-between p-2 bg-green-50 border border-green-200 rounded-md mb-2">
+                <span class="text-green-800">
+                  <i class="fa-solid fa-credit-card mr-2"></i> **** **** **** 1234 (VISA)
+                </span>
+                <button class="text-red-600 hover:underline text-sm">Remove</button>
+              </li>
+              <li class="flex items-center justify-between p-2 bg-green-50 border border-green-200 rounded-md">
+                <span class="text-green-800">
+                  <i class="fa-solid fa-credit-card mr-2"></i> **** **** **** 5678 (Mastercard)
+                </span>
+                <button class="text-red-600 hover:underline text-sm">Remove</button>
+              </li>
+            </ul>
+            <button
+              class="py-2 px-4 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+            >
+              Add New Payment Method
+            </button>
+          </div>
+
+          <!-- Billing History -->
+          <div>
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Billing History</h3>
+            <table class="min-w-full bg-green-50 border border-green-200 text-green-800">
+              <thead>
+                <tr class="border-b border-green-200">
+                  <th class="p-2 text-left">Date</th>
+                  <th class="p-2 text-left">Description</th>
+                  <th class="p-2 text-left">Amount</th>
+                  <th class="p-2 text-left">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-green-200">
+                  <td class="p-2">2025-01-15</td>
+                  <td class="p-2">Monthly Subscription</td>
+                  <td class="p-2">$9.99</td>
+                  <td class="p-2 text-green-600">Paid</td>
+                </tr>
+                <tr class="border-b border-green-200">
+                  <td class="p-2">2025-02-15</td>
+                  <td class="p-2">Monthly Subscription</td>
+                  <td class="p-2">$9.99</td>
+                  <td class="p-2 text-green-600">Paid</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <!-- END BILLING SECTION -->
+
+        <!-- SECTION: PREFERENCES -->
+        <section id="preferencesSection" class="hidden">
+          <h2 class="text-2xl font-bold text-green-800 mb-4">Preferences</h2>
+          <form class="space-y-4 max-w-md">
+            <!-- Timezone -->
+            <div>
+              <label class="block text-green-800 mb-1">Time Zone</label>
+              <select
+                class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+              >
+                <option value="UTC-5">UTC-5 Eastern Time</option>
+                <option value="UTC-6">UTC-6 Central Time</option>
+                <option value="UTC-7">UTC-7 Mountain Time</option>
+                <option value="UTC-8">UTC-8 Pacific Time</option>
+              </select>
+            </div>
+            <!-- Date Format -->
+            <div>
+              <label class="block text-green-800 mb-1">Date Format</label>
+              <select
+                class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+              >
+                <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+              </select>
+            </div>
+            <!-- Language -->
+            <div>
+              <label class="block text-green-800 mb-1">Language</label>
+              <select
+                class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+              >
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+              </select>
+            </div>
+            <!-- Default Currency -->
+            <div>
+              <label class="block text-green-800 mb-1">Default Currency</label>
+              <select
+                class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+              >
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+              </select>
+            </div>
+            <!-- Theme -->
+            <div>
+              <label class="block text-green-800 mb-1">Theme</label>
+              <select
+                class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700"
+              >
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
+            </div>
+            <!-- Save Button -->
+            <button
+              type="button"
+              class="py-2 px-6 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+            >
+              Save Preferences
+            </button>
+          </form>
+        </section>
+        <!-- END PREFERENCES SECTION -->
+
+        <!-- SECTION: PRIVACY -->
+        <section id="privacySection" class="hidden">
+          <h2 class="text-2xl font-bold text-green-800 mb-4">Privacy & Data</h2>
+          
+          <!-- Data Download -->
+          <div class="border-b border-green-200 pb-4 mb-4">
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Data Download</h3>
+            <p class="text-green-700 mb-3">
+              You can request a copy of all your data stored in our system.
+            </p>
+            <button
+              class="py-2 px-4 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+            >
+              Request Data Export
+            </button>
+          </div>
+
+          <!-- GDPR / Privacy Settings -->
+          <div class="border-b border-green-200 pb-4 mb-4">
+            <h3 class="text-lg font-semibold text-green-800 mb-2">GDPR / Privacy Settings</h3>
+            <p class="text-green-700 mb-3">
+              Manage your consent and see details about how your data is used.
+            </p>
+            <button
+              class="py-2 px-4 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+            >
+              Manage Consents
+            </button>
+          </div>
+
+          <!-- Request Account Deletion -->
+          <div>
+            <h3 class="text-lg font-semibold text-green-800 mb-2">Request Account Deletion</h3>
+            <p class="text-green-700 mb-3">
+              If you wish to delete your account and all associated data, you can initiate the process here.
+              This action is irreversible.
+            </p>
+            <button
+              class="py-2 px-4 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+            >
+              Delete My Account
+            </button>
+          </div>
+        </section>
+        <!-- END PRIVACY SECTION -->
+
+      </main>
+      <!-- END CONTENT AREA -->
+    </div>
+    <!-- END WRAPPER FOR SETTINGS SIDEBAR + CONTENT -->
+  </div>
+  <!-- END MAIN LAYOUT -->
+
+  <!-- FOOTER (Optional) -->
+  <footer class="bg-green-700 text-white py-3 text-center text-sm">
+    &copy; 2025 JJ Turfs. All rights reserved.
+  </footer>
+
+  <!-- SCRIPT: Toggle Between Sections + Extra Demo Logic -->
+  <script>
+    // List all section IDs for user settings
+    const sections = [
+      'profileSection',
+      'securitySection',
+      'notificationsSection',
+      'billingSection',
+      'preferencesSection',
+      'privacySection'
+    ];
+
+    function showSection(sectionId) {
+      sections.forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(sectionId).classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Demo of "Close Account" handler
+    function closeAccountHandler() {
+      const confirmClose = confirm("Are you sure you want to close your account?");
+      if (confirmClose) {
+        alert("Account closure requested (demo)!");
+        // Additional logic (API call, etc.)
+      }
+    }
+
+    // Show the default section on page load
+    showSection('profileSection');
+
+    // Simple toggles for the action dropdown
+    function toggleActionsDropdown() {
+      document.getElementById('actionsDropdown').classList.toggle('show');
+    }
+    function toggleActivityDropdown() {
+      document.getElementById('activityDropdown').classList.toggle('show');
+    }
+
+    // For the activity sub-tabs
+    function showActivitySubTab(subtab) {
+      const login = document.getElementById('login-history');
+      const actions = document.getElementById('user-actions');
+      if (subtab === 'login') {
+        login.classList.remove('hidden');
+        actions.classList.add('hidden');
+      } else {
+        login.classList.add('hidden');
+        actions.classList.remove('hidden');
+      }
+    }
+    function updateSubtabLabel(label) {
+      document.getElementById('active-subtab-label').textContent = label;
+    }
+
+    // Demo placeholders for management actions:
+    function forcePasswordReset() { alert("Forcing PW Reset (demo)!"); }
+    function toggleUserStatus() { alert("Toggling user status (demo)!"); }
+    function lockUnlockAccount() { alert("Lock/Unlock Account (demo)!"); }
+    function resendConfirmationEmail() { alert("Resending email (demo)!"); }
+    function deleteUser() { alert("Deleting user (demo)!"); }
+    function impersonateUser() { alert("Impersonating user (demo)!"); }
+    function editUserProfile() { alert("Editing profile (demo)!"); }
+    function suspendUserAccount() { alert("Suspending account (demo)!"); }
+    function revokeUserSessions() { alert("Revoking sessions (demo)!"); }
+
+  </script>
+</body>
+</html>

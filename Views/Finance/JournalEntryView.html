@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>General Ledger Journal Entry Detail View</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (optional icons) -->
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"
+    crossorigin="anonymous">
+  </script>
+  <style>
+    /* A utility class for dotted underline + cursor pointer */
+    .dotted-edit {
+      @apply border-b border-dotted border-gray-400 cursor-pointer;
+    }
+    /* Hide elements by default (for toggling) */
+    .hidden {
+      display: none;
+    }
+
+    /* Dropdown hidden by default */
+    .dropdown-menu {
+      display: none;
+    }
+    /* Dropdown visible class */
+    .show {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Page Container -->
+  <div class="max-w-5xl mx-auto p-4 mt-6 bg-white shadow rounded">
+
+   <!-- Existing Header Example -->
+   <div class="flex items-center justify-between mb-4">
+    <h1 class="text-xl font-semibold text-gray-700">
+      General Ledger Journal Entry/View Specific - GJ
+    </h1>
+    <button
+      class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 inline-flex items-center space-x-2"
+    >
+      <i class="fa fa-save"></i>
+      <span>Save / Post</span>
+    </button>
+  </div>
+
+  <!-- Row of Action Buttons -->
+  <div class="flex flex-wrap items-center space-x-2 mb-4">
+    <!-- Delete -->
+    <button
+      class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 inline-flex items-center space-x-2"
+    >
+      <i class="fa fa-trash"></i>
+      <span>Delete</span>
+    </button>
+
+    <!-- Print -->
+    <button
+      class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 inline-flex items-center space-x-2"
+    >
+      <i class="fa fa-print"></i>
+      <span>Print</span>
+    </button>
+
+    <!-- Post/Unpost -->
+    <button
+      class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 inline-flex items-center space-x-2"
+    >
+      <i class="fa fa-check"></i>
+      <span>Post/Unpost</span>
+    </button>
+
+    <!-- Memorize -->
+    <button
+      class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 inline-flex items-center space-x-2"
+    >
+      <i class="fa fa-bookmark"></i>
+      <span>Memorize</span>
+    </button>
+
+    <!-- E-mail -->
+    <button
+      class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 inline-flex items-center space-x-2"
+    >
+      <i class="fa fa-envelope"></i>
+      <span>E-mail</span>
+    </button>
+
+    <!-- Excel (split button) -->
+    <div class="relative inline-flex" id="excelSplitContainer">
+      <!-- Left side (main action) -->
+      <button
+        id="excelMainBtn"
+        class="bg-gray-100 text-gray-700 py-2 px-4 rounded-l hover:bg-gray-200 inline-flex items-center space-x-2 border-r"
+      >
+        <i class="fa fa-file-excel"></i>
+        <span>Excel</span>
+      </button>
+      <!-- Right side (dropdown toggle) -->
+      <button
+        id="excelToggleBtn"
+        class="bg-gray-100 text-gray-700 py-2 px-2 rounded-r hover:bg-gray-200 flex items-center"
+      >
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <!-- Dropdown menu -->
+      <div
+        id="excelDropdown"
+        class="dropdown-menu absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded shadow-lg z-10"
+      >
+        <button
+          class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        >
+          Create New Worksheet
+        </button>
+        <button
+          class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+        >
+          Update Existing Worksheet
+        </button>
+      </div>
+    </div>
+
+    <!-- Refresh -->
+    <button
+      class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 inline-flex items-center space-x-2"
+    >
+      <i class="fa fa-sync"></i>
+      <span>Refresh</span>
+    </button>
+  </div>
+
+    <!-- Transaction Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-b pb-4 mb-4">
+      <!-- Left column fields -->
+      <div>
+        <!-- Internal Ref Num -->
+        <label class="text-sm font-medium text-gray-600">Reference Number</label>
+        <div>
+          <span
+            id="RefNumDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('RefNum')"
+          >
+            S1
+          </span>
+          <input
+            id="RefNumInput"
+            type="text"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('RefNum')"
+          />
+        </div>
+
+        <!-- Journal No -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Journal No</label>
+        <div>
+          <span
+            id="journalNoDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('journalNo')"
+          >
+            888888
+          </span>
+          <input
+            id="journalNoInput"
+            type="text"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('journalNo')"
+          />
+        </div>
+
+        <!-- Date In -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Date In</label>
+        <div>
+          <span
+            id="dateInDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('dateIn')"
+          >
+            3/7/22
+          </span>
+          <input
+            id="dateInInput"
+            type="date"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('dateIn')"
+          />
+        </div>
+
+        <!-- Period -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Period</label>
+        <div>
+          <span
+            id="periodDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('period')"
+          >
+            (none)
+          </span>
+          <input
+            id="periodInput"
+            type="text"
+            placeholder="e.g. Q1, 2025"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('period')"
+          />
+        </div>
+
+        <!-- Memo -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Memo</label>
+        <div>
+          <span
+            id="memoDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('memo')"
+          >
+            3/7/22 11:26:25 SOME0...
+          </span>
+          <input
+            id="memoInput"
+            type="text"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('memo')"
+          />
+        </div>
+      </div>
+
+      <!-- Right column fields -->
+      <div>
+        <!-- Allocation -->
+        <label class="text-sm font-medium text-gray-600">Allocation</label>
+        <div>
+          <span
+            id="allocationDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('allocation')"
+          >
+            0
+          </span>
+          <input
+            id="allocationInput"
+            type="number"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('allocation')"
+          />
+        </div>
+
+        <!-- Allocation % -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Allocation %</label>
+        <div>
+          <span
+            id="allocationPctDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('allocationPct')"
+          >
+            0.00%
+          </span>
+          <input
+            id="allocationPctInput"
+            type="number"
+            step="0.01"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('allocationPct')"
+          />
+        </div>
+
+        <!-- Entered By -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Entered By</label>
+        <div>
+          <span
+            id="enteredByDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('enteredBy')"
+          >
+            SOME0
+          </span>
+          <input
+            id="enteredByInput"
+            type="text"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('enteredBy')"
+          />
+        </div>
+
+        <!-- Created -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Created</label>
+        <div>
+          <span
+            id="createdDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('created')"
+          >
+            3/7/22 11:26:00 by SOME0
+          </span>
+          <input
+            id="createdInput"
+            type="text"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('created')"
+          />
+        </div>
+
+        <!-- Modified -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Modified</label>
+        <div>
+          <span
+            id="modifiedDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('modified')"
+          >
+            3/7/22 11:26:58 by SOME0
+          </span>
+          <input
+            id="modifiedInput"
+            type="text"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('modified')"
+          />
+        </div>
+
+        <!-- Posted -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Posted</label>
+        <div>
+          <span
+            id="postedDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('posted')"
+          >
+            00/00/00 00:00:00 By
+          </span>
+          <input
+            id="postedInput"
+            type="text"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('posted')"
+          />
+        </div>
+
+        <!-- Reconciled -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Reconciled</label>
+        <div>
+          <span
+            id="reconciledDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('reconciled')"
+          >
+            00/00/00 00:00:00
+          </span>
+          <input
+            id="reconciledInput"
+            type="text"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('reconciled')"
+          />
+        </div>
+
+        <!-- Run No -->
+        <label class="text-sm font-medium text-gray-600 mt-2 block">Run No</label>
+        <div>
+          <span
+            id="runNoDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('runNo')"
+          >
+            0
+          </span>
+          <input
+            id="runNoInput"
+            type="number"
+            class="border border-gray-300 rounded px-1 text-sm hidden"
+            onblur="saveEdit('runNo')"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Standing Transactions Section (Optional) -->
+    <div class="border-b pb-4 mb-4">
+      <h3 class="text-sm font-semibold text-gray-700 mb-2">Standing Transactions</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-600">Scheduled</label>
+          <select class="border border-gray-300 rounded px-2 py-1 text-sm w-full">
+            <option>None</option>
+            <option>Daily</option>
+            <option>Weekly</option>
+            <option>Monthly</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-600">Start/Next Date</label>
+          <input
+            type="date"
+            class="border border-gray-300 rounded px-2 py-1 text-sm w-full"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-600">Stop Date</label>
+          <input
+            type="date"
+            class="border border-gray-300 rounded px-2 py-1 text-sm w-full"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Destination / Line Items Section -->
+    <div>
+      <h3 class="text-sm font-semibold text-gray-700 mb-2">Destination</h3>
+
+      <div class="overflow-auto custom-scrollbar border rounded">
+        <table class="min-w-full table-auto text-sm">
+          <thead class="bg-gray-100 border-b text-gray-600 uppercase">
+            <tr>
+              <th class="px-4 py-2">Account</th>
+              <th class="px-4 py-2">Account Name</th>
+              <th class="px-4 py-2">Tax Code</th>
+              <th class="px-4 py-2 text-right">Debit</th>
+              <th class="px-4 py-2 text-right">Credit</th>
+              <th class="px-4 py-2">Project</th>
+              <th class="px-4 py-2 w-24">Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Example Row -->
+            <tr class="border-b hover:bg-gray-50">
+              <td class="px-4 py-2">1020-0</td>
+              <td class="px-4 py-2">Sales - Furniture & Fittings</td>
+              <td class="px-4 py-2">S</td>
+              <td class="px-4 py-2 text-right">$0.00</td>
+              <td class="px-4 py-2 text-right">$1,000.00</td>
+              <td class="px-4 py-2">Ken’s Super Stores</td>
+              <td class="px-4 py-2">Company</td>
+            </tr>
+            <!-- Additional empty rows for demonstration -->
+            <tr class="border-b hover:bg-gray-50">
+              <td class="px-4 py-2">1020-1</td>
+              <td class="px-4 py-2">Sales - Office Furniture</td>
+              <td class="px-4 py-2">S</td>
+              <td class="px-4 py-2 text-right">$0.00</td>
+              <td class="px-4 py-2 text-right">$350.00</td>
+              <td class="px-4 py-2">Project X</td>
+              <td class="px-4 py-2">N/A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Footer with Out of Balance, Sequence, etc. -->
+      <div class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div>
+          <label class="text-sm font-medium text-gray-600 block">Sequence</label>
+          <span
+            id="sequenceDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('sequence')"
+          >
+            26511
+          </span>
+          <input
+            id="sequenceInput"
+            type="number"
+            class="border border-gray-300 rounded px-1 text-sm hidden mt-1"
+            onblur="saveEdit('sequence')"
+          />
+        </div>
+        <div>
+          <label class="text-sm font-medium text-gray-600 block">Out of Balance</label>
+          <span
+            id="oobDisplay"
+            class="dotted-edit"
+            onclick="toggleEdit('oob')"
+          >
+            $1,000.00
+          </span>
+          <input
+            id="oobInput"
+            type="number"
+            step="0.01"
+            class="border border-gray-300 rounded px-1 text-sm hidden mt-1"
+            onblur="saveEdit('oob')"
+          />
+        </div>
+        <div>
+          <label class="text-sm font-medium text-gray-600 block">Rules Level</label>
+          <select class="border border-gray-300 rounded px-2 py-1 text-sm mt-1 w-full">
+            <option>Default</option>
+            <option>Strict</option>
+            <option>Lenient</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-sm font-medium text-gray-600 block">Tag</label>
+          <select class="border border-gray-300 rounded px-2 py-1 text-sm mt-1 w-full">
+            <option>None</option>
+            <option>Review</option>
+            <option>Audit</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Minimal JavaScript for toggling dotted text <-> input fields -->
+  <script>
+    // Show/hide input for inline editing
+    function toggleEdit(fieldId) {
+      const displayEl = document.getElementById(fieldId + 'Display');
+      const inputEl = document.getElementById(fieldId + 'Input');
+
+      // Initialize input with display text, if needed
+      if (inputEl && displayEl) {
+        inputEl.value = displayEl.innerText.trim();
+        displayEl.classList.add('hidden');
+        inputEl.classList.remove('hidden');
+        inputEl.focus();
+      }
+    }
+
+    // Save input field data back to the display text
+    function saveEdit(fieldId) {
+      const displayEl = document.getElementById(fieldId + 'Display');
+      const inputEl = document.getElementById(fieldId + 'Input');
+
+      if (inputEl && displayEl) {
+        displayEl.innerText = inputEl.value.trim() || '(empty)';
+        inputEl.classList.add('hidden');
+        displayEl.classList.remove('hidden');
+      }
+    }
+
+      // Grab references
+      const excelToggleBtn = document.getElementById('excelToggleBtn');
+    const excelDropdown = document.getElementById('excelDropdown');
+    const excelSplitContainer = document.getElementById('excelSplitContainer');
+
+    // Toggle dropdown on right-button click
+    excelToggleBtn.addEventListener('click', (event) => {
+      event.stopPropagation(); // Don’t let the click bubble up (to avoid immediate close)
+      excelDropdown.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking anywhere outside the split button
+    document.addEventListener('click', (event) => {
+      // If click is not within the excelSplitContainer, hide the dropdown
+      if (!excelSplitContainer.contains(event.target)) {
+        excelDropdown.classList.remove('show');
+      }
+    });
+  </script>
+</body>
+</html>

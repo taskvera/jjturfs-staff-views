@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manager Timesheet View (Dummy Data)</title>
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (CDN) -->
+  <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- PAGE WRAPPER -->
+  <div class="min-h-screen p-4">
+    <!-- PAGE HEADER & FILTERS -->
+    <header class="mb-4">
+      <div class="flex items-center justify-between mb-4">
+        <h1 class="text-2xl font-bold">Manager Timesheet View</h1>
+        <div class="flex items-center space-x-2">
+          <!-- Notifications / Alerts Icon -->
+          <button class="relative text-gray-600 hover:text-gray-800">
+            <i class="fas fa-bell text-xl"></i>
+            <!-- Example alert indicator -->
+            <span class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">5</span>
+          </button>
+          <!-- User / Profile Icon (Placeholder) -->
+          <button class="text-gray-600 hover:text-gray-800">
+            <i class="fas fa-user-circle text-xl"></i>
+          </button>
+        </div>
+      </div>
+      <!-- FILTERS / SEARCH -->
+      <div class="bg-white rounded shadow p-4 flex flex-col md:flex-row md:items-end md:space-x-4 space-y-4 md:space-y-0">
+        <!-- Date Range Selector -->
+        <div>
+          <label for="startDate" class="block text-sm font-medium mb-1">Start Date</label>
+          <input type="date" id="startDate" name="startDate" class="border rounded w-full px-2 py-1" value="2025-01-27" />
+        </div>
+        <div>
+          <label for="endDate" class="block text-sm font-medium mb-1">End Date</label>
+          <input type="date" id="endDate" name="endDate" class="border rounded w-full px-2 py-1" value="2025-02-02" />
+        </div>
+        <!-- View / Group By Toggle -->
+        <div>
+          <label class="block text-sm font-medium mb-1">View / Group By</label>
+          <select class="border rounded w-full px-2 py-1">
+            <option>Weekly</option>
+            <option>Bi-Weekly</option>
+            <option>Monthly</option>
+            <option>By Employee</option>
+            <option>By Department</option>
+          </select>
+        </div>
+        <!-- Search / Filter -->
+        <div class="flex-1">
+          <label for="employeeSearch" class="block text-sm font-medium mb-1">Search Employee</label>
+          <input 
+            type="text" 
+            id="employeeSearch" 
+            placeholder="Name / ID..."
+            class="border rounded w-full px-2 py-1"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">Status Filter</label>
+          <select class="border rounded w-full px-2 py-1">
+            <option>All</option>
+            <option>Pending</option>
+            <option>Approved</option>
+            <option>Rejected</option>
+            <option>Under Review</option>
+          </select>
+        </div>
+        <!-- Bulk Actions -->
+        <div class="flex space-x-2">
+          <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">
+            <i class="fas fa-check mr-1"></i>Approve All
+          </button>
+          <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">
+            <i class="fas fa-times mr-1"></i>Reject All
+          </button>
+          <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm">
+            <i class="fas fa-edit mr-1"></i>Request Revisions
+          </button>
+          <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">
+            <i class="fas fa-file-export mr-1"></i>Export
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- TIMESHEET TABLE -->
+    <section class="bg-white rounded shadow p-4">
+      <h2 class="text-xl font-semibold mb-4">Timesheet Entries</h2>
+      <!-- Example Alerts / Warnings -->
+      <div class="mb-4">
+        <p class="text-sm text-red-600">
+          <i class="fas fa-exclamation-circle mr-1"></i>
+          <strong>Alert:</strong> 2 employees have missing entries in this date range.
+        </p>
+        <p class="text-sm text-orange-600">
+          <i class="fas fa-clock mr-1"></i>
+          <strong>Reminder:</strong> Payroll approval deadline is in 2 days.
+        </p>
+      </div>
+
+      <table class="w-full border-collapse">
+        <thead class="bg-gray-200 text-gray-700">
+          <tr>
+            <th class="py-2 px-2 text-left w-6">
+              <!-- Bulk Select Checkbox -->
+              <input type="checkbox" />
+            </th>
+            <th class="py-2 px-2 text-left">Employee</th>
+            <th class="py-2 px-2 text-left">Department</th>
+            <th class="py-2 px-2 text-center">Mon (1/27)</th>
+            <th class="py-2 px-2 text-center">Tue (1/28)</th>
+            <th class="py-2 px-2 text-center">Wed (1/29)</th>
+            <th class="py-2 px-2 text-center">Thu (1/30)</th>
+            <th class="py-2 px-2 text-center">Fri (1/31)</th>
+            <th class="py-2 px-2 text-center">Sat (2/01)</th>
+            <th class="py-2 px-2 text-center">Sun (2/02)</th>
+            <th class="py-2 px-2 text-center">Total Hours</th>
+            <th class="py-2 px-2 text-center">Status</th>
+            <th class="py-2 px-2 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ROW 1 -->
+          <tr class="border-b">
+            <td class="py-2 px-2">
+              <input type="checkbox" />
+            </td>
+            <td class="py-2 px-2">
+              <a href="#" class="text-blue-600 hover:underline">John Smith</a><br>
+              <span class="text-xs text-gray-500">ID: EMP001</span>
+            </td>
+            <td class="py-2 px-2">Sales</td>
+            <!-- Monday -->
+            <td class="py-2 px-2 text-center">
+              9:00 AM - 5:00 PM<br>
+              <span class="text-xs text-gray-500">(8h)</span>
+            </td>
+            <!-- Tuesday -->
+            <td class="py-2 px-2 text-center">
+              9:00 AM - 5:00 PM<br>
+              <span class="text-xs text-gray-500">(8h)</span>
+            </td>
+            <!-- Wednesday -->
+            <td class="py-2 px-2 text-center">
+              9:00 AM - 5:00 PM<br>
+              <span class="text-xs text-gray-500">(8h)</span>
+            </td>
+            <!-- Thursday -->
+            <td class="py-2 px-2 text-center">
+              9:00 AM - 5:00 PM<br>
+              <span class="text-xs text-gray-500">(8h)</span>
+            </td>
+            <!-- Friday -->
+            <td class="py-2 px-2 text-center">
+              9:00 AM - 4:00 PM<br>
+              <span class="text-xs text-gray-500">(7h)</span>
+            </td>
+            <!-- Saturday -->
+            <td class="py-2 px-2 text-center">
+              OFF<br>
+              <span class="text-xs text-gray-400">N/A</span>
+            </td>
+            <!-- Sunday -->
+            <td class="py-2 px-2 text-center">
+              OFF<br>
+              <span class="text-xs text-gray-400">N/A</span>
+            </td>
+            <td class="py-2 px-2 text-center font-bold">39</td>
+            <td class="py-2 px-2 text-center">
+              <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-semibold">Pending</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              <button class="text-green-600 hover:text-green-800 mr-1" title="Approve">
+                <i class="fas fa-check"></i>
+              </button>
+              <button class="text-red-600 hover:text-red-800 mr-1" title="Reject">
+                <i class="fas fa-times"></i>
+              </button>
+              <button 
+                class="text-blue-600 hover:text-blue-800" 
+                title="View Details" 
+                onclick="toggleDetails('details-emp001')"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </td>
+          </tr>
+          <!-- Details Row (hidden by default) -->
+          <tr id="details-emp001" class="hidden bg-gray-50">
+            <td colspan="13" class="py-2 px-2">
+              <!-- Expanded Details -->
+              <div class="p-2 space-y-2">
+                <p class="text-sm"><strong>In/Out Details (Mon 1/27):</strong> Clock-In 9:00 AM (Device #12 - Office), Lunch 12:30 PM, Clock-Out 5:00 PM. <br>
+                  <strong>Notes:</strong> Worked on Project Alpha.
+                </p>
+                <p class="text-sm"><strong>In/Out Details (Tue 1/28):</strong> Clock-In 8:58 AM (Biometric - Main Entrance), ...</p>
+                <p class="text-sm"><strong>Overtime:</strong> None recorded.</p>
+                <p class="text-sm"><strong>Leave/Absence:</strong> N/A</p>
+                <p class="text-sm"><strong>Approval Workflow Status:</strong> Under Manager Review → Next: HR Approval</p>
+                <p class="text-sm"><strong>Audit Log:</strong> 
+                  <a href="#" class="text-blue-600 hover:underline">View Audit History</a>
+                </p>
+                <div class="flex space-x-2 pt-2">
+                  <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">
+                    <i class="fas fa-check mr-1"></i>Approve
+                  </button>
+                  <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">
+                    <i class="fas fa-times mr-1"></i>Reject
+                  </button>
+                  <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm">
+                    <i class="fas fa-edit mr-1"></i>Edit / Override
+                  </button>
+                  <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">
+                    <i class="fas fa-comment-dots mr-1"></i>Add Note
+                  </button>
+                  <button class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 text-sm">
+                    <i class="fas fa-print mr-1"></i>Print / Export
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ROW 2 -->
+          <tr class="border-b">
+            <td class="py-2 px-2">
+              <input type="checkbox" />
+            </td>
+            <td class="py-2 px-2">
+              <a href="#" class="text-blue-600 hover:underline">Jane Doe</a><br>
+              <span class="text-xs text-gray-500">ID: EMP002</span>
+            </td>
+            <td class="py-2 px-2">Marketing</td>
+            <td class="py-2 px-2 text-center">
+              8:00 AM - 4:00 PM<br>
+              <span class="text-xs text-gray-500">(8h)</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              8:00 AM - 4:00 PM<br>
+              <span class="text-xs text-gray-500">(8h)</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              <span class="text-sm text-gray-400">Missing</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              8:00 AM - 4:00 PM<br>
+              <span class="text-xs text-gray-500">(8h)</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              8:00 AM - 4:00 PM<br>
+              <span class="text-xs text-gray-500">(8h)</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              OFF
+            </td>
+            <td class="py-2 px-2 text-center">
+              OFF
+            </td>
+            <td class="py-2 px-2 text-center font-bold">32</td>
+            <td class="py-2 px-2 text-center">
+              <span class="bg-red-100 text-red-700 px-2 py-1 rounded text-xs font-semibold">Rejected</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              <button class="text-green-600 hover:text-green-800 mr-1" title="Approve">
+                <i class="fas fa-check"></i>
+              </button>
+              <button class="text-red-600 hover:text-red-800 mr-1" title="Reject">
+                <i class="fas fa-times"></i>
+              </button>
+              <button 
+                class="text-blue-600 hover:text-blue-800" 
+                title="View Details" 
+                onclick="toggleDetails('details-emp002')"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </td>
+          </tr>
+          <!-- Details Row (hidden by default) -->
+          <tr id="details-emp002" class="hidden bg-gray-50">
+            <td colspan="13" class="py-2 px-2">
+              <div class="p-2 space-y-2">
+                <p class="text-sm"><strong>In/Out Details (Wed 1/29):</strong> Missing clock-in/out data.</p>
+                <p class="text-sm"><strong>Notes:</strong> Employee forgot to clock in. Verification needed.</p>
+                <p class="text-sm"><strong>Leave/Absence:</strong> None recorded.</p>
+                <p class="text-sm"><strong>Approval Workflow Status:</strong> Rejected by Manager. Pending revision from employee.</p>
+                <p class="text-sm"><strong>Audit Log:</strong> 
+                  <a href="#" class="text-blue-600 hover:underline">View Audit History</a>
+                </p>
+                <div class="flex space-x-2 pt-2">
+                  <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">
+                    <i class="fas fa-check mr-1"></i>Approve
+                  </button>
+                  <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">
+                    <i class="fas fa-times mr-1"></i>Reject
+                  </button>
+                  <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm">
+                    <i class="fas fa-edit mr-1"></i>Edit / Override
+                  </button>
+                  <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">
+                    <i class="fas fa-comment-dots mr-1"></i>Add Note
+                  </button>
+                  <button class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 text-sm">
+                    <i class="fas fa-print mr-1"></i>Print / Export
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- ROW 3 (example with Overtime) -->
+          <tr class="border-b">
+            <td class="py-2 px-2">
+              <input type="checkbox" />
+            </td>
+            <td class="py-2 px-2">
+              <a href="#" class="text-blue-600 hover:underline">Carlos Mendoza</a><br>
+              <span class="text-xs text-gray-500">ID: EMP003</span>
+            </td>
+            <td class="py-2 px-2">IT Support</td>
+            <td class="py-2 px-2 text-center">
+              7:00 AM - 7:00 PM<br>
+              <span class="text-xs text-red-500">(12h)</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              7:00 AM - 7:00 PM<br>
+              <span class="text-xs text-red-500">(12h)</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              7:00 AM - 7:00 PM<br>
+              <span class="text-xs text-red-500">(12h)</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              7:00 AM - 7:00 PM<br>
+              <span class="text-xs text-red-500">(12h)</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              OFF
+            </td>
+            <td class="py-2 px-2 text-center">
+              OFF
+            </td>
+            <td class="py-2 px-2 text-center">
+              OFF
+            </td>
+            <td class="py-2 px-2 text-center font-bold">48</td>
+            <td class="py-2 px-2 text-center">
+              <span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-semibold">Approved</span>
+            </td>
+            <td class="py-2 px-2 text-center">
+              <button class="text-green-600 hover:text-green-800 mr-1" title="Approve">
+                <i class="fas fa-check"></i>
+              </button>
+              <button class="text-red-600 hover:text-red-800 mr-1" title="Reject">
+                <i class="fas fa-times"></i>
+              </button>
+              <button 
+                class="text-blue-600 hover:text-blue-800" 
+                title="View Details"
+                onclick="toggleDetails('details-emp003')"
+              >
+                <i class="fas fa-search"></i>
+              </button>
+            </td>
+          </tr>
+          <!-- Details Row (hidden by default) -->
+          <tr id="details-emp003" class="hidden bg-gray-50">
+            <td colspan="13" class="py-2 px-2">
+              <div class="p-2 space-y-2">
+                <p class="text-sm"><strong>Overtime Hours:</strong> 8 hours total over the normal 40-hour threshold.</p>
+                <p class="text-sm"><strong>Notes:</strong> System Maintenance tasks scheduled outside normal hours.</p>
+                <p class="text-sm"><strong>Approval Workflow Status:</strong> Approved by Manager and HR. Ready for Payroll.</p>
+                <p class="text-sm"><strong>Audit Log:</strong> 
+                  <a href="#" class="text-blue-600 hover:underline">View Audit History</a>
+                </p>
+                <div class="flex space-x-2 pt-2">
+                  <button class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 text-sm">
+                    <i class="fas fa-check mr-1"></i>Re-Approve
+                  </button>
+                  <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-sm">
+                    <i class="fas fa-times mr-1"></i>Reject
+                  </button>
+                  <button class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 text-sm">
+                    <i class="fas fa-edit mr-1"></i>Edit / Override
+                  </button>
+                  <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-sm">
+                    <i class="fas fa-comment-dots mr-1"></i>Add Note
+                  </button>
+                  <button class="bg-gray-500 text-white px-3 py-1 rounded hover:bg-gray-600 text-sm">
+                    <i class="fas fa-print mr-1"></i>Print / Export
+                  </button>
+                </div>
+              </div>
+            </td>
+          </tr>
+
+          <!-- You can add more rows as needed with different statuses, notes, etc. -->
+
+        </tbody>
+      </table>
+    </section>
+
+    <!-- SUMMARY / TOTALS SECTION EXAMPLE -->
+    <section class="mt-4">
+      <div class="bg-white rounded shadow p-4">
+        <h3 class="text-lg font-semibold mb-2">Summary / Totals</h3>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="bg-gray-50 p-3 rounded shadow-sm">
+            <p class="text-sm text-gray-600">Total Regular Hours</p>
+            <p class="text-xl font-bold">119 hrs</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded shadow-sm">
+            <p class="text-sm text-gray-600">Total Overtime Hours</p>
+            <p class="text-xl font-bold">8 hrs</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded shadow-sm">
+            <p class="text-sm text-gray-600">Number of Pending Timesheets</p>
+            <p class="text-xl font-bold">1</p>
+          </div>
+          <div class="bg-gray-50 p-3 rounded shadow-sm">
+            <p class="text-sm text-gray-600">Employees with Missing Data</p>
+            <p class="text-xl font-bold">1</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPTIONAL: Additional Integrations / Extensions -->
+    <section class="mt-4">
+      <div class="bg-white rounded shadow p-4">
+        <h3 class="text-lg font-semibold mb-2">Integrations</h3>
+        <div class="space-y-2">
+          <button class="bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600 text-sm">
+            <i class="fas fa-arrow-right mr-1"></i>Send Approved Timesheets to Payroll
+          </button>
+          <button class="bg-indigo-500 text-white px-3 py-2 rounded hover:bg-indigo-600 text-sm">
+            <i class="fas fa-link mr-1"></i>Sync with Project Management
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- SIMPLE TOGGLE SCRIPT FOR DETAILS ROWS -->
+  <script>
+    function toggleDetails(rowId) {
+      const row = document.getElementById(rowId);
+      if (row.classList.contains('hidden')) {
+        row.classList.remove('hidden');
+      } else {
+        row.classList.add('hidden');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -2,70 +2,254 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Trouble Logging In</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    /* Smooth transitions for show/hide */
+    .hidden {
+      display: none;
+    }
+    .visible {
+      display: block;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-  <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-    <!-- Logo and Title -->
+<body class="bg-green-50 min-h-screen flex items-center justify-center">
+
+  <!-- Main Container -->
+  <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md mx-4">
+    <!-- Page Title & Description -->
     <div class="flex flex-col items-center mb-6">
-      <i class="fa-solid fa-leaf text-green-500 text-4xl mb-2"></i>
-      <h1 class="text-2xl font-bold">Trouble Logging In</h1>
-      <p class="text-sm text-gray-600 mt-2 text-center">
-        Please select one of the options below to get help with accessing your account.
+      <i class="fa-solid fa-leaf text-green-700 text-4xl mb-2"></i>
+      <h1 class="text-2xl font-bold text-green-800">Trouble Logging In</h1>
+      <p class="text-sm text-green-700 mt-2 text-center">
+        Select one of the options below to get help with accessing your account.
       </p>
     </div>
 
-    <!-- Options List -->
-    <div class="space-y-4">
+    <!-- OPTIONS VIEW (shown by default) -->
+    <div id="optionsView" class="space-y-4">
       <!-- Reset Password Option -->
-      <a href="#" class="flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100">
-        <i class="fa-solid fa-key text-green-500 text-xl mr-3"></i>
-        <span class="flex-1">Reset Password</span>
-        <i class="fa-solid fa-chevron-right text-gray-400"></i>
-      </a>
-      <!-- Verify Your Email Option -->
-      <a href="#" class="flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100">
-        <i class="fa-solid fa-envelope text-green-500 text-xl mr-3"></i>
-        <span class="flex-1">Verify Your Email</span>
-        <i class="fa-solid fa-chevron-right text-gray-400"></i>
-      </a>
-      <!-- Two-Factor Authentication Issues -->
-      <a href="#" class="flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100">
-        <i class="fa-solid fa-shield-halved text-green-500 text-xl mr-3"></i>
-        <span class="flex-1">Two-Factor Authentication Issues</span>
-        <i class="fa-solid fa-chevron-right text-gray-400"></i>
-      </a>
-      <!-- Account Locked Option -->
-      <a href="#" class="flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100">
-        <i class="fa-solid fa-lock text-green-500 text-xl mr-3"></i>
-        <span class="flex-1">Account Locked</span>
-        <i class="fa-solid fa-chevron-right text-gray-400"></i>
-      </a>
-      <!-- Security Questions Option -->
-      <a href="#" class="flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100">
-        <i class="fa-solid fa-user-shield text-green-500 text-xl mr-3"></i>
-        <span class="flex-1">Security Questions</span>
-        <i class="fa-solid fa-chevron-right text-gray-400"></i>
-      </a>
-      <!-- Contact Support Option -->
-      <a href="#" class="flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100">
-        <i class="fa-solid fa-headset text-green-500 text-xl mr-3"></i>
-        <span class="flex-1">Contact Support</span>
-        <i class="fa-solid fa-chevron-right text-gray-400"></i>
-      </a>
+      <button
+        class="w-full flex items-center p-4 bg-white rounded-md border border-green-600 hover:bg-green-100 transition"
+        onclick="showSubView('resetPasswordView')"
+      >
+        <i class="fa-solid fa-key text-green-600 text-xl mr-3"></i>
+        <span class="flex-1 text-green-800">Reset Password</span>
+        <i class="fa-solid fa-chevron-right text-green-600"></i>
+      </button>
 
-      <a class="flex justify-center text-green-700" href="LoginView.html">Back to Login</a>
+      <!-- Verify Your Email Option -->
+      <button
+        class="w-full flex items-center p-4 bg-white rounded-md border border-green-600 hover:bg-green-100 transition"
+        onclick="showSubView('verifyEmailView')"
+      >
+        <i class="fa-solid fa-envelope text-green-600 text-xl mr-3"></i>
+        <span class="flex-1 text-green-800">Verify Your Email</span>
+        <i class="fa-solid fa-chevron-right text-green-600"></i>
+      </button>
+
+      <!-- Two-Factor Authentication Issues -->
+      <button
+        class="w-full flex items-center p-4 bg-white rounded-md border border-green-600 hover:bg-green-100 transition"
+        onclick="showSubView('twoFactorView')"
+      >
+        <i class="fa-solid fa-shield-halved text-green-600 text-xl mr-3"></i>
+        <span class="flex-1 text-green-800">Two-Factor Authentication Issues</span>
+        <i class="fa-solid fa-chevron-right text-green-600"></i>
+      </button>
+
+      <!-- Account Locked Option -->
+      <button
+        class="w-full flex items-center p-4 bg-white rounded-md border border-green-600 hover:bg-green-100 transition"
+        onclick="showSubView('accountLockedView')"
+      >
+        <i class="fa-solid fa-lock text-green-600 text-xl mr-3"></i>
+        <span class="flex-1 text-green-800">Account Locked</span>
+        <i class="fa-solid fa-chevron-right text-green-600"></i>
+      </button>
+
+      <!-- Security Questions Option -->
+      <button
+        class="w-full flex items-center p-4 bg-white rounded-md border border-green-600 hover:bg-green-100 transition"
+        onclick="showSubView('securityQuestionsView')"
+      >
+        <i class="fa-solid fa-user-shield text-green-600 text-xl mr-3"></i>
+        <span class="flex-1 text-green-800">Security Questions</span>
+        <i class="fa-solid fa-chevron-right text-green-600"></i>
+      </button>
+
+      <!-- Contact Support Option -->
+      <button
+        class="w-full flex items-center p-4 bg-white rounded-md border border-green-600 hover:bg-green-100 transition"
+        onclick="showSubView('contactSupportView')"
+      >
+        <i class="fa-solid fa-headset text-green-600 text-xl mr-3"></i>
+        <span class="flex-1 text-green-800">Contact Support</span>
+        <i class="fa-solid fa-chevron-right text-green-600"></i>
+      </button>
+
+      <!-- Back to Login Link -->
+      <div class="text-center mt-4">
+        <a class="text-green-700 hover:underline" href="LoginView.html">Back to Login</a>
+      </div>
+    </div>
+    <!-- END of OPTIONS VIEW -->
+
+    <!-- SUB-VIEWS (hidden by default) -->
+
+    <!-- RESET PASSWORD SUB-VIEW -->
+    <div id="resetPasswordView" class="hidden">
+      <h2 class="text-lg font-bold text-green-800 mb-4">Reset Your Password</h2>
+      <p class="text-sm text-green-700 mb-6">
+        Enter your email to receive password reset instructions.
+      </p>
+      <div class="mb-4">
+        <label for="resetEmail" class="block text-green-800 mb-1">Email</label>
+        <input
+          type="email"
+          id="resetEmail"
+          placeholder="you@example.com"
+          class="w-full p-2 border border-green-600 rounded-md focus:outline-none focus:border-green-700 focus:ring-1 focus:ring-green-700"
+        />
+      </div>
+      <button
+        class="w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors mb-4"
+      >
+        Send Reset Link
+      </button>
+      <button
+        class="w-full py-2 border border-green-600 text-green-700 rounded-md hover:bg-green-100 transition-colors"
+        onclick="showSubView('optionsView')"
+      >
+        Back to Options
+      </button>
     </div>
 
-    <!-- Footer / Additional Info -->
-    <p class="text-xs text-gray-500 mt-6 text-center">
-      If you still need help, please call our support hotline or email us at support@example.com.
+    <!-- VERIFY EMAIL SUB-VIEW -->
+    <div id="verifyEmailView" class="hidden">
+      <h2 class="text-lg font-bold text-green-800 mb-4">Verify Your Email</h2>
+      <p class="text-sm text-green-700 mb-6">
+        Please check your inbox for a verification link, or request a new link below.
+      </p>
+      <button
+        class="w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors mb-4"
+      >
+        Resend Verification Email
+      </button>
+      <button
+        class="w-full py-2 border border-green-600 text-green-700 rounded-md hover:bg-green-100 transition-colors"
+        onclick="showSubView('optionsView')"
+      >
+        Back to Options
+      </button>
+    </div>
+
+    <!-- TWO-FACTOR AUTH SUB-VIEW -->
+    <div id="twoFactorView" class="hidden">
+      <h2 class="text-lg font-bold text-green-800 mb-4">Two-Factor Issues</h2>
+      <p class="text-sm text-green-700 mb-6">
+        Having trouble with your 2FA code or device? Use a backup code, or reset your 2FA.
+      </p>
+      <button
+        class="w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors mb-4"
+      >
+        Use Backup Code
+      </button>
+      <button
+        class="w-full py-2 border border-green-600 text-green-700 rounded-md hover:bg-green-100 transition-colors"
+        onclick="showSubView('optionsView')"
+      >
+        Back to Options
+      </button>
+    </div>
+
+    <!-- ACCOUNT LOCKED SUB-VIEW -->
+    <div id="accountLockedView" class="hidden">
+      <h2 class="text-lg font-bold text-green-800 mb-4">Account Locked</h2>
+      <p class="text-sm text-green-700 mb-6">
+        Your account may be locked due to multiple failed attempts or suspicious activity. 
+        Contact support or follow instructions below to unlock.
+      </p>
+      <button
+        class="w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors mb-4"
+      >
+        Unlock My Account
+      </button>
+      <button
+        class="w-full py-2 border border-green-600 text-green-700 rounded-md hover:bg-green-100 transition-colors"
+        onclick="showSubView('optionsView')"
+      >
+        Back to Options
+      </button>
+    </div>
+
+    <!-- SECURITY QUESTIONS SUB-VIEW -->
+    <div id="securityQuestionsView" class="hidden">
+      <h2 class="text-lg font-bold text-green-800 mb-4">Security Questions</h2>
+      <p class="text-sm text-green-700 mb-6">
+        Verify your identity by answering your security questions or updating them if needed.
+      </p>
+      <button
+        class="w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors mb-4"
+      >
+        Answer Security Questions
+      </button>
+      <button
+        class="w-full py-2 border border-green-600 text-green-700 rounded-md hover:bg-green-100 transition-colors"
+        onclick="showSubView('optionsView')"
+      >
+        Back to Options
+      </button>
+    </div>
+
+    <!-- CONTACT SUPPORT SUB-VIEW -->
+    <div id="contactSupportView" class="hidden">
+      <h2 class="text-lg font-bold text-green-800 mb-4">Contact Support</h2>
+      <p class="text-sm text-green-700 mb-6">
+        Please call our support hotline at <strong>1-800-XXX-XXXX</strong> or email us at
+        <strong>support@example.com</strong>.
+      </p>
+      <button
+        class="w-full py-2 border border-green-600 text-green-700 rounded-md hover:bg-green-100 transition-colors"
+        onclick="showSubView('optionsView')"
+      >
+        Back to Options
+      </button>
+    </div>
+
+    <!-- FOOTER INFO -->
+    <p class="text-xs text-green-700 mt-6 text-center">
+      If you still need help, please reach out to our support team. 
     </p>
-  </div>
+  </div> <!-- End Main Container -->
+
+  <!-- Script to toggle sub-views -->
+  <script>
+    // Show the requested subView; hide others.
+    function showSubView(viewId) {
+      const allViews = [
+        'optionsView',
+        'resetPasswordView',
+        'verifyEmailView',
+        'twoFactorView',
+        'accountLockedView',
+        'securityQuestionsView',
+        'contactSupportView'
+      ];
+
+      allViews.forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(viewId).classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>

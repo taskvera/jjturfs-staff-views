@@ -6,129 +6,193 @@
   <title>Multi-Factor Authentication</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Font Awesome CDN for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Font Awesome CDN -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    /* Smooth transitions for focus and color changes */
+    input {
+      transition: border-color 0.2s ease-in-out;
+    }
+    /* Utility to hide an element */
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+<body class="bg-green-50 min-h-screen flex items-center justify-center p-4">
+
+  <!-- Main Container -->
   <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-    <!-- Method Selection View -->
+    
+    <!-- METHOD SELECTION VIEW -->
     <div id="methodSelection">
       <div class="flex flex-col items-center mb-6">
-        <i class="fa-solid fa-shield-halved text-green-500 text-4xl mb-2"></i>
-        <h1 class="text-2xl font-bold">Select MFA Method</h1>
-        <p class="text-sm text-gray-600 text-center mt-2">
+        <i class="fa-solid fa-shield-halved text-green-700 text-4xl mb-2"></i>
+        <h1 class="text-2xl font-bold text-green-800">Select MFA Method</h1>
+        <p class="text-sm text-green-700 text-center mt-2">
           Choose one of your enrolled methods to receive your one-time code.
         </p>
       </div>
       <div class="space-y-4">
         <!-- Option: SMS -->
-        <button class="w-full flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100"
-                onclick="selectMethod('sms', 'SMS to ****3223')">
-          <i class="fa-solid fa-sms text-green-500 text-xl mr-3"></i>
-          <span class="flex-1 text-left">SMS</span>
-          <i class="fa-solid fa-chevron-right text-gray-400"></i>
+        <button
+          class="w-full flex items-center p-4 bg-white rounded-md border border-green-600 hover:bg-green-100 transition"
+          onclick="selectMethod('sms','SMS to ****3223')"
+        >
+          <i class="fa-solid fa-sms text-green-600 text-xl mr-3"></i>
+          <span class="flex-1 text-green-800 text-left">SMS</span>
+          <i class="fa-solid fa-chevron-right text-green-600"></i>
         </button>
         <!-- Option: Email -->
-        <button class="w-full flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100"
-                onclick="selectMethod('email', 'Email to ****@example.com')">
-          <i class="fa-solid fa-envelope text-green-500 text-xl mr-3"></i>
-          <span class="flex-1 text-left">Email</span>
-          <i class="fa-solid fa-chevron-right text-gray-400"></i>
+        <button
+          class="w-full flex items-center p-4 bg-white rounded-md border border-green-600 hover:bg-green-100 transition"
+          onclick="selectMethod('email','Email to ****@example.com')"
+        >
+          <i class="fa-solid fa-envelope text-green-600 text-xl mr-3"></i>
+          <span class="flex-1 text-green-800 text-left">Email</span>
+          <i class="fa-solid fa-chevron-right text-green-600"></i>
         </button>
         <!-- Option: Authenticator App -->
-        <button class="w-full flex items-center p-4 bg-gray-50 rounded-lg border hover:bg-gray-100"
-                onclick="selectMethod('authenticator', 'Authenticator App')">
-          <i class="fa-solid fa-mobile-screen-button text-green-500 text-xl mr-3"></i>
-          <span class="flex-1 text-left">Authenticator App</span>
-          <i class="fa-solid fa-chevron-right text-gray-400"></i>
+        <button
+          class="w-full flex items-center p-4 bg-white rounded-md border border-green-600 hover:bg-green-100 transition"
+          onclick="selectMethod('authenticator','Authenticator App')"
+        >
+          <i class="fa-solid fa-mobile-screen-button text-green-600 text-xl mr-3"></i>
+          <span class="flex-1 text-green-800 text-left">Authenticator App</span>
+          <i class="fa-solid fa-chevron-right text-green-600"></i>
         </button>
       </div>
     </div>
+    <!-- END METHOD SELECTION VIEW -->
 
-    <!-- Code Entry View (initially hidden) -->
+    <!-- CODE ENTRY VIEW (hidden by default) -->
     <div id="codeEntry" class="hidden">
       <div class="flex flex-col items-center mb-6">
-        <i class="fa-solid fa-key text-green-500 text-4xl mb-2"></i>
-        <h1 class="text-2xl font-bold">Enter MFA Code</h1>
-        <p id="methodPreview" class="text-sm text-gray-600 text-center mt-2">
-          <!-- This text is updated based on selected method -->
+        <i class="fa-solid fa-key text-green-700 text-4xl mb-2"></i>
+        <h1 class="text-2xl font-bold text-green-800">Enter MFA Code</h1>
+        <p id="methodPreview" class="text-sm text-green-700 text-center mt-2">
+          <!-- Updated dynamically when a method is selected -->
         </p>
       </div>
+
       <!-- MFA Code Form -->
       <form id="mfaForm" class="space-y-4" novalidate>
         <div>
-          <label for="mfaCode" class="block text-gray-700 mb-1">MFA Code</label>
           <div class="relative">
-            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <i class="fa-solid fa-key"></i>
+            <!-- Key Icon -->
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-green-600">
             </span>
-            <input
-              type="text"
-              id="mfaCode"
-              name="mfaCode"
-              placeholder="Enter your MFA code"
-              class="w-full px-4 py-2 pl-10 border rounded-md focus:outline-none focus:border-green-500"
-              required
-            />
+            <!-- 6 Individual Inputs (letters & numbers only) -->
+            <div class="ml-8 flex space-x-2" id="mfaInputs">
+              <input
+                id="mfaInput1" maxlength="1"
+                class="w-12 py-2 border border-green-600 rounded-md text-center text-green-800
+                       focus:outline-none focus:border-green-700 focus:ring-1 focus:ring-green-700"
+              />
+              <input
+                id="mfaInput2" maxlength="1"
+                class="w-12 py-2 border border-green-600 rounded-md text-center text-green-800
+                       focus:outline-none focus:border-green-700 focus:ring-1 focus:ring-green-700"
+              />
+              <input
+                id="mfaInput3" maxlength="1"
+                class="w-12 py-2 border border-green-600 rounded-md text-center text-green-800
+                       focus:outline-none focus:border-green-700 focus:ring-1 focus:ring-green-700"
+              />
+              <input
+                id="mfaInput4" maxlength="1"
+                class="w-12 py-2 border border-green-600 rounded-md text-center text-green-800
+                       focus:outline-none focus:border-green-700 focus:ring-1 focus:ring-green-700"
+              />
+              <input
+                id="mfaInput5" maxlength="1"
+                class="w-12 py-2 border border-green-600 rounded-md text-center text-green-800
+                       focus:outline-none focus:border-green-700 focus:ring-1 focus:ring-green-700"
+              />
+              <input
+                id="mfaInput6" maxlength="1"
+                class="w-12 py-2 border border-green-600 rounded-md text-center text-green-800
+                       focus:outline-none focus:border-green-700 focus:ring-1 focus:ring-green-700"
+              />
+            </div>
           </div>
         </div>
+
         <div>
-          <button type="submit" class="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors">
+          <button
+            type="submit"
+            class="w-full py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors"
+          >
             Verify Code
           </button>
         </div>
       </form>
+
       <!-- Resend & Change Method Options -->
       <div class="mt-4 flex flex-col items-center space-y-2">
-        <button id="resendButton" class="text-sm text-blue-500 hover:underline disabled:opacity-50" disabled>
+        <button
+          id="resendButton"
+          class="text-sm text-green-700 hover:underline disabled:opacity-50"
+          disabled
+        >
           Resend Code (<span id="timer">30</span>s)
         </button>
-        <a href="#" class="text-sm text-blue-500 hover:underline" onclick="changeMethod()">Change Method</a>
+        <a
+          href="#"
+          class="text-sm text-green-700 hover:underline"
+          onclick="changeMethod()"
+        >
+          Change Method
+        </a>
       </div>
+
       <!-- Footer -->
-      <p class="text-xs text-gray-500 mt-6 text-center">
+      <p class="text-xs text-green-700 mt-6 text-center">
         If you experience issues, please contact support.
       </p>
     </div>
+    <!-- END CODE ENTRY VIEW -->
   </div>
+  <!-- END MAIN CONTAINER -->
 
-  <!-- JavaScript for view switching and live timer -->
+  <!-- JavaScript for view switching, timers, and 6-input code entry -->
   <script>
+    // Timer and method selection
     let resendInterval;
     const initialTimerValue = 30; // seconds
 
-    // Called when a user selects a method from the first view.
+    // Called when a user selects a method
     function selectMethod(methodType, previewText) {
-      // Hide the method selection view and show the code entry view
+      // Hide method selection, show code entry
       document.getElementById('methodSelection').classList.add('hidden');
       document.getElementById('codeEntry').classList.remove('hidden');
-      // Update the preview text
+      // Update method preview text
       document.getElementById('methodPreview').textContent = previewText;
-      // Reset the resend timer and disable the button
+      // Reset + start resend timer
       startResendTimer();
     }
 
-    // Resets view back to the method selection
+    // Switch back to method selection
     function changeMethod() {
-      // Stop any running timer
       clearInterval(resendInterval);
-      // Clear timer display
       document.getElementById('timer').textContent = initialTimerValue;
-      // Reset resend button state
       document.getElementById('resendButton').disabled = true;
-      // Hide the code entry view and show method selection view
       document.getElementById('codeEntry').classList.add('hidden');
       document.getElementById('methodSelection').classList.remove('hidden');
+      // Clear all inputs
+      clearMfaInputs();
     }
 
-    // Start the resend code timer (disables resend button until timer expires)
+    // Start the 30s timer for Resend Code
     function startResendTimer() {
       let timeLeft = initialTimerValue;
       const timerElement = document.getElementById('timer');
       const resendButton = document.getElementById('resendButton');
       resendButton.disabled = true;
       timerElement.textContent = timeLeft;
-      // Clear any previous interval
       clearInterval(resendInterval);
       resendInterval = setInterval(() => {
         timeLeft--;
@@ -137,27 +201,71 @@
           clearInterval(resendInterval);
           resendButton.disabled = false;
           timerElement.textContent = initialTimerValue;
-          resendButton.textContent = 'Resend Code';
+          resendButton.textContent = "Resend Code";
         }
       }, 1000);
     }
 
-    // For demo: Handle MFA form submission
+    // Handle MFA form submission
     document.getElementById('mfaForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      // Here, you would verify the code. For demo:
-      alert('MFA code verified (demo message)!');
-      // You could redirect on success, e.g.,
+      // Gather 6 digits/characters
+      const mfaCode = getMfaCode();
+      if (!mfaCode) {
+        alert("Please enter a valid 6-character MFA code.");
+        return;
+      }
+      // Demo: show alert, normally you’d verify code server-side
+      alert(`MFA code verified (demo). Code entered: ${mfaCode}`);
+      // Optionally redirect or proceed
       // window.location.href = 'dashboard.html';
     });
 
-    // For demo: Handle clicking of resend button
+    // Resend button click
     document.getElementById('resendButton').addEventListener('click', function() {
-      // Here, you would trigger code resend.
-      alert('A new MFA code has been sent (demo message)!');
-      // Restart the timer after resend.
+      // Demo resend code
+      alert("A new MFA code has been sent (demo message)!");
+      // Restart timer
       startResendTimer();
     });
+
+    // Enforce letters + numbers only, auto-move forward/back
+    const inputs = Array.from(document.querySelectorAll('#mfaInputs input'));
+    inputs.forEach((input, idx) => {
+      input.addEventListener('input', (e) => {
+        const value = e.target.value;
+        // Allow only alphanumeric
+        if (/^[A-Za-z0-9]$/.test(value)) {
+          // Move to next input if any
+          if (idx < inputs.length - 1 && value) {
+            inputs[idx + 1].focus();
+          }
+        } else {
+          // Invalid char -> clear
+          e.target.value = "";
+        }
+      });
+
+      input.addEventListener('keydown', (e) => {
+        // Handle backspace: move to previous if empty
+        if (e.key === 'Backspace' && !input.value && idx > 0) {
+          inputs[idx - 1].focus();
+        }
+      });
+    });
+
+    // Helper: gather 6-digit code as a string
+    function getMfaCode() {
+      const code = inputs.map(inp => inp.value).join("");
+      // Return false if any input is empty
+      if (code.length < 6) return false;
+      return code;
+    }
+
+    // Helper: clear all 6 inputs
+    function clearMfaInputs() {
+      inputs.forEach(inp => (inp.value = ""));
+    }
   </script>
 </body>
 </html>

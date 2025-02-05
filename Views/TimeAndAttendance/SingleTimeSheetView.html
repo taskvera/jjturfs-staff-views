@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Employee Timesheet (Single-View)</title>
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (Dev CDN) -->
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"
+    crossorigin="anonymous">
+  </script>
+    <style>
+        /* Simple tooltip styling */
+        .tooltip:hover::after {
+          content: attr(data-tip);
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0, 0, 0, 0.85);
+          color: #fff;
+          padding: 4px 8px;
+          border-radius: 4px;
+          white-space: nowrap;
+          font-size: 0.75rem;
+          margin-top: 4px;
+          z-index: 50;
+        }
+      </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+<div class="min-h-screen p-4">
+  <!-- MAIN HEADER (Top) -->
+  <header class="mb-4">
+    <!-- ROW 1: Title & Date Switcher -->
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center space-y-2 md:space-y-0">
+      <!-- Left: Page Title -->
+      <div>
+        <h2 class="text-xl font-bold text-gray-700">Employee Timesheet</h2>
+      </div>
+
+      <!-- Right: Date Range Switcher & Range Label -->
+      <div class="flex md:items-end md:space-y-0">
+        <!-- Date Switcher -->
+        <div class="flex items-center space-x-2 border border-gray-300 bg-white px-2 py-1 mr-5 rounded shadow self-end">
+          <!-- Previous Button -->
+          <button 
+            class="text-gray-500 hover:text-gray-700 focus:outline-none" 
+            aria-label="Previous period"
+          >
+            <i class="fa-solid fa-chevron-left w-4 h-4"></i>
+          </button>
+          <!-- Date Range Text -->
+          <div class="text-xs md:text-sm text-gray-700 font-medium">
+            Sun, Oct 3, 2022 - Sat, Oct 9, 2022
+          </div>
+          <!-- Next Button -->
+          <button 
+            class="text-gray-500 hover:text-gray-700 focus:outline-none" 
+            aria-label="Next period"
+          >
+            <i class="fa-solid fa-chevron-right w-4 h-4"></i>
+          </button>
+        </div>
+      <!-- RIGHT: Main Action Buttons -->
+      <div class="flex items-center space-x-1 self-start md:self-center">
+        <!-- Approve -->
+        <button class="bg-green-500 text-white text-xs md:text-sm px-3 py-1 rounded hover:bg-green-600">
+          <i class="fa-solid fa-check mr-1"></i>Approve
+        </button>
+        <!-- Reject -->
+        <button class="bg-red-500 text-white text-xs md:text-sm px-3 py-1 rounded hover:bg-red-600">
+          <i class="fa-solid fa-xmark mr-1"></i>Reject
+        </button>
+        <!-- Icon button: Request Revisions -->
+        <button 
+          class="bg-yellow-500 text-white text-xs md:text-sm px-2 py-1 rounded hover:bg-yellow-600"
+          title="Request Revisions"
+        >
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+        <!-- Dropdown Menu: Print, Export, Email -->
+        <div class="relative inline-block">
+          <button 
+            class="bg-gray-500 text-white text-xs md:text-sm px-2 py-1 rounded hover:bg-gray-600 focus:outline-none"
+            onclick="toggleMenu(event)"
+            title="More Actions"
+          >
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+          </button>
+          <!-- Menu (hidden by default) -->
+          <div 
+            id="actionsMenu" 
+            class="hidden absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow z-50"
+          >
+            <ul class="py-1 text-sm text-gray-700">
+              <li>
+                <button class="block w-full text-left px-4 py-2 hover:bg-gray-100">
+                  <i class="fa-solid fa-print mr-1"></i> Print
+                </button>
+              </li>
+              <li>
+                <button class="block w-full text-left px-4 py-2 hover:bg-gray-100">
+                  <i class="fa-solid fa-file-export mr-1"></i> Export
+                </button>
+              </li>
+              <li>
+                <button class="block w-full text-left px-4 py-2 hover:bg-gray-100">
+                  <i class="fa-solid fa-envelope mr-1"></i> Email
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- EMPLOYEE & ACTIONS -->
+  <section class="bg-white border border-gray-200 rounded shadow p-4 mb-6">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center space-y-4 md:space-y-0">
+      <!-- LEFT: Employee Info -->
+      <div class="flex items-start space-x-4">
+        <!-- Avatar -->
+        <img 
+          src="https://via.placeholder.com/80x80" 
+          alt="Employee Photo" 
+          class="w-20 h-20 rounded-full object-cover border border-gray-200"
+        />
+        <!-- Name & Details -->
+        <div class="leading-tight">
+          <h3 class="text-base md:text-lg font-semibold text-blue-600">
+            Stuart McGregor
+          </h3>
+          <p class="text-sm text-gray-500">Employee ID: EMP001</p>
+          <p class="text-sm text-gray-500">Mansfield, OH.</p>
+        </div>
+      </div>
+      <!-- Example Alerts / Warnings -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+        <!-- Alerts on left -->
+        <div>
+          <p class="text-sm text-red-600 flex items-center">
+            <i class="fa-solid fa-circle-exclamation mr-1"></i>
+            <strong class="mr-1">Alert:</strong> Missing break entry on Wednesday (1/29).
+          </p>
+          <p class="text-sm text-orange-600 flex items-center mt-1">
+            <i class="fa-solid fa-clock mr-1"></i>
+            <strong class="mr-1">Reminder:</strong> Approvals due by Feb 3, 2025.
+          </p>
+        </div>
+
+        <!-- Status & Last Updated on right -->
+        <div class="mt-3 md:mt-0 text-sm text-gray-500 md:text-right">
+          <p>
+            <strong>Submitted:</strong> about 3 hours ago
+          </p>
+          <p>
+            <strong>Status:</strong>
+            <span class="inline-block bg-orange-100 text-orange-800 px-2 py-0.5 text-xs font-semibold rounded">
+              Submitted
+            </span>
+          </p>
+          <p class="mt-1 text-xs text-gray-400">
+            Last updated by: <strong>Manager (mgr_jane)</strong><br>
+            on Feb 1, 2025, 09:15 AM
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="bg-white rounded shadow p-4">
+    <!-- SUMMARY HEADER -->
+    <h3 class="text-lg font-semibold mb-2">Timesheet Summary</h3>
+    <!-- INLINE SUMMARY CARDS -->
+    <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-4 md:space-y-0 mb-4">
+      <!-- Card 1 -->
+      <div class="bg-gray-50 p-3 rounded shadow-sm w-full md:w-auto flex-1 md:flex-none">
+        <p class="text-sm text-gray-600">Total Hours (Regular)</p>
+        <p class="text-xl font-bold">38.5</p>
+      </div>
+      <!-- Card 2 -->
+      <div class="bg-gray-50 p-3 rounded shadow-sm w-full md:w-auto flex-1 md:flex-none">
+        <p class="text-sm text-gray-600">Total Overtime Hours</p>
+        <p class="text-xl font-bold">0</p>
+      </div>
+      <!-- Card 3 -->
+      <div class="bg-gray-50 p-3 rounded shadow-sm w-full md:w-auto flex-1 md:flex-none">
+        <p class="text-sm text-gray-600">Number of Days Worked</p>
+        <p class="text-xl font-bold">5</p>
+      </div>
+      <!-- Card 4 -->
+      <div class="bg-gray-50 p-3 rounded shadow-sm w-full md:w-auto flex-1 md:flex-none">
+        <p class="text-sm text-gray-600">Days Off</p>
+        <p class="text-xl font-bold">2</p>
+      </div>
+    </div>
+
+    <!-- TABLE HEADING -->
+    <h2 class="text-xl font-semibold mb-4">Timesheet Entries</h2>
+    
+    <!-- TABLE WRAPPER -->
+    <div class="overflow-x-auto bg-white rounded shadow p-4">
+        <table class="w-full border-collapse">
+          <thead class="bg-gray-200 text-gray-700">
+            <tr>
+              <th class="py-2 px-2 text-left">Date</th>
+              <th class="py-2 px-2 text-center">Clock In</th>
+              <th class="py-2 px-2 text-center">Clock Out</th>
+              <th class="py-2 px-2 text-center">Break</th>
+              <th class="py-2 px-2 text-center">Total</th>
+              <th class="py-2 px-2 text-center">OT</th>
+              <th class="py-2 px-2 text-left">Notes / Comments</th>
+              <th class="py-2 px-2 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Monday -->
+            <tr class="border-b">
+              <td class="py-2 px-2 text-sm text-center">
+                <span class="font-semibold text-gray-900 block">Monday</span>
+                <span class="text-xs text-gray-500">Jan 27, 2022</span>
+              </td>
+              <!-- 09:00 with tooltip for ET, CT, MT, PT -->
+              <td 
+                class="py-2 px-2 text-center tooltip relative"
+                data-tip="**09:00 ET** • 08:00 CT • 07:00 MT • 06:00 PT"
+              >
+                09:00
+              </td>
+              <td 
+                class="py-2 px-2 text-center tooltip relative"
+                data-tip="**17:00 ET** • 16:00 CT • 15:00 MT • 14:00 PT"
+              >
+                17:00
+              </td>
+              <td class="py-2 px-2 text-center">30 min</td>
+              <td class="py-2 px-2 text-center">7.5</td>
+              <td class="py-2 px-2 text-center">0</td>
+              <td class="py-2 px-2 text-sm text-gray-700">
+                <span class="block">Worked on Project Alpha</span>
+                <span class="block text-xs text-gray-500">Clocked in via Office Biometric</span>
+              </td>
+              <td class="py-2 px-2 text-center">
+                <!-- Standard actions -->
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Edit/Override">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Add Note">
+                  <i class="fa-solid fa-comment-dots"></i>
+                </button>
+                <!-- Context menu button -->
+                <div class="relative inline-block">
+                  <button 
+                    class="text-gray-500 hover:text-gray-700 focus:outline-none"
+                    onclick="toggleMenu(event, 'monday-menu')"
+                    title="More Shift Actions"
+                  >
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                  </button>
+                  <div 
+                    id="monday-menu"
+                    class="hidden absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow z-50"
+                  >
+                    <ul class="py-1 text-sm text-gray-700">
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Split Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Merge Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Delete Shift
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+            </tr>
+    
+            <!-- Tuesday (plus icon to indicate multiple shifts) -->
+            <tr class="border-b">
+              <td class="py-2 px-2 text-sm text-center">
+                <span class="font-semibold text-gray-900 flex items-center justify-center">
+                  Tuesday
+                  <i class="fa-solid fa-plus text-blue-500 ml-2" title="Multiple shifts"></i>
+                </span>
+                <span class="text-xs text-gray-500">Jan 28, 2022</span>
+              </td>
+              <td 
+                class="py-2 px-2 text-center tooltip relative"
+                data-tip="**09:00 ET** • 08:00 CT • 07:00 MT • 06:00 PT"
+              >
+                09:00
+              </td>
+              <td 
+                class="py-2 px-2 text-center tooltip relative"
+                data-tip="**17:00 ET** • 16:00 CT • 15:00 MT • 14:00 PT"
+              >
+                17:00
+              </td>
+              <td class="py-2 px-2 text-center">30 min</td>
+              <td class="py-2 px-2 text-center">7.5</td>
+              <td class="py-2 px-2 text-center">0</td>
+              <td class="py-2 px-2 text-sm text-gray-700">
+                <span class="block">Team meeting 10-11 AM</span>
+              </td>
+              <td class="py-2 px-2 text-center">
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Edit/Override">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Add Note">
+                  <i class="fa-solid fa-comment-dots"></i>
+                </button>
+                <!-- Context menu button -->
+                <div class="relative inline-block">
+                  <button 
+                    class="text-gray-500 hover:text-gray-700 focus:outline-none"
+                    onclick="toggleMenu(event, 'tuesday-menu')"
+                    title="More Shift Actions"
+                  >
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                  </button>
+                  <div 
+                    id="tuesday-menu"
+                    class="hidden absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow z-50"
+                  >
+                    <ul class="py-1 text-sm text-gray-700">
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Split Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Merge Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Delete Shift
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+            </tr>
+    
+            <!-- Wednesday (Missing Break) -->
+            <tr class="bg-red-50 border-b">
+              <td class="py-2 px-2 text-sm text-center">
+                <span class="font-semibold text-gray-900 block">Wednesday</span>
+                <span class="text-xs text-gray-500">Jan 29, 2022</span>
+              </td>
+              <td 
+                class="py-2 px-2 text-center text-red-600 font-bold tooltip relative"
+                data-tip="**09:05 ET** • 08:05 CT • 07:05 MT • 06:05 PT"
+              >
+                09:05
+              </td>
+              <td 
+                class="py-2 px-2 text-center tooltip relative"
+                data-tip="**17:02 ET** • 16:02 CT • 15:02 MT • 14:02 PT"
+              >
+                17:02
+              </td>
+              <td class="py-2 px-2 text-center text-red-600 font-bold">Missing</td>
+              <td class="py-2 px-2 text-center">8.0</td>
+              <td class="py-2 px-2 text-center">0</td>
+              <td class="py-2 px-2 text-sm text-gray-700">
+                <span class="block">No break recorded</span>
+                <span class="block text-xs text-gray-500">Needs manager override</span>
+              </td>
+              <td class="py-2 px-2 text-center">
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Edit/Override">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Add Note">
+                  <i class="fa-solid fa-comment-dots"></i>
+                </button>
+                <!-- Context menu -->
+                <div class="relative inline-block">
+                  <button 
+                    class="text-gray-500 hover:text-gray-700 focus:outline-none"
+                    onclick="toggleMenu(event, 'wednesday-menu')"
+                    title="More Shift Actions"
+                  >
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                  </button>
+                  <div 
+                    id="wednesday-menu"
+                    class="hidden absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow z-50"
+                  >
+                    <ul class="py-1 text-sm text-gray-700">
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Split Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Merge Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Delete Shift
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+            </tr>
+    
+            <!-- Thursday -->
+            <tr class="border-b">
+              <td class="py-2 px-2 text-sm text-center">
+                <span class="font-semibold text-gray-900 block">Thursday</span>
+                <span class="text-xs text-gray-500">Jan 30, 2022</span>
+              </td>
+              <td 
+                class="py-2 px-2 text-center tooltip relative"
+                data-tip="**09:00 ET** • 08:00 CT • 07:00 MT • 06:00 PT"
+              >
+                09:00
+              </td>
+              <td 
+                class="py-2 px-2 text-center tooltip relative"
+                data-tip="**17:00 ET** • 16:00 CT • 15:00 MT • 14:00 PT"
+              >
+                17:00
+              </td>
+              <td class="py-2 px-2 text-center">30 min</td>
+              <td class="py-2 px-2 text-center">7.5</td>
+              <td class="py-2 px-2 text-center">0</td>
+              <td class="py-2 px-2 text-sm text-gray-700">
+                <span class="block">Assisted with Marketing event planning</span>
+              </td>
+              <td class="py-2 px-2 text-center">
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Edit/Override">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Add Note">
+                  <i class="fa-solid fa-comment-dots"></i>
+                </button>
+                <!-- Context menu -->
+                <div class="relative inline-block">
+                  <button 
+                    class="text-gray-500 hover:text-gray-700 focus:outline-none"
+                    onclick="toggleMenu(event, 'thursday-menu')"
+                    title="More Shift Actions"
+                  >
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                  </button>
+                  <div 
+                    id="thursday-menu"
+                    class="hidden absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow z-50"
+                  >
+                    <ul class="py-1 text-sm text-gray-700">
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Split Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Merge Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Delete Shift
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+            </tr>
+    
+            <!-- Friday -->
+            <tr class="border-b">
+              <td class="py-2 px-2 text-sm text-center">
+                <span class="font-semibold text-gray-900 block">Friday</span>
+                <span class="text-xs text-gray-500">Jan 31, 2022</span>
+              </td>
+              <td 
+                class="py-2 px-2 text-center tooltip relative"
+                data-tip="**08:58 ET** • 07:58 CT • 06:58 MT • 05:58 PT"
+              >
+                08:58
+              </td>
+              <td 
+                class="py-2 px-2 text-center tooltip relative"
+                data-tip="**16:00 ET** • 15:00 CT • 14:00 MT • 13:00 PT"
+              >
+                16:00
+              </td>
+              <td class="py-2 px-2 text-center">30 min</td>
+              <td class="py-2 px-2 text-center">7.5</td>
+              <td class="py-2 px-2 text-center">0</td>
+              <td class="py-2 px-2 text-sm text-gray-700">
+                <span class="block">Left early for dentist appointment</span>
+                <span class="block text-xs text-gray-500">Approved by manager</span>
+              </td>
+              <td class="py-2 px-2 text-center">
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Edit/Override">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <button class="text-blue-600 hover:text-blue-800 mr-1" title="Add Note">
+                  <i class="fa-solid fa-comment-dots"></i>
+                </button>
+                <!-- Context menu -->
+                <div class="relative inline-block">
+                  <button 
+                    class="text-gray-500 hover:text-gray-700 focus:outline-none"
+                    onclick="toggleMenu(event, 'friday-menu')"
+                    title="More Shift Actions"
+                  >
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                  </button>
+                  <div 
+                    id="friday-menu"
+                    class="hidden absolute right-0 mt-2 w-36 bg-white border border-gray-200 rounded shadow z-50"
+                  >
+                    <ul class="py-1 text-sm text-gray-700">
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Split Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Merge Shift
+                        </button>
+                      </li>
+                      <li>
+                        <button 
+                          class="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                        >
+                          Delete Shift
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </td>
+            </tr>
+    
+            <!-- Saturday -->
+            <tr class="border-b">
+              <td class="py-2 px-2 text-sm text-center">
+                <span class="font-semibold text-gray-900 block">Saturday</span>
+                <span class="text-xs text-gray-500">Feb 1, 2022</span>
+              </td>
+              <td class="py-2 px-2 text-center">OFF</td>
+              <td class="py-2 px-2 text-center">OFF</td>
+              <td class="py-2 px-2 text-center">N/A</td>
+              <td class="py-2 px-2 text-center">0</td>
+              <td class="py-2 px-2 text-center">0</td>
+              <td class="py-2 px-2 text-sm text-gray-700">Weekend</td>
+              <td class="py-2 px-2 text-center">
+                <button class="text-gray-400 mr-1" disabled title="No action needed">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <!-- Context menu (could be hidden or disabled) -->
+                <div class="relative inline-block">
+                  <button 
+                    class="text-gray-300 cursor-not-allowed"
+                    disabled
+                  >
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+    
+            <!-- Sunday -->
+            <tr>
+              <td class="py-2 px-2 text-sm text-center">
+                <span class="font-semibold text-gray-900 block">Sunday</span>
+                <span class="text-xs text-gray-500">Feb 2, 2022</span>
+              </td>
+              <td class="py-2 px-2 text-center">OFF</td>
+              <td class="py-2 px-2 text-center">OFF</td>
+              <td class="py-2 px-2 text-center">N/A</td>
+              <td class="py-2 px-2 text-center">0</td>
+              <td class="py-2 px-2 text-center">0</td>
+              <td class="py-2 px-2 text-sm text-gray-700">Weekend</td>
+              <td class="py-2 px-2 text-center">
+                <button class="text-gray-400 mr-1" disabled title="No action needed">
+                  <i class="fa-solid fa-pen-to-square"></i>
+                </button>
+                <div class="relative inline-block">
+                  <button 
+                    class="text-gray-300 cursor-not-allowed"
+                    disabled
+                  >
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  </section>
+
+
+</div>
+
+<!-- DROPDOWN SCRIPT -->
+<script>
+  function toggleMenu(event) {
+    const menu = document.getElementById('actionsMenu');
+    menu.classList.toggle('hidden');
+    event.stopPropagation();
+  }
+
+  // Hide dropdown when clicking outside
+  document.addEventListener('click', function() {
+    const menu = document.getElementById('actionsMenu');
+    if (!menu.classList.contains('hidden')) {
+      menu.classList.add('hidden');
+    }
+  });
+
+  function toggleMenu(event, menuId) {
+      const menu = document.getElementById(menuId);
+      menu.classList.toggle('hidden');
+      event.stopPropagation();
+    }
+
+    // Hide any open menu when clicking elsewhere
+    document.addEventListener('click', () => {
+      const menus = document.querySelectorAll('.z-50');
+      menus.forEach((m) => m.classList.add('hidden'));
+    });
+</script>
+
+</body>
+</html>

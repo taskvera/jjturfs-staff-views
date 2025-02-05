@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>General Ledger - Property & Lawn Care</title>
+
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (Dev CDN) -->
+  <script 
+    src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"
+    crossorigin="anonymous">
+  </script>
+
+  <!-- Example: Some small inline custom CSS for scrollbars, etc. -->
+  <style>
+    /* Customize any overflow/scrollbar if you want */
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background-color: rgba(100, 100, 100, 0.4);
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    /* Simple dropdown utility in pure CSS (hover) for Excel button. 
+       For a more robust solution, consider a JS approach (e.g., Alpine.js). */
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 overflow-x-hidden">
+
+  <!-- Top Navigation Bar -->
+  <nav class="bg-white shadow-sm p-4 flex items-center justify-between">
+    <div class="flex items-center space-x-2">
+      <i class="fa fa-building text-green-700 text-xl"></i>
+      <span class="font-bold text-xl text-gray-700">MyProperty & LawnCare</span>
+    </div>
+    <div class="flex items-center space-x-4">
+      <button
+        class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+      >
+        Add Transaction
+      </button>
+      <button
+        class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+      >
+        Settings
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-8">
+
+    <!-- Summary Cards (Multi-column layout on desktop) -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <!-- Total Income Card -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center space-x-3">
+          <div class="text-green-600 text-2xl"><i class="fa fa-arrow-up"></i></div>
+          <div>
+            <div class="text-sm font-medium text-gray-500">Total Income</div>
+            <div class="text-xl font-bold text-gray-700">$14,550</div>
+          </div>
+        </div>
+      </div>
+      <!-- Total Expenses Card -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center space-x-3">
+          <div class="text-red-600 text-2xl"><i class="fa fa-arrow-down"></i></div>
+          <div>
+            <div class="text-sm font-medium text-gray-500">Total Expenses</div>
+            <div class="text-xl font-bold text-gray-700">$4,225</div>
+          </div>
+        </div>
+      </div>
+      <!-- Net Profit Card -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center space-x-3">
+          <div class="text-blue-600 text-2xl"><i class="fa fa-balance-scale"></i></div>
+          <div>
+            <div class="text-sm font-medium text-gray-500">Net Profit</div>
+            <div class="text-xl font-bold text-gray-700">$10,325</div>
+          </div>
+        </div>
+      </div>
+      <!-- Outstanding Invoices or Receivables -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="flex items-center space-x-3">
+          <div class="text-yellow-600 text-2xl"><i class="fa fa-exclamation-circle"></i></div>
+          <div>
+            <div class="text-sm font-medium text-gray-500">Outstanding Invoices</div>
+            <div class="text-xl font-bold text-gray-700">$1,200</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QuickBooks-Like Toolbar (matches your screenshot style) -->
+    <div class="bg-white shadow rounded mb-6 px-4 py-3">
+      <!-- Row of left-side buttons -->
+      <div class="flex flex-wrap items-center space-x-2 mb-2">
+        <button class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200">
+          Customize Report
+        </button>
+        <button class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200">
+          Comment on Report
+        </button>
+        <button class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200">
+          Share Template
+        </button>
+        <button class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200">
+          Memorize
+        </button>
+        <button class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200">
+          Print
+        </button>
+        <button class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200">
+          E-mail
+        </button>
+
+        <!-- Excel Dropdown -->
+        <div class="relative dropdown">
+          <button
+            class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200 flex items-center"
+          >
+            Excel&nbsp;<i class="fa fa-caret-down"></i>
+          </button>
+          <!-- Dropdown menu -->
+          <div
+            class="dropdown-menu absolute hidden bg-white border border-gray-200 rounded mt-1 w-48 z-10"
+          >
+            <button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+              Create New Worksheet
+            </button>
+            <button class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+              Update Existing Worksheet
+            </button>
+          </div>
+        </div>
+
+        <button class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200">
+          Hide Header
+        </button>
+        <button class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200">
+          Collapse
+        </button>
+        <button class="text-sm border border-gray-300 bg-gray-100 rounded px-2 py-1 hover:bg-gray-200">
+          Refresh
+        </button>
+      </div>
+
+      <!-- Row of date filters and sort options -->
+      <div class="flex flex-col md:flex-row md:items-center md:space-x-4 space-y-2 md:space-y-0">
+        <div class="flex items-center space-x-2">
+          <label for="dateRange" class="text-sm text-gray-700">Dates:</label>
+          <select
+            id="dateRange"
+            class="border border-gray-300 bg-white rounded px-2 py-1 text-sm focus:outline-none"
+          >
+            <option value="thisMonthToDate" selected>This Month-to-date</option>
+            <option value="custom">Custom Range</option>
+            <option value="lastMonth">Last Month</option>
+            <option value="thisYear">This Year</option>
+          </select>
+        </div>
+        <div class="flex items-center space-x-2">
+          <label for="dateFrom" class="text-sm text-gray-700">From</label>
+          <input
+            type="date"
+            id="dateFrom"
+            class="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none"
+            value="2023-12-01"
+          />
+        </div>
+        <div class="flex items-center space-x-2">
+          <label for="dateTo" class="text-sm text-gray-700">To</label>
+          <input
+            type="date"
+            id="dateTo"
+            class="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none"
+            value="2023-12-15"
+          />
+        </div>
+        <div class="flex items-center space-x-2">
+          <label for="sortBy" class="text-sm text-gray-700">Sort By</label>
+          <select
+            id="sortBy"
+            class="border border-gray-300 bg-white rounded px-2 py-1 text-sm focus:outline-none"
+          >
+            <option value="default" selected>Default</option>
+            <option value="dateAsc">Date (Ascending)</option>
+            <option value="dateDesc">Date (Descending)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter and Search Row -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 space-y-2 md:space-y-0">
+      <!-- Search Bar -->
+      <div class="flex items-center bg-white rounded shadow p-2 w-full md:w-1/2">
+        <i class="fa fa-search text-gray-400 px-2"></i>
+        <input
+          type="text"
+          id="searchInput"
+          class="w-full border-none focus:outline-none focus:ring-0"
+          placeholder="Search transactions..."
+          oninput="filterTable()"
+        />
+      </div>
+
+      <!-- Category Filter -->
+      <div class="flex items-center space-x-2">
+        <label for="categoryFilter" class="text-sm text-gray-600">Filter by Category:</label>
+        <select
+          id="categoryFilter"
+          class="bg-white border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-green-500"
+          onchange="filterTable()"
+        >
+          <option value="">All</option>
+          <option value="Rent">Rent</option>
+          <option value="Maintenance">Maintenance</option>
+          <option value="Lawn Service">Lawn Service</option>
+          <option value="Utilities">Utilities</option>
+          <option value="Office Supply">Office Supply</option>
+          <option value="Misc">Misc</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- General Ledger Table -->
+    <div class="overflow-auto custom-scrollbar bg-white shadow rounded-lg">
+      <table class="min-w-full table-auto">
+        <thead class="bg-gray-100 border-b">
+          <tr class="text-left text-xs uppercase text-gray-500">
+            <th class="py-3 px-4">Date</th>
+            <th class="py-3 px-4">Transaction #</th>
+            <th class="py-3 px-4">Property / Lawn Service</th>
+            <th class="py-3 px-4">Type</th>
+            <th class="py-3 px-4">Category</th>
+            <th class="py-3 px-4">Description</th>
+            <th class="py-3 px-4">Amount</th>
+            <th class="py-3 px-4">Balance</th>
+          </tr>
+        </thead>
+        <tbody id="ledgerBody">
+          <!-- Dummy data rows; classes used for searching/filtering later -->
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-02</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1001</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Greenwood Apartments</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Rent</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">January rent payment (Unit #5)</td>
+            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$1,200</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$1,200</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-04</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1002</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Greenwood Apartments</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Maintenance</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">Plumbing repair (Unit #7 bathroom)</td>
+            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$150</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$1,050</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-05</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1003</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Pine Valley House</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Rent</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">January rent payment</td>
+            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$1,000</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$2,050</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-07</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1004</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">All Properties (Service)</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Lawn Service</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">
+              Routine lawn maintenance for 5 properties (Jan)
+            </td>
+            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$800</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$2,850</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-10</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1005</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Office Supply Store</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Office Supply</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">Printer ink, copy paper</td>
+            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$75</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$2,775</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-12</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1006</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Pine Valley House</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Maintenance</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">Roof inspection fee</td>
+            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$200</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$2,575</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-15</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1007</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Rosewood Duplex</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Rent</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">Late rent payment (Unit A)</td>
+            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$1,100</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$3,675</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-16</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1008</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Rosewood Duplex</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Utilities</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">Water bill (shared meter)</td>
+            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$60</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$3,615</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-18</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1009</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Greenwood Apartments</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Lawn Service</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">One-time landscaping add-on</td>
+            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$300</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$3,915</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-19</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1010</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Admin Fees</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Misc</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">Accounting software subscription</td>
+            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$50</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$3,865</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-22</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1011</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Pine Valley House</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Lawn Service</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">Tree trimming</td>
+            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$200</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$4,065</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-25</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1012</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Pine Valley House</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Utilities</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">Electric bill (vacant unit usage)</td>
+            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$120</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$3,945</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-28</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1013</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Greenwood Apartments</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Misc</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">Advertising fees (vacant units)</td>
+            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$100</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$3,845</td>
+          </tr>
+          <tr class="border-b hover:bg-gray-50">
+            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-30</td>
+            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1014</td>
+            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Rosewood Duplex</td>
+            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
+            <td class="py-3 px-4 text-sm" data-label="Category">Rent</td>
+            <td class="py-3 px-4 text-sm" data-label="Description">February rent payment (Unit B, early)</td>
+            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$1,100</td>
+            <td class="py-3 px-4 text-sm" data-label="Balance">$4,945</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination or "Load More" placeholder (if needed) -->
+    <div class="flex justify-end mt-4">
+      <button
+        class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+      >
+        Load More
+      </button>
+    </div>
+  </div>
+
+  <!-- Lightweight JavaScript for Filtering/Search -->
+  <script>
+    function filterTable() {
+      const searchValue = document.getElementById("searchInput").value.toLowerCase();
+      const categoryValue = document.getElementById("categoryFilter").value.toLowerCase();
+      const tableBody = document.getElementById("ledgerBody");
+      const rows = tableBody.getElementsByTagName("tr");
+
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        const cells = row.getElementsByTagName("td");
+
+        // Gather text content for searching
+        let rowText = "";
+        for (let j = 0; j < cells.length; j++) {
+          rowText += cells[j].textContent.toLowerCase() + " ";
+        }
+
+        // Check if row matches search and category
+        const matchesSearch = rowText.includes(searchValue);
+        const categoryCell = cells[4]?.textContent.toLowerCase() || "";
+        const matchesCategory =
+          !categoryValue || categoryCell.includes(categoryValue);
+
+        if (matchesSearch && matchesCategory) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
