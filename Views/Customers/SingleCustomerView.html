@@ -392,6 +392,7 @@
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
                 <!-- Left Column with multiple, minimal cards -->
                 <div class="md:col-span-4 space-y-3">
+                <!-- Customer Info Card -->
                   <div class="w-full border border-gray-200 rounded-lg shadow-sm overflow-hidden">
                     <!-- Header with subtle gradient -->
                     <div class="bg-gradient-to-r from-purple-600 to-purple-500 p-3 flex items-center justify-between">
@@ -465,7 +466,7 @@
                     </div>
                   </div>
                   
-
+                <!-- Billing Overview Card -->
                   <div class="w-full border border-gray-200 rounded-lg shadow-sm overflow-hidden">
                     <!-- Header with gradient and red alert pill -->
                     <div class="bg-gradient-to-r from-blue-600 to-blue-500 p-3 flex items-center justify-between">
@@ -612,7 +613,66 @@
                     </div>
                   </div>
                   
-                  
+                <!-- Customer Portal Card -->
+                <div class="w-full border border-gray-200 rounded-lg shadow-sm overflow-hidden">
+                  <!-- Header with gradient and status pill -->
+                  <div class="bg-gradient-to-r from-teal-600 to-blue-500 p-3 flex items-center justify-between">
+                    <div class="flex items-center space-x-2 text-white">
+                      <i class="fa fa-user-lock text-xl"></i>
+                      <h3 class="text-lg font-medium tracking-wide">Customer Portal Account</h3>
+                    </div>
+                    <div>
+                      <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                        <i class="fa fa-check-circle mr-1"></i> Active
+                      </span>
+                    </div>
+                  </div>
+                  <!-- Main content area -->
+                  <div class="p-4 bg-white text-gray-800">
+                    <!-- Account Details Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <!-- Username -->
+                      <div>
+                        <p class="text-xs uppercase text-gray-500">Username</p>
+                        <p class="font-medium text-gray-700">daniel.weber</p>
+                      </div>
+                      <!-- Portal Email -->
+                      <div>
+                        <p class="text-xs uppercase text-gray-500">Portal Email</p>
+                        <p class="font-medium text-gray-700">daniel.weber@example.com</p>
+                      </div>
+                      <!-- Last Login -->
+                      <div>
+                        <p class="text-xs uppercase text-gray-500">Last Login</p>
+                        <p class="font-medium text-gray-700">Apr 15, 2025, 09:30 AM</p>
+                      </div>
+                      <!-- Account Created -->
+                      <div>
+                        <p class="text-xs uppercase text-gray-500">Account Created</p>
+                        <p class="font-medium text-gray-700">Jan 01, 2020</p>
+                      </div>
+                      <!-- Roles / Permissions -->
+                      <div class="sm:col-span-2">
+                        <p class="text-xs uppercase text-gray-500">Roles</p>
+                        <p class="font-medium text-gray-700">Standard, Premium</p>
+                      </div>
+                    </div>
+                    <!-- Action Buttons -->
+                    <div class="mt-4 flex flex-col sm:flex-row sm:justify-end sm:items-center gap-3">
+                      <button class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white text-base rounded hover:bg-blue-700 focus:outline-none">
+                        <i class="fa fa-user-edit mr-2"></i> Update Profile
+                      </button>
+                      <button class="w-full sm:w-auto px-4 py-2 bg-red-600 text-white text-base rounded hover:bg-red-700 focus:outline-none">
+                        <i class="fa fa-lock mr-2"></i> Reset Password
+                      </button>
+                    </div>
+                    <!-- Centered Link for Login History -->
+                    <div class="mt-4 text-center">
+                      <a href="#" class="text-sm text-blue-500 hover:underline">View Login History</a>
+                    </div>
+                  </div>
+                </div>
+                
 
                 </div>
 
@@ -623,6 +683,9 @@
                 <ul class="main-tab-nav flex border-b">
                   <li class="-mb-px mr-1">
                     <a class="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold" href="#overview">Overview</a>
+                  </li>
+                  <li class="mr-1">
+                    <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold" href="#properties">Properties</a>
                   </li>
                   <li class="mr-1">
                     <a class="bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold" href="#financials">Financials</a>
@@ -636,229 +699,405 @@
                 </ul>
                 <!-- Tab Content -->
                 <div class="mt-4">
-                  <!-- CSS styling for the compact, multi-col Overview tab -->
-                  <style>
-                    .overview-container {
-                      font-family: Arial, sans-serif;
-                      color: #333;
-                      padding: 10px;
-                      max-width: 1200px;
-                      margin: 0 auto;
-                      font-size: 0.9rem;
-                    }
-                    .overview-header h1 {
-                      font-size: 1.75rem;
-                      text-align: center;
-                      margin-bottom: 15px;
-                    }
-                    .overview-section {
-                      margin-bottom: 20px;
-                      padding-bottom: 15px;
-                      border-bottom: 1px solid #e0e0e0;
-                    }
-                    .overview-section h2 {
-                      font-size: 1.3rem;
-                      margin-bottom: 10px;
-                      padding-bottom: 5px;
-                      border-bottom: 1px solid #ccc;
-                    }
-                    .overview-fields {
-                      display: grid;
-                      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                      gap: 10px;
-                    }
-                    .overview-field {
-                      display: flex;
-                      flex-direction: column;
-                      margin-bottom: 5px;
-                    }
-                    .overview-field label {
-                      font-weight: bold;
-                      margin-bottom: 3px;
-                    }
-                    .overview-field .value {
-                      color: #555;
-                    }
-                    .overview-field .value ul {
-                      padding-left: 20px;
-                      margin: 0;
-                      list-style-type: disc;
-                    }
-                  </style>
 
-                  <!-- Overview Tab Content -->
-                  <div id="overview" class="tab-pane active">
-                    <div class="overview-container">
-                      <header class="overview-header">
-                        <h1>Customer Overview</h1>
-                      </header>
-                      <section class="overview-section" id="status-section">
-                        <h2>Status & Settings</h2>
-                        <div class="overview-fields">
-                          <div class="overview-field">
-                            <label>Status:</label>
-                            <span class="value">Active</span>
-                          </div>
-                          <div class="overview-field inactive-details" style="display: none;">
-                            <label>Inactive Since:</label>
-                            <span class="value">Feb 05, 2025</span>
-                          </div>
-                          <div class="overview-field inactive-details" style="display: none;">
-                            <label>Inactive Reason:</label>
-                            <span class="value">Customer requested suspension</span>
-                          </div>
-                          <div class="overview-field writtenoff-details" style="display: none;">
-                            <label>Written Off Settings:</label>
-                            <span class="value">
-                              <ul>
-                                <li>Change unpaid invoices to “Written Off”: Yes</li>
-                                <li>Remove all scheduled visits: Yes</li>
-                                <li>Stop automations: Yes</li>
-                              </ul>
-                            </span>
-                          </div>
-                        </div>
-                      </section>
-                      <section class="overview-section" id="identification-section">
-                        <h2>Identification</h2>
-                        <div class="overview-fields">
-                          <div class="overview-field">
-                            <label>Title:</label>
-                            <span class="value">Mr.</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Client ID:</label>
-                            <span class="value">1240765</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Number:</label>
-                            <span class="value">875256</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Business Name / Full Name:</label>
-                            <span class="value">Jeremy Evans</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>First Name:</label>
-                            <span class="value">Jeremy</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Last Name:</label>
-                            <span class="value">Evans</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Type:</label>
-                            <span class="value">Customer</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>How the Customer Found Out About Us:</label>
-                            <span class="value">Referral</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Since:</label>
-                            <span class="value">Jan 01, 2020</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Is Tax Exempt:</label>
-                            <span class="value">No</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Discount:</label>
-                            <span class="value">10%</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Tags:</label>
-                            <span class="value">Tag1, Tag2, Tag3</span>
-                          </div>
-                        </div>
-                      </section>
-                      <section class="overview-section" id="contact-section">
-                        <h2>Contact Information</h2>
-                        <div class="overview-fields">
-                          <div class="overview-field">
-                            <label>Business/Home Phone:</label>
-                            <span class="value">(123) 456-7890</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Mobile/Cell Phone:</label>
-                            <span class="value" id="custom_cell">(098) 765-4321</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Fax:</label>
-                            <span class="value" id="custom_fax">(123) 555-6789</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Email:</label>
-                            <span class="value" id="custom_email">example@example.com</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>CC Email 1:</label>
-                            <span class="value" id="custom_ccemail">cc1@example.com</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>CC Email 2:</label>
-                            <span class="value" id="custom_ccemail2">cc2@example.com</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>CC Email 3:</label>
-                            <span class="value" id="custom_ccemail3">cc3@example.com</span>
-                          </div>
-                        </div>
-                      </section>
-                      <section class="overview-section" id="address-section">
-                        <h2>Address</h2>
-                        <div class="overview-fields">
-                          <div class="overview-field">
-                            <label>Street:</label>
-                            <span class="value" id="custom_addr">123 Main St</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Street2:</label>
-                            <span class="value" id="custom_addr2">Suite 100</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>County / Parish:</label>
-                            <span class="value" id="custom_county">Some County</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>City:</label>
-                            <span class="value" id="custom_city">Some City</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>State:</label>
-                            <span class="value" id="custom_state">CA</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Postal Code:</label>
-                            <span class="value" id="custom_zip">90210</span>
-                          </div>
-                        </div>
-                      </section>
-                      <section class="overview-section" id="preferences-section">
-                        <h2>Invoice & Communication Preferences</h2>
-                        <div class="overview-fields">
-                          <div class="overview-field">
-                            <label>Invoice Delivery Preference:</label>
-                            <span class="value" id="custom_invoice_delivery_preference">Email</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>When We Invoice This Customer:</label>
-                            <span class="value" id="custom_when_to_invoice">Monthly</span>
-                          </div>
-                          <div class="overview-field">
-                            <label>Communication Preferences:</label>
-                            <span class="value">
-                              <ul class="comm-preferences">
-                                <li>Phone Call: <strong>Yes</strong></li>
-                                <li>Email: <strong>Yes</strong></li>
-                                <li>Text Message: <strong>No</strong></li>
-                              </ul>
-                            </span>
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                  </div>
+<!-- Overview Tab Content -->
+<div id="overview" class="tab-pane active">
+  <div class="overview-container p-4">
+
+    <!-- Status & Settings Section -->
+    <section id="status-section" class="mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Customer ID -->
+        <div class="flex items-center space-x-2">
+          <i class="fa fa-info-circle text-blue-500"></i>
+          <div>
+            <p class="uppercase text-gray-500 text-xs">Customer ID</p>
+            <p class="font-medium text-gray-700">4532345</p>
+          </div>
+        </div>
+        <!-- Status -->
+        <div class="flex items-center space-x-2">
+          <i class="fa fa-info-circle text-blue-500"></i>
+          <div>
+            <p class="uppercase text-gray-500 text-xs">Status</p>
+            <p class="font-medium text-gray-700">Active</p>
+          </div>
+        </div>
+        <!-- Inactive Details (if applicable) -->
+        <div class="flex items-center space-x-2">
+          <i class="fa fa-clock text-yellow-500"></i>
+          <div>
+            <p class="uppercase text-gray-500 text-xs">Inactive Since</p>
+            <p class="font-medium text-gray-700">Feb 05, 2025</p>
+          </div>
+        </div>
+        <!-- Written Off Settings (if applicable) -->
+        <div class="col-span-1 md:col-span-2">
+          <p class="uppercase text-gray-500 text-xs">Written Off Settings</p>
+          <ul class="list-disc list-inside text-gray-700 text-sm">
+            <li>Change unpaid invoices to “Written Off”: Yes</li>
+            <li>Remove all scheduled visits: Yes</li>
+            <li>Stop automations: Yes</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Identification & Demographics Section -->
+    <section id="identification-section" class="mb-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Identification &amp; Demographics</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div>
+          <p class="uppercase text-gray-500 text-xs">Full Name</p>
+          <p class="font-medium text-gray-700">Jeremy Evans</p>
+        </div>
+        <div>
+          <p class="uppercase text-gray-500 text-xs">Customer Type</p>
+          <p class="font-medium text-gray-700">Customer</p>
+        </div>
+        <div>
+          <p class="uppercase text-gray-500 text-xs">Referral Source</p>
+          <p class="font-medium text-gray-700">Referral</p>
+        </div>
+        <div>
+          <p class="uppercase text-gray-500 text-xs">Customer Since</p>
+          <p class="font-medium text-gray-700">Jan 01, 2020</p>
+        </div>
+        <div>
+          <p class="uppercase text-gray-500 text-xs">Lifetime Value</p>
+          <p class="font-medium text-gray-700">$50,000</p>
+        </div>
+      </div>
+    </section>
+
+<!-- Contact Information Section -->
+<section id="contact-section" class="mb-6">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Contact Information</h2>
+
+  <!-- Phone Numbers -->
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold text-gray-700 flex items-center">
+      <i class="fa fa-phone text-blue-500 mr-2"></i> Phone Numbers
+    </h3>
+    <!-- Mobile Cards View -->
+    <div class="block md:hidden space-y-4 mt-3">
+      <!-- Phone Card Example #1 -->
+      <div class="bg-white shadow rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-medium text-gray-700">(123) 456-7890</span>
+          <span class="text-xs text-gray-500">Work</span>
+        </div>
+        <div class="text-xs text-gray-500">
+          <p>Effective: Jan 01, 2020</p>
+          <p>Status: Active</p>
+        </div>
+      </div>
+      <!-- Phone Card Example #2 -->
+      <div class="bg-white shadow rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-medium text-gray-700">(555) 555-1234</span>
+          <span class="text-xs text-gray-500">Home</span>
+        </div>
+        <div class="text-xs text-gray-500">
+          <p>Effective: Feb 01, 2021</p>
+          <p>Status: Active</p>
+        </div>
+      </div>
+    </div>
+    <!-- Desktop Table View -->
+    <div class="hidden md:block mt-3">
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Phone Number</th>
+              <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Type</th>
+              <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Effective Date</th>
+              <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Status</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-xs divide-y divide-gray-200">
+            <tr class="hover:bg-gray-50">
+              <td class="py-2 px-4">(123) 456-7890</td>
+              <td class="py-2 px-4">Work</td>
+              <td class="py-2 px-4">Jan 01, 2020</td>
+              <td class="py-2 px-4">Active</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="py-2 px-4">(555) 555-1234</td>
+              <td class="py-2 px-4">Home</td>
+              <td class="py-2 px-4">Feb 01, 2021</td>
+              <td class="py-2 px-4">Active</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Emails -->
+  <div class="mb-6">
+    <h3 class="text-lg font-semibold text-gray-700 flex items-center">
+      <i class="fa fa-envelope text-green-500 mr-2"></i> Emails
+    </h3>
+    <!-- Mobile Cards View -->
+    <div class="block md:hidden space-y-4 mt-3">
+      <!-- Email Card Example #1 -->
+      <div class="bg-white shadow rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-medium text-gray-700">example@example.com</span>
+          <span class="text-xs text-gray-500">Work</span>
+        </div>
+        <div class="text-xs text-gray-500">
+          <p>Effective: Jan 01, 2020</p>
+          <p>Status: Active</p>
+        </div>
+      </div>
+      <!-- Email Card Example #2 -->
+      <div class="bg-white shadow rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <span class="font-medium text-gray-700">personal@example.com</span>
+          <span class="text-xs text-gray-500">Personal</span>
+        </div>
+        <div class="text-xs text-gray-500">
+          <p>Effective: Mar 15, 2021</p>
+          <p>Status: Active</p>
+        </div>
+      </div>
+    </div>
+    <!-- Desktop Table View -->
+    <div class="hidden md:block mt-3">
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Email Address</th>
+              <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Type</th>
+              <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Effective Date</th>
+              <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Status</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-xs divide-y divide-gray-200">
+            <tr class="hover:bg-gray-50">
+              <td class="py-2 px-4">example@example.com</td>
+              <td class="py-2 px-4">Work</td>
+              <td class="py-2 px-4">Jan 01, 2020</td>
+              <td class="py-2 px-4">Active</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="py-2 px-4">personal@example.com</td>
+              <td class="py-2 px-4">Personal</td>
+              <td class="py-2 px-4">Mar 15, 2021</td>
+              <td class="py-2 px-4">Active</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- Address Section -->
+<section id="address-section" class="mb-6">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Addresses</h2>
+
+  <!-- Mobile Cards View -->
+  <div class="block md:hidden space-y-4">
+    <!-- Billing Address Card -->
+    <div class="bg-white shadow rounded-lg p-4">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center space-x-2">
+          <i class="fa fa-file-invoice-dollar text-green-500"></i>
+          <span class="font-medium text-gray-700">Billing Address</span>
+        </div>
+        <span class="text-xs text-gray-500">Active</span>
+      </div>
+      <div class="text-xs text-gray-500">
+        <p>123 Main St, Suite 100</p>
+        <p>Some City, CA 90210</p>
+        <p>Some County</p>
+        <p>Effective: Jan 01, 2020</p>
+      </div>
+    </div>
+    <!-- Mailing Address Card -->
+    <div class="bg-white shadow rounded-lg p-4">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center space-x-2">
+          <i class="fa fa-envelope text-blue-500"></i>
+          <span class="font-medium text-gray-700">Mailing Address</span>
+        </div>
+        <span class="text-xs text-gray-500">Active</span>
+      </div>
+      <div class="text-xs text-gray-500">
+        <p>456 Another St, Apt 5B</p>
+        <p>Other City, CA 90300</p>
+        <p>Other County</p>
+        <p>Effective: Mar 01, 2021</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop Table View -->
+  <div class="hidden md:block mt-3">
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Type</th>
+            <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Street</th>
+            <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Street2</th>
+            <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">City</th>
+            <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">State</th>
+            <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Postal Code</th>
+            <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">County/Parish</th>
+            <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Effective Date</th>
+            <th class="py-2 px-4 text-left text-xs font-semibold text-gray-700">Status</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-600 text-xs divide-y divide-gray-200">
+          <tr class="hover:bg-gray-50">
+            <td class="py-2 px-4">Billing</td>
+            <td class="py-2 px-4">123 Main St</td>
+            <td class="py-2 px-4">Suite 100</td>
+            <td class="py-2 px-4">Some City</td>
+            <td class="py-2 px-4">CA</td>
+            <td class="py-2 px-4">90210</td>
+            <td class="py-2 px-4">Some County</td>
+            <td class="py-2 px-4">Jan 01, 2020</td>
+            <td class="py-2 px-4">Active</td>
+          </tr>
+          <tr class="hover:bg-gray-50">
+            <td class="py-2 px-4">Mailing</td>
+            <td class="py-2 px-4">456 Another St</td>
+            <td class="py-2 px-4">Apt 5B</td>
+            <td class="py-2 px-4">Other City</td>
+            <td class="py-2 px-4">CA</td>
+            <td class="py-2 px-4">90300</td>
+            <td class="py-2 px-4">Other County</td>
+            <td class="py-2 px-4">Mar 01, 2021</td>
+            <td class="py-2 px-4">Active</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Invoice & Communication Preferences Section -->
+    <section id="preferences-section" class="mb-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Communication Preferences</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div class="md:col-span-2">
+          <p class="uppercase text-gray-500 text-xs">Communication Preferences</p>
+          <ul class="list-disc list-inside text-gray-700 text-sm">
+            <li>Phone Call: Yes</li>
+            <li>Email: Yes</li>
+            <li>Text Message: No</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Metrics Section -->
+    <section id="additional-metrics" class="mb-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Additional Metrics</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="uppercase text-gray-500 text-xs">Lifetime Value</p>
+          <p class="font-medium text-gray-700">$50,000</p>
+        </div>
+        <div>
+          <p class="uppercase text-gray-500 text-xs">Customer Length</p>
+          <p class="font-medium text-gray-700">5 years</p>
+        </div>
+        <!-- Add more metrics as needed -->
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Properties Tab Content -->
+<div id="properties" class="tab-pane hidden">
+  <div class="max-w-5xl mx-auto p-6 space-y-8">
+    <!-- Page Header -->
+    <header>
+      <h1 class="text-3xl font-bold text-gray-900 border-b pb-2">Properties</h1>
+      <p class="text-gray-600">A complete view of all properties associated with this customer.</p>
+    </header>
+
+    <!-- Mobile Cards View -->
+    <div class="block md:hidden space-y-4">
+      <!-- Property Card Example #1 -->
+      <div class="bg-white shadow rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-lg font-semibold text-gray-900">Property One</h3>
+          <span class="text-xs font-semibold text-green-600">Active</span>
+        </div>
+        <div class="text-sm text-gray-700 space-y-1">
+          <p class="flex items-center"><i class="fa fa-map-marker-alt text-red-500 mr-1"></i>123 Main St, Some City, CA 90210</p>
+          <p class="flex items-center"><i class="fa fa-building text-blue-500 mr-1"></i>Residential</p>
+          <p class="flex items-center"><i class="fa fa-calendar-alt text-teal-500 mr-1"></i>Acquired: Jan 01, 2019</p>
+          <p class="flex items-center"><i class="fa fa-clock text-gray-500 mr-1"></i>Length: 5 years</p>
+        </div>
+      </div>
+      <!-- Property Card Example #2 -->
+      <div class="bg-white shadow rounded-lg p-4">
+        <div class="flex items-center justify-between mb-2">
+          <h3 class="text-lg font-semibold text-gray-900">Property Two</h3>
+          <span class="text-xs font-semibold text-red-600">Inactive</span>
+        </div>
+        <div class="text-sm text-gray-700 space-y-1">
+          <p class="flex items-center"><i class="fa fa-map-marker-alt text-red-500 mr-1"></i>456 Elm St, Other City, CA 90300</p>
+          <p class="flex items-center"><i class="fa fa-building text-blue-500 mr-1"></i>Commercial</p>
+          <p class="flex items-center"><i class="fa fa-calendar-alt text-teal-500 mr-1"></i>Acquired: Mar 15, 2020</p>
+          <p class="flex items-center"><i class="fa fa-clock text-gray-500 mr-1"></i>Length: 3 years</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desktop Table View -->
+    <div class="hidden md:block">
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="py-3 px-4 text-left text-xs font-semibold text-gray-700">Property Name</th>
+              <th class="py-3 px-4 text-left text-xs font-semibold text-gray-700">Address</th>
+              <th class="py-3 px-4 text-left text-xs font-semibold text-gray-700">Type</th>
+              <th class="py-3 px-4 text-left text-xs font-semibold text-gray-700">Status</th>
+              <th class="py-3 px-4 text-left text-xs font-semibold text-gray-700">Acquired Date</th>
+              <th class="py-3 px-4 text-left text-xs font-semibold text-gray-700">Customer Length</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-xs divide-y divide-gray-200">
+            <tr class="hover:bg-gray-50">
+              <td class="py-3 px-4">Property One</td>
+              <td class="py-3 px-4">123 Main St, Some City, CA 90210</td>
+              <td class="py-3 px-4">Residential</td>
+              <td class="py-3 px-4"><span class="font-semibold text-green-600">Active</span></td>
+              <td class="py-3 px-4">Jan 01, 2019</td>
+              <td class="py-3 px-4">5 years</td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="py-3 px-4">Property Two</td>
+              <td class="py-3 px-4">456 Elm St, Other City, CA 90300</td>
+              <td class="py-3 px-4">Commercial</td>
+              <td class="py-3 px-4"><span class="font-semibold text-red-600">Inactive</span></td>
+              <td class="py-3 px-4">Mar 15, 2020</td>
+              <td class="py-3 px-4">3 years</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
 
                   <!-- Financials Tab Content (unchanged from previous implementation) -->
                   <div id="financials" class="tab-pane hidden">
@@ -1096,46 +1335,168 @@
                   </div>
 
                   <!-- Billing Settings Tab Content (Updated Content) -->
-                  <div id="billingsettings" class="tab-pane hidden">
-                    <!-- Billing Settings Header -->
-                    <div class="mb-4">
-                      <h3 class="text-2xl font-bold">Billing Settings</h3>
-                      <p class="text-gray-600">Manage your billing preferences and configurations.</p>
-                    </div>
-                    <!-- Responsive Grid: 1 column on mobile, 2 columns on desktop -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <!-- Payment Terms -->
-                      <div class="bg-white shadow rounded-lg p-4">
-                        <h4 class="text-lg font-semibold mb-2">Payment Terms</h4>
-                        <p class="text-gray-700">Net 30</p>
-                      </div>
-                      <!-- Invoice Delivery Method -->
-                      <div class="bg-white shadow rounded-lg p-4">
-                        <h4 class="text-lg font-semibold mb-2">Invoice Delivery Method</h4>
-                        <p class="text-gray-700">Email</p>
-                      </div>
-                      <!-- Late Fee Settings -->
-                      <div class="bg-white shadow rounded-lg p-4">
-                        <h4 class="text-lg font-semibold mb-2">Late Fee Settings</h4>
-                        <p class="text-gray-700">2% per month</p>
-                      </div>
-                      <!-- Customer Discount -->
-                      <div class="bg-white shadow rounded-lg p-4">
-                        <h4 class="text-lg font-semibold mb-2">Customer Discount</h4>
-                        <p class="text-gray-700">10%</p>
-                      </div>
-                      <!-- Auto Payment Options -->
-                      <div class="bg-white shadow rounded-lg p-4">
-                        <h4 class="text-lg font-semibold mb-2">Auto Payment Options</h4>
-                        <p class="text-gray-700">Enabled</p>
-                      </div>
-                      <!-- Preferred Payment Methods -->
-                      <div class="bg-white shadow rounded-lg p-4">
-                        <h4 class="text-lg font-semibold mb-2">Preferred Payment Methods</h4>
-                        <p class="text-gray-700">Credit Card, ACH</p>
-                      </div>
-                    </div>
-                  </div>
+<!-- Billing Settings Tab Content (View-Only) -->
+<div id="billingsettings" class="tab-pane hidden">
+  <div class="p-4">
+    <!-- Header -->
+    <header class="mb-6">
+      <h3 class="text-2xl font-bold text-gray-900">Billing Settings</h3>
+      <p class="text-gray-600">Manage your billing preferences and configurations.</p>
+    </header>
+
+    <!-- General Billing Settings -->
+    <section class="mb-6">
+      <h4 class="text-xl font-semibold text-gray-800 mb-4">General Billing Settings</h4>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-xs uppercase text-gray-500">Is Tax Exempt</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Discount</p>
+          <p class="font-medium text-gray-700">% 0.00</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Has Credit Card on File or ACH Enabled</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Allow Customer to Add Payment as Customer Credit</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Invoice Settings -->
+    <section class="mb-6">
+      <h4 class="text-xl font-semibold text-gray-800 mb-4">Invoice Settings</h4>
+      <p class="text-gray-600 text-sm mb-4">
+        Set different late fees for invoices as time passes. Late fees can be set as a dollar amount or a percentage of the invoice amount.
+        <br>
+        <span class="italic">*IMPORTANT - Changing late fee rules here DOES NOT change the late fee date or amount on any invoices already created. It will only change the late fee terms and amounts on newly created invoices.</span>
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-xs uppercase text-gray-500">Days After the Invoice is Sent</p>
+          <p class="font-medium text-gray-700">31</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Late Fee Type</p>
+          <p class="font-medium text-gray-700">Exact Amount</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Late Fee Amount</p>
+          <p class="font-medium text-gray-700">$35.00</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Invoice Display Options -->
+    <section class="mb-6">
+      <h4 class="text-xl font-semibold text-gray-800 mb-4">Invoice Display Options</h4>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-xs uppercase text-gray-500">Hide Outstanding Balance</p>
+          <p class="font-medium text-gray-700">No</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Hide Total Due on Account</p>
+          <p class="font-medium text-gray-700">No</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Show Stamp on Invoices</p>
+          <p class="font-medium text-gray-700">Pending, Draft, Paid in Full, Past Due</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Show Invoice Due Date</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Show Invoice Time Of Visit</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Show "Credit Available"</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payment Options -->
+    <section class="mb-6">
+      <h4 class="text-xl font-semibold text-gray-800 mb-4">Payment Options</h4>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-xs uppercase text-gray-500">Accept ACH Payments</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Accept Credit Card Payments</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Automatically Apply Customer Credit to Invoices</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Show Tips on Invoices &amp; Allow Customer Tips</p>
+          <p class="font-medium text-gray-700">Yes</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Auto-Invoice Options -->
+    <section class="mb-6">
+      <h4 class="text-xl font-semibold text-gray-800 mb-4">Auto-Invoice Options</h4>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-xs uppercase text-gray-500">Auto-Send Invoices</p>
+          <p class="font-medium text-gray-700">Enabled</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Auto-Create Invoices</p>
+          <p class="font-medium text-gray-700">Enabled</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACH & Credit Card Settings -->
+    <section class="mb-6">
+      <h4 class="text-xl font-semibold text-gray-800 mb-4">ACH &amp; Credit Card Settings</h4>
+      <!-- ACH Info -->
+      <div class="mb-4">
+        <p class="text-sm text-gray-600 italic">ACH: You can enable ACH Payments for only $12 / month.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-xs uppercase text-gray-500">Default Notes on Invoices</p>
+          <p class="font-medium text-gray-700">Words: 0, Chars: 0</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Default Terms on Invoices</p>
+          <p class="font-medium text-gray-700">Words: 0, Chars: 0</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Default Email for Invoices</p>
+          <p class="font-medium text-gray-700">Email Templates: Please Select</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Default Text Message for Invoices</p>
+          <p class="font-medium text-gray-700">Text Message Templates: Please Select</p>
+        </div>
+        <div>
+          <p class="text-xs uppercase text-gray-500">Default Text Message for Estimates</p>
+          <p class="font-medium text-gray-700">Text Message Templates: Please Select</p>
+        </div>
+      </div>
+      <!-- Credit Card Info -->
+      <div class="mt-6">
+        <p class="text-sm text-gray-600 italic">Credit Cards: You need to set up LawnPro payments before you can add a credit card.</p>
+      </div>
+    </section>
+  </div>
+</div>
+
 
                   <!-- Notes Tab Content (Updated Content) -->
                   <div id="notes" class="tab-pane hidden">
