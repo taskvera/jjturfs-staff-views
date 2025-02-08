@@ -66,6 +66,37 @@
           All Customers
         </a>
 
+        <!-- Child #2 has a third level -->
+        <div class="acc-parent">
+          <button
+            class="w-full flex items-center px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700 focus:outline-none transition"
+            data-accordion-btn
+          >
+            Segments
+            <i
+              class="fa fa-chevron-down ml-auto transform transition-all duration-200 text-xs"
+            ></i>
+          </button>
+
+          <!-- Level 3 Sub-items (stacked vertically / up-down) -->
+          <div
+            class="acc-children hidden flex-col ml-4 border-l border-gray-700"
+            data-accordion-content
+          >
+            <a
+              href="#"
+              class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+            >
+              Retail
+            </a>
+            <a
+              href="#"
+              class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+            >
+              Commercial
+            </a>
+          </div>
+        </div>
 
         <!-- Child #3 -->
         <a
@@ -119,14 +150,6 @@
           class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
         >
           Chart of Accounts
-        </a>
-
-        <!-- Child #3 -->
-        <a
-          href="#"
-          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
-        >
-          Reporting
         </a>
       </div>
     </div>
@@ -394,8 +417,110 @@
       <!-- MAIN_CONTENT_START (docblock placeholder) -->
       <!-- =========================================== -->
 
-      <!-- Put your page-specific content here... -->
-
+<!-- MAIN_CONTENT_START -->
+<div class="p-4 bg-white rounded shadow">
+    <h2 class="text-2xl font-bold mb-4">Create New Account</h2>
+    <form action="/create-account" method="POST" class="space-y-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Account Code -->
+        <div>
+          <label for="accountCode" class="block text-sm font-medium text-gray-700">Account Code</label>
+          <input type="text" name="accountCode" id="accountCode" placeholder="e.g. 1000" required
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+        </div>
+        <!-- Account Name -->
+        <div>
+          <label for="accountName" class="block text-sm font-medium text-gray-700">Account Name</label>
+          <input type="text" name="accountName" id="accountName" placeholder="e.g. Cash on Hand" required
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+        </div>
+        <!-- Account Type -->
+        <div>
+          <label for="accountType" class="block text-sm font-medium text-gray-700">Account Type</label>
+          <select name="accountType" id="accountType" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            <option value="">Select Type</option>
+            <option value="Asset">Asset</option>
+            <option value="Liability">Liability</option>
+            <option value="Equity">Equity</option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+            <option value="COGS">COGS</option>
+          </select>
+        </div>
+        <!-- Parent Account (for Sub-Accounts) -->
+        <div>
+          <label for="parentAccount" class="block text-sm font-medium text-gray-700">Parent Account (if sub-account)</label>
+          <select name="parentAccount" id="parentAccount" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            <option value="">None</option>
+            <!-- Dynamically populate options from existing accounts -->
+            <option value="1000">1000 - Cash on Hand</option>
+            <option value="1100">1100 - Accounts Receivable</option>
+          </select>
+        </div>
+        <!-- Description -->
+        <div class="md:col-span-2">
+          <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea name="description" id="description" rows="3" placeholder="Enter a brief description"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
+        </div>
+        <!-- Active -->
+        <div class="flex items-center">
+          <input type="checkbox" name="active" id="active" checked class="form-checkbox h-5 w-5 text-green-500" />
+          <label for="active" class="ml-2 text-sm text-gray-700">Active</label>
+        </div>
+        <!-- Tax Code -->
+        <div>
+          <label for="taxCode" class="block text-sm font-medium text-gray-700">Tax Code</label>
+          <input type="text" name="taxCode" id="taxCode" placeholder="e.g. GST, VAT" 
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+        </div>
+        <!-- Currency -->
+        <div>
+          <label for="currency" class="block text-sm font-medium text-gray-700">Currency</label>
+          <select name="currency" id="currency" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            <option value="">Select Currency</option>
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+            <option value="JPY">JPY</option>
+          </select>
+        </div>
+        <!-- Opening Balance -->
+        <div>
+          <label for="openingBalance" class="block text-sm font-medium text-gray-700">Opening Balance</label>
+          <input type="number" name="openingBalance" id="openingBalance" placeholder="0.00" step="0.01"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+        </div>
+        <!-- Posting Type -->
+        <div>
+          <label for="postingType" class="block text-sm font-medium text-gray-700">Posting Type</label>
+          <select name="postingType" id="postingType" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            <option value="">Select Posting Type</option>
+            <option value="Debit">Debit</option>
+            <option value="Credit">Credit</option>
+          </select>
+        </div>
+        <!-- Reconciliation Required -->
+        <div class="flex items-center">
+          <input type="checkbox" name="reconciliation" id="reconciliation" class="form-checkbox h-5 w-5 text-green-500" />
+          <label for="reconciliation" class="ml-2 text-sm text-gray-700">Reconciliation Required</label>
+        </div>
+        <!-- Effective Date -->
+        <div>
+          <label for="effectiveDate" class="block text-sm font-medium text-gray-700">Effective Date</label>
+          <input type="date" name="effectiveDate" id="effectiveDate"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+        </div>
+      </div>
+      <div>
+        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded-md flex items-center justify-center">
+          <i class="fa fa-plus mr-2"></i> Create Account
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- MAIN_CONTENT_END -->
+  
       <!-- ========================================= -->
       <!-- MAIN_CONTENT_END (docblock placeholder) -->
       <!-- ========================================= -->

@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My App - Sidebar Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (Dev CDN) -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"
+    crossorigin="anonymous"
+  ></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 min-h-screen flex">
+<!-- SIDEBAR (Three-level, single-open accordion, footer profile) -->
+<aside
+  id="sidebar"
+  class="bg-gray-800 text-white fixed inset-y-0 left-0 w-64 transform
+         -translate-x-full md:translate-x-0
+         transition-transform duration-200 z-50 flex flex-col"
+>
+  <!-- Header / Logo -->
+  <div class="p-4 bg-gray-900 flex items-center">
+    <i class="fa fa-home mr-2"></i>
+    <span class="font-semibold text-lg">MyApp</span>
+  </div>
+
+  <!-- Main Menu (Scroll if needed) -->
+  <nav id="sidebarMenu" class="flex-1 overflow-y-auto px-2 py-3 space-y-1">
+    <!-- Example Parent #1 (No sub-items) -->
+    <a
+      href="#"
+      class="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition"
+    >
+      <i class="fa fa-tachometer-alt mr-2 w-4 text-center"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <!-- Example Parent #2 with sub-levels -->
+    <div class="acc-parent">
+      <!-- Parent Title -->
+      <button
+        class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition"
+        data-accordion-btn
+      >
+        <i class="fa fa-users mr-2 w-4 text-center"></i>
+        <span class="flex-1 text-left">Customers</span>
+        <!-- Chevron -->
+        <i
+          class="fa fa-chevron-down ml-auto transform transition-all duration-200"
+        ></i>
+      </button>
+
+      <!-- Level 2 Sub-items -->
+      <div
+        class="acc-children hidden flex-col ml-6 border-l border-gray-700"
+        data-accordion-content
+      >
+        <!-- Child #1 -->
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          All Customers
+        </a>
+
+        <!-- Child #2 has a third level -->
+        <div class="acc-parent">
+          <button
+            class="w-full flex items-center px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700 focus:outline-none transition"
+            data-accordion-btn
+          >
+            Segments
+            <i
+              class="fa fa-chevron-down ml-auto transform transition-all duration-200 text-xs"
+            ></i>
+          </button>
+
+          <!-- Level 3 Sub-items (stacked vertically / up-down) -->
+          <div
+            class="acc-children hidden flex-col ml-4 border-l border-gray-700"
+            data-accordion-content
+          >
+            <a
+              href="#"
+              class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+            >
+              Retail
+            </a>
+            <a
+              href="#"
+              class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+            >
+              Commercial
+            </a>
+          </div>
+        </div>
+
+        <!-- Child #3 -->
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Add New
+        </a>
+      </div>
+    </div>    
+    
+    <!-- Example Parent #2 with sub-levels -->
+    <div class="acc-parent">
+      <!-- Parent Title -->
+      <button
+        class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition"
+        data-accordion-btn
+      >
+        <i class="fas fa-calculator mr-2 w-4 text-center"></i>
+        <span class="flex-1 text-left">Accounting</span>
+        <!-- Chevron -->
+        <i
+          class="fa fa-chevron-down ml-auto transform transition-all duration-200"
+        ></i>
+      </button>
+
+      <!-- Level 2 Sub-items -->
+      <div
+        class="acc-children hidden flex-col ml-6 border-l border-gray-700"
+        data-accordion-content
+      >
+      <!-- Child #1 -->
+      <a
+        href="#"
+        class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+      >
+        Journal Entries
+      </a>
+      <!-- Child #1 -->
+      <a
+        href="#"
+        class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+      >
+        General Ledger
+      </a>
+
+
+        <!-- Child #3 -->
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Chart of Accounts
+        </a>
+
+        <!-- Child #3 -->
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Reporting
+        </a>
+      </div>
+    </div>
+
+    <!-- Example Parent #3 with sub-levels -->
+    <div class="acc-parent">
+      <button
+        class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition"
+        data-accordion-btn
+      >
+        <i class="fa fa-file-invoice-dollar mr-2 w-4 text-center"></i>
+        <span class="flex-1 text-left">Invoices</span>
+        <i
+          class="fa fa-chevron-down ml-auto transform transition-all duration-200"
+        ></i>
+      </button>
+      <div
+        class="acc-children hidden flex-col ml-6 border-l border-gray-700"
+        data-accordion-content
+      >
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Unpaid
+        </a>
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Paid
+        </a>
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Overdue
+        </a>
+      </div>
+    </div>
+    <!-- Add more parent items or children as needed -->
+  </nav>
+
+  <!-- Footer w/ Profile Info -->
+  <div class="p-4 border-t border-gray-700 flex items-center space-x-3">
+    <!-- Example avatar -->
+    <img
+      src="https://via.placeholder.com/40"
+      alt="User"
+      class="w-10 h-10 rounded-full"
+    />
+    <div class="flex-1">
+      <div class="text-sm font-semibold">John Doe</div>
+      <div class="text-xs text-gray-300">Administrator</div>
+    </div>
+    <!-- Example logout icon -->
+    <a href="#" class="hover:text-gray-400">
+      <i class="fa fa-sign-out-alt"></i>
+    </a>
+  </div>
+</aside>
+
+<script>
+  // Accordion logic with single-open behavior
+  // For each .acc-parent, clicking [data-accordion-btn] toggles that sub-menu
+  // and closes siblings at the same level.
+  const parentMenus = document.querySelectorAll('.acc-parent');
+
+  parentMenus.forEach((parent) => {
+    const toggleBtn = parent.querySelector('[data-accordion-btn]');
+    const childrenContainer = parent.querySelector('[data-accordion-content]');
+
+    if (toggleBtn && childrenContainer) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        // Close siblings on the same level
+        const siblings = parent.parentElement.querySelectorAll('.acc-parent');
+        siblings.forEach((sib) => {
+          if (sib !== parent) {
+            const sibBtn = sib.querySelector('[data-accordion-btn]');
+            const sibContent = sib.querySelector('[data-accordion-content]');
+            if (sibContent && !sibContent.classList.contains('hidden')) {
+              sibContent.classList.add('hidden');
+              // Rotate chevron back
+              const sibChevron = sibBtn.querySelector('.fa-chevron-down');
+              sibChevron && sibChevron.classList.remove('rotate-180');
+            }
+          }
+        });
+
+        // Toggle this sub-menu
+        childrenContainer.classList.toggle('hidden');
+
+        // Rotate chevron
+        const chevron = toggleBtn.querySelector('.fa-chevron-down');
+        chevron && chevron.classList.toggle('rotate-180');
+      });
+    }
+  });
+</script>
+
+
+
+  <!-- OVERLAY (mobile) -->
+  <div
+    id="sidebarOverlay"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+  ></div>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <!-- Notice md:ml-64 here so on desktop, content is offset by 64px margin -->
+  <div class="flex-1 flex flex-col md:ml-64">
+    <!-- Top Nav -->
+    <header
+      class="bg-white text-gray-700 shadow-sm px-4 py-2 flex items-center justify-between"
+    >
+      <!-- Left side: title and mobile toggle -->
+      <div class="flex items-center space-x-3">
+        <!-- Hamburger toggle (mobile only) -->
+        <button
+          id="hamburgerBtn"
+          class="md:hidden text-gray-500 focus:outline-none"
+        >
+          <i class="fa fa-bars"></i>
+        </button>
+
+        <!-- Title / Page Heading -->
+        <div class="page-heading py-1" id="pageHeading">
+          <h2
+            class="page-title text-xl font-semibold flex items-center space-x-2"
+            id="pageTitle"
+          >
+            <i class="fa fa-lg fa-users" aria-hidden="true"></i>
+            <span id="main-title">Accounting Reports</span>
+          </h2>
+        </div>
+      </div>
+
+      <!-- Right side: icon links -->
+      <div class="flex space-x-4 items-center text-gray-500">
+        <!-- To-Do List -->
+        <a
+          href="/scheduler/add-new-todo"
+          title="Create a To-Do"
+          class="hover:text-gray-800"
+        >
+          <i class="fas fa-tasks" aria-hidden="true"></i>
+        </a>
+
+        <!-- Messaging/Inbox -->
+        <a
+          href="#"
+          id="messenger-open"
+          class="relative hover:text-gray-800"
+        >
+          <i class="fas fa-comment" aria-hidden="true"></i>
+          <!-- If you need a badge/pulse for unread messages: -->
+          <div
+            id="notify-badge-msg"
+            class="absolute top-0 right-0"
+            style="display: none;"
+          >
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+
+        <!-- Settings -->
+        <a href="/settings" class="hover:text-gray-800">
+          <i class="fa fa-lg fa-cog" aria-hidden="true"></i>
+        </a>
+
+        <!-- Notifications -->
+        <a href="/notifications" class="relative hover:text-gray-800">
+          <i class="fa fa-lg fa-bell" aria-hidden="true"></i>
+          <!-- Notification badge if needed -->
+          <div
+            id="notify-badge"
+            class="absolute top-0 right-0"
+            style="display: none;"
+          >
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+
+        <!-- Profile -->
+        <a
+          href="/resources/employees/edit/62149"
+          class="hover:text-gray-800"
+        >
+          <i class="fa fa-lg fa-user" aria-hidden="true"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="p-2 md:p-2">
+      <!-- Breadcrumb -->
+      <div class="md:block">
+        <nav class="py-2 text-sm" aria-label="Breadcrumb">
+          <ol class="flex items-center space-x-2">
+            <!-- Home -->
+            <li>
+              <a
+                href="/"
+                class="text-blue-600 hover:underline hover:text-blue-800"
+              >
+                Home
+              </a>
+            </li>
+            <!-- Separator -->
+            <li class="text-gray-400">
+              <svg
+                class="w-4 h-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 
+                  4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </li>
+
+            <!-- Customers -->
+            <li>
+              <a
+                href="/customers"
+                class="text-blue-600 hover:underline hover:text-blue-800"
+              >
+                Accounting
+              </a>
+            </li>
+            <!-- Separator -->
+            <li class="text-gray-400">
+              <svg
+                class="w-4 h-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 
+                  4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </li>
+
+            <!-- Current page -->
+            <li class="text-gray-500" aria-current="page">
+              Reports
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- =========================================== -->
+      <!-- MAIN_CONTENT_START (docblock placeholder) -->
+      <!-- =========================================== -->
+<!-- FAVORITES SECTION (FULL WIDTH) -->
+<section class="w-full bg-white py-6 px-4 md:px-8">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6">Your Favorite Reports</h2>
+  
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Favorite Card Example #1: "Profit and Loss" -->
+      <a
+        href="#"
+        class="block p-6 bg-gray-50 border border-gray-200 rounded-lg
+               hover:shadow-md hover:border-blue-500 transition cursor-pointer group"
+      >
+        <div class="flex flex-col items-center text-center">
+          <!-- Big Icon -->
+          <i class="fa fa-chart-pie text-5xl text-blue-600 mb-4
+                    group-hover:text-blue-700 transition-colors"
+            aria-hidden="true"
+          ></i>
+          <!-- Title -->
+          <h3
+            class="text-xl font-semibold text-gray-800 mb-1
+                   group-hover:text-blue-600 transition-colors"
+          >
+            Profit and Loss
+          </h3>
+          <!-- Subtext / Description -->
+          <p class="text-sm text-gray-600">
+            Quickly see your total income, expenses, and net profit
+          </p>
+        </div>
+      </a>
+  
+      <!-- Favorite Card Example #2: "Balance Sheet" -->
+      <a
+        href="#"
+        class="block p-6 bg-gray-50 border border-gray-200 rounded-lg
+               hover:shadow-md hover:border-blue-500 transition cursor-pointer group"
+      >
+        <div class="flex flex-col items-center text-center">
+          <i class="fa fa-balance-scale text-5xl text-blue-600 mb-4
+                    group-hover:text-blue-700 transition-colors"
+            aria-hidden="true"
+          ></i>
+          <h3
+            class="text-xl font-semibold text-gray-800 mb-1
+                   group-hover:text-blue-600 transition-colors"
+          >
+            Balance Sheet
+          </h3>
+          <p class="text-sm text-gray-600">
+            A snapshot of your assets, liabilities, and equity
+          </p>
+        </div>
+      </a>
+  
+      <!-- Favorite Card Example #3: "General Ledger" -->
+      <a
+        href="#"
+        class="block p-6 bg-gray-50 border border-gray-200 rounded-lg
+               hover:shadow-md hover:border-blue-500 transition cursor-pointer group"
+      >
+        <div class="flex flex-col items-center text-center">
+          <i class="fa fa-book text-5xl text-blue-600 mb-4
+                    group-hover:text-blue-700 transition-colors"
+            aria-hidden="true"
+          ></i>
+          <h3
+            class="text-xl font-semibold text-gray-800 mb-1
+                   group-hover:text-blue-600 transition-colors"
+          >
+            General Ledger
+          </h3>
+          <p class="text-sm text-gray-600">
+            A complete record of all accounts and transactions
+          </p>
+        </div>
+      </a>
+  
+      <!-- Additional favorites can follow the same pattern -->
+    </div>
+  </section>
+  
+<!-- Just the report cards snippet with hover and click indicators for ALL reports -->
+<div class="p-4 bg-white rounded shadow">
+    <!-- Invoice and Expense Reports -->
+    <section class="mb-8">
+      <h3 class="text-lg font-semibold mb-3">Invoice and Expense Reports</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Invoice Details -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-file-invoice text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Invoice Details
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                A detailed summary of all invoices you've sent over a period of time
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Expense Report -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-receipt text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Expense Report
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                See how much money you're spending, and where you're spending it
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Item Sales -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-shopping-cart text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Item Sales
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                See how much money you're making from each item you sell
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Revenue by Client -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-user-friends text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Revenue by Client
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                A breakdown of how much revenue each of your clients is bringing in.
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+      </div>
+    </section>
+  
+    <!-- Payments Reports -->
+    <section class="mb-8">
+      <h3 class="text-lg font-semibold mb-3">Payments Reports</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Accounts Aging -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-hourglass-half text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Accounts Aging
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Find out which clients are taking a long time to pay
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Payments Collected -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-hand-holding-usd text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Payments Collected
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                A summary of all the payments you have collected over a period of time
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Accounts Payable Aging -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-clock text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Accounts Payable Aging
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Find out how much each vendor needs to be paid
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Credit Balance -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-credit-card text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Credit Balance
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Summary of all your credit balance for your clients over a period of time
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+      </div>
+    </section>
+  
+    <!-- Accounting Reports -->
+    <section class="mb-8">
+      <h3 class="text-lg font-semibold mb-3">Accounting Reports</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Balance Sheet -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-balance-scale text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Balance Sheet
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                A snapshot of your company's assets, liabilities, and equity at any given point in time
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Profit and Loss UPDATED -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-chart-pie text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Profit and Loss
+                </span>
+                <span class="ml-2 bg-blue-200 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">Updated</span>
+              </div>
+              <p class="text-sm text-gray-600">
+                A summary of your total income, expenses, and net profit. Updated with new style and functionality.
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- General Ledger UPDATED -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-book text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  General Ledger
+                </span>
+                <span class="ml-2 bg-blue-200 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">Updated</span>
+              </div>
+              <p class="text-sm text-gray-600">
+                A complete record of transactions and balances for all your accounts. Updated with new style and functionality.
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Trial Balance -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-balance-scale-left text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Trial Balance
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                A quick gut check to make sure your books are balanced
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Bank Reconciliation Summary -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-university text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Bank Reconciliation Summary
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Helps you see FreshBooks Entries and Bank Transactions that have not been reconciled
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Sales Tax Summary -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-receipt text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Sales Tax Summary
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Helps determine how much you owe the government in Sales Taxes
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Cash Flow -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-money-bill-wave text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Cash Flow
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Overview of Cash coming in and going out of your business
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Journal Entry -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-edit text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Journal Entry
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Helps you see all the Manual Journal Entries and Adjustments made to your books
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+      </div>
+    </section>
+  
+    <!-- Time Tracking and Project Reports -->
+    <section class="mb-8">
+      <h3 class="text-lg font-semibold mb-3">Time Tracking and Project Reports</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Time Entry Details -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-clock text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Time Entry Details
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                A detailed summary of how much time you and / or your team tracked over a period of time
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Retainer Summary -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-briefcase text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Retainer Summary
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                A detailed work summary for your retainer clients
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Profitability Summary -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-chart-line text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Profitability Summary
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                View a summary of a client’s profitability across all their projects
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Profitability Details -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-file-invoice-dollar text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Profitability Details
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Get a detailed breakdown of project profitability by service and expense categories
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Team Utilization -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group md:col-span-2"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-users text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Team Utilization
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Overview of billable hours from team members against their expected capacity
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+      </div>
+    </section>
+  
+    <!-- Logs -->
+    <section class="mb-8">
+      <h3 class="text-lg font-semibold mb-3">Logs</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Audit Log -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-clipboard-list text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Audit Log
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                View changes made to your books
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+      </div>
+    </section>
+  
+    <!-- Payroll -->
+    <section>
+      <h3 class="text-lg font-semibold mb-3">Payroll</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Payroll Journal -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-file-medical text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Payroll Journal
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Helps you get detailed payroll information for each pay period and employee
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+  
+        <!-- Contractor Payment -->
+        <a
+          href="#"
+          class="block p-4 border rounded hover:shadow-sm transition-shadow 
+                 hover:bg-gray-50 cursor-pointer group"
+        >
+          <div class="flex justify-between items-start">
+            <div class="mr-4">
+              <div class="flex items-center mb-1 space-x-2">
+                <i class="fa fa-briefcase text-blue-600"></i>
+                <span
+                  class="font-semibold text-gray-800
+                         group-hover:underline group-hover:text-blue-600 transition-colors"
+                >
+                  Contractor Payment
+                </span>
+              </div>
+              <p class="text-sm text-gray-600">
+                Helps you get detailed payroll information for each contractor
+              </p>
+            </div>
+            <button
+              class="text-gray-400 hover:text-yellow-500 transition"
+              title="Star this report"
+            >
+              <i class="fa fa-star"></i>
+            </button>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+  
+      <!-- ========================================= -->
+      <!-- MAIN_CONTENT_END (docblock placeholder) -->
+      <!-- ========================================= -->
+
+    </main>
+    <!-- End main content area -->
+  </div>
+  <!-- end .flex-1 flex flex-col md:ml-64 -->
+
+  <!-- Toggle Script -->
+  <script>
+    const hamburgerBtn = document.querySelector("#hamburgerBtn");
+    const sidebar = document.querySelector("#sidebar");
+    const overlay = document.querySelector("#sidebarOverlay");
+
+    hamburgerBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("-translate-x-full");
+      overlay.classList.toggle("hidden");
+    });
+
+    overlay.addEventListener("click", () => {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    });
+  </script>
+</body>
+</html>

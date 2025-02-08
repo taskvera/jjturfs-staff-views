@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>My App - Sidebar Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome (Dev CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"
+        crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 min-h-screen flex">
+    <!-- SIDEBAR (Three-level, single-open accordion, footer profile) -->
+    <aside id="sidebar" class="bg-gray-800 text-white fixed inset-y-0 left-0 w-64 transform
+         -translate-x-full md:translate-x-0
+         transition-transform duration-200 z-50 flex flex-col">
+        <!-- Header / Logo -->
+        <div class="p-4 bg-gray-900 flex items-center">
+            <i class="fa fa-home mr-2"></i>
+            <span class="font-semibold text-lg">MyApp</span>
+        </div>
+
+        <!-- Main Menu (Scroll if needed) -->
+        <nav id="sidebarMenu" class="flex-1 overflow-y-auto px-2 py-3 space-y-1">
+            <!-- Example Parent #1 (No sub-items) -->
+            <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition">
+                <i class="fa fa-tachometer-alt mr-2 w-4 text-center"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <!-- Example Parent #2 with sub-levels -->
+            <div class="acc-parent">
+                <!-- Parent Title -->
+                <button
+                    class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition"
+                    data-accordion-btn>
+                    <i class="fa fa-users mr-2 w-4 text-center"></i>
+                    <span class="flex-1 text-left">Customers</span>
+                    <!-- Chevron -->
+                    <i class="fa fa-chevron-down ml-auto transform transition-all duration-200"></i>
+                </button>
+
+                <!-- Level 2 Sub-items -->
+                <div class="acc-children hidden flex-col ml-6 border-l border-gray-700" data-accordion-content>
+                    <!-- Child #1 -->
+                    <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+                        All Customers
+                    </a>
+
+
+                    <!-- Child #3 -->
+                    <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+                        Add New
+                    </a>
+                </div>
+            </div>
+
+            <!-- Example Parent #2 with sub-levels -->
+            <div class="acc-parent">
+                <!-- Parent Title -->
+                <button
+                    class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition"
+                    data-accordion-btn>
+                    <i class="fas fa-calculator mr-2 w-4 text-center"></i>
+                    <span class="flex-1 text-left">Accounting</span>
+                    <!-- Chevron -->
+                    <i class="fa fa-chevron-down ml-auto transform transition-all duration-200"></i>
+                </button>
+
+                <!-- Level 2 Sub-items -->
+                <div class="acc-children hidden flex-col ml-6 border-l border-gray-700" data-accordion-content>
+                    <!-- Child #1 -->
+                    <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+                        Journal Entries
+                    </a>
+                    <!-- Child #1 -->
+                    <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+                        General Ledger
+                    </a>
+
+
+                    <!-- Child #3 -->
+                    <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+                        Chart of Accounts
+                    </a>
+
+                    <!-- Child #3 -->
+                    <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+                        Reporting
+                    </a>
+                </div>
+            </div>
+
+            <!-- Example Parent #3 with sub-levels -->
+            <div class="acc-parent">
+                <button
+                    class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition"
+                    data-accordion-btn>
+                    <i class="fa fa-file-invoice-dollar mr-2 w-4 text-center"></i>
+                    <span class="flex-1 text-left">Invoices</span>
+                    <i class="fa fa-chevron-down ml-auto transform transition-all duration-200"></i>
+                </button>
+                <div class="acc-children hidden flex-col ml-6 border-l border-gray-700" data-accordion-content>
+                    <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+                        Unpaid
+                    </a>
+                    <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+                        Paid
+                    </a>
+                    <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+                        Overdue
+                    </a>
+                </div>
+            </div>
+            <!-- Add more parent items or children as needed -->
+        </nav>
+
+        <!-- Footer w/ Profile Info -->
+        <div class="p-4 border-t border-gray-700 flex items-center space-x-3">
+            <!-- Example avatar -->
+            <img src="https://via.placeholder.com/40" alt="User" class="w-10 h-10 rounded-full" />
+            <div class="flex-1">
+                <div class="text-sm font-semibold">John Doe</div>
+                <div class="text-xs text-gray-300">Administrator</div>
+            </div>
+            <!-- Example logout icon -->
+            <a href="#" class="hover:text-gray-400">
+                <i class="fa fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </aside>
+
+    <script>
+        // Accordion logic with single-open behavior
+        // For each .acc-parent, clicking [data-accordion-btn] toggles that sub-menu
+        // and closes siblings at the same level.
+        const parentMenus = document.querySelectorAll('.acc-parent');
+
+        parentMenus.forEach((parent) => {
+            const toggleBtn = parent.querySelector('[data-accordion-btn]');
+            const childrenContainer = parent.querySelector('[data-accordion-content]');
+
+            if (toggleBtn && childrenContainer) {
+                toggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+
+                    // Close siblings on the same level
+                    const siblings = parent.parentElement.querySelectorAll('.acc-parent');
+                    siblings.forEach((sib) => {
+                        if (sib !== parent) {
+                            const sibBtn = sib.querySelector('[data-accordion-btn]');
+                            const sibContent = sib.querySelector('[data-accordion-content]');
+                            if (sibContent && !sibContent.classList.contains('hidden')) {
+                                sibContent.classList.add('hidden');
+                                // Rotate chevron back
+                                const sibChevron = sibBtn.querySelector('.fa-chevron-down');
+                                sibChevron && sibChevron.classList.remove('rotate-180');
+                            }
+                        }
+                    });
+
+                    // Toggle this sub-menu
+                    childrenContainer.classList.toggle('hidden');
+
+                    // Rotate chevron
+                    const chevron = toggleBtn.querySelector('.fa-chevron-down');
+                    chevron && chevron.classList.toggle('rotate-180');
+                });
+            }
+        });
+    </script>
+
+
+
+    <!-- OVERLAY (mobile) -->
+    <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <!-- Notice md:ml-64 here so on desktop, content is offset by 64px margin -->
+    <div class="flex-1 flex flex-col md:ml-64">
+        <!-- Top Nav -->
+        <header class="bg-white text-gray-700 shadow-sm px-4 py-2 flex items-center justify-between">
+            <!-- Left side: title and mobile toggle -->
+            <div class="flex items-center space-x-3">
+                <!-- Hamburger toggle (mobile only) -->
+                <button id="hamburgerBtn" class="md:hidden text-gray-500 focus:outline-none">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <!-- Title / Page Heading -->
+                <div class="page-heading py-1" id="pageHeading">
+                    <h2 class="page-title text-xl font-semibold flex items-center space-x-2" id="pageTitle">
+                        <i class="fa fa-lg fa-clipboard" aria-hidden="true"></i>
+                        <span id="main-title">Work Order PM-2002</span>
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Right side: icon links -->
+            <div class="flex space-x-4 items-center text-gray-500">
+                <!-- To-Do List -->
+                <a href="/scheduler/add-new-todo" title="Create a To-Do" class="hover:text-gray-800">
+                    <i class="fas fa-tasks" aria-hidden="true"></i>
+                </a>
+
+                <!-- Messaging/Inbox -->
+                <a href="#" id="messenger-open" class="relative hover:text-gray-800">
+                    <i class="fas fa-comment" aria-hidden="true"></i>
+                    <!-- If you need a badge/pulse for unread messages: -->
+                    <div id="notify-badge-msg" class="absolute top-0 right-0" style="display: none;">
+                        <div class="notify-pulse"></div>
+                        <div class="notify-marker"></div>
+                    </div>
+                </a>
+
+                <!-- Settings -->
+                <a href="/settings" class="hover:text-gray-800">
+                    <i class="fa fa-lg fa-cog" aria-hidden="true"></i>
+                </a>
+
+                <!-- Notifications -->
+                <a href="/notifications" class="relative hover:text-gray-800">
+                    <i class="fa fa-lg fa-bell" aria-hidden="true"></i>
+                    <!-- Notification badge if needed -->
+                    <div id="notify-badge" class="absolute top-0 right-0" style="display: none;">
+                        <div class="notify-pulse"></div>
+                        <div class="notify-marker"></div>
+                    </div>
+                </a>
+
+                <!-- Profile -->
+                <a href="/resources/employees/edit/62149" class="hover:text-gray-800">
+                    <i class="fa fa-lg fa-user" aria-hidden="true"></i>
+                </a>
+            </div>
+        </header>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="p-2 md:p-2">
+            <!-- Breadcrumb -->
+            <div class="md:block">
+                <nav class="py-2 text-sm" aria-label="Breadcrumb">
+                    <ol class="flex items-center space-x-2">
+                        <!-- Home -->
+                        <li>
+                            <a href="/" class="text-blue-600 hover:underline hover:text-blue-800">
+                                Home
+                            </a>
+                        </li>
+                        <!-- Separator -->
+                        <li class="text-gray-400">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 
+                  4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </li>
+
+                        <!-- Customers -->
+                        <li>
+                            <a href="/customers" class="text-blue-600 hover:underline hover:text-blue-800">
+                                Dev
+                            </a>
+                        </li>
+                        <!-- Separator -->
+                        <li class="text-gray-400">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 
+                  4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </li>
+
+                        <!-- Current page -->
+                        <li class="text-gray-500" aria-current="page">
+                            App Info
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+
+            <!-- =========================================== -->
+            <!-- MAIN_CONTENT_START (docblock placeholder) -->
+            <!-- =========================================== -->
+
+            <!-- MAIN CONTENT START -->
+            <div class="flex flex-col lg:flex-row gap-4">
+                <!-- LEFT COLUMN: Work Order / Landlord / Property Details -->
+                <div class="w-full lg:w-1/4 space-y-4">
+                    <!-- Work Order Details Card -->
+                    <div class="max-w-md mx-auto p-4 bg-white rounded-md shadow">
+                        <!-- Header -->
+                        <div>
+                            <h2 class="text-lg font-semibold text-gray-800">
+                                Work Order Details
+                            </h2>
+                        </div>
+
+                        <!-- Row: WO info on left, pill on right -->
+                        <div class="flex items-center justify-between mt-2">
+                            <!-- Left block: WO # & Type -->
+                            <div>
+                                <p class="text-base font-semibold text-gray-800">
+                                    WO #PM-2002
+                                </p>
+                                <p class="text-sm text-gray-600">
+                                    Rental Unit Turn
+                                </p>
+                            </div>
+                            <!-- Status Dropdown with Colored Dots -->
+                            <div class="relative inline-block text-left">
+                                <!-- Dropdown Button (Status Pill) -->
+                                <button id="statusDropdownButton" type="button"
+                                    class="inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-semibold text-white focus:outline-none"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <!-- Colored dot -->
+                                    <span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                                    In Progress
+                                    <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </button>
+
+                                <!-- Dropdown Menu -->
+                                <div id="statusDropdownMenu"
+                                    class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden"
+                                    role="menu" aria-orientation="vertical" aria-labelledby="statusDropdownButton">
+                                    <div class="py-1">
+                                        <!-- Dropdown Items with Colored Dots -->
+                                        <a href="#" data-status="In Progress" data-bg="bg-green-500"
+                                            class="dropdown-item block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100"
+                                            role="menuitem">
+                                            <span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                                            In Progress
+                                        </a>
+                                        <a href="#" data-status="Completed" data-bg="bg-blue-500"
+                                            class="dropdown-item block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100"
+                                            role="menuitem">
+                                            <span class="inline-block w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+                                            Completed
+                                        </a>
+                                        <a href="#" data-status="Pending" data-bg="bg-yellow-500"
+                                            class="dropdown-item block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100"
+                                            role="menuitem">
+                                            <span class="inline-block w-2 h-2 rounded-full bg-yellow-500 mr-2"></span>
+                                            Pending
+                                        </a>
+                                        <a href="#" data-status="Cancelled" data-bg="bg-red-500"
+                                            class="dropdown-item block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100"
+                                            role="menuitem">
+                                            <span class="inline-block w-2 h-2 rounded-full bg-red-500 mr-2"></span>
+                                            Cancelled
+                                        </a>
+                                        <a href="#" data-status="On Hold" data-bg="bg-purple-500"
+                                            class="dropdown-item block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100"
+                                            role="menuitem">
+                                            <span class="inline-block w-2 h-2 rounded-full bg-purple-500 mr-2"></span>
+                                            On Hold
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- JavaScript to handle dropdown toggling and updating the status -->
+                            <script>
+                                const statusDropdownButton = document.getElementById('statusDropdownButton');
+                                const statusDropdownMenu = document.getElementById('statusDropdownMenu');
+                                const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+                                // Toggle dropdown visibility when clicking the button
+                                statusDropdownButton.addEventListener('click', function (e) {
+                                    e.stopPropagation();
+                                    statusDropdownMenu.classList.toggle('hidden');
+                                });
+
+                                // Update the button's text and colored dot when a dropdown item is selected
+                                dropdownItems.forEach((item) => {
+                                    item.addEventListener('click', function (e) {
+                                        e.preventDefault();
+                                        const newStatus = this.getAttribute('data-status');
+                                        const newBgClass = this.getAttribute('data-bg');
+
+                                        // Update button innerHTML to include a new dot and status text
+                                        statusDropdownButton.innerHTML =
+                                            `<span class="inline-block w-2 h-2 rounded-full ${newBgClass} mr-2"></span>` +
+                                            newStatus +
+                                            ` <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+           </svg>`;
+
+                                        // Update the button's background color by removing old classes and adding the new one
+                                        statusDropdownButton.classList.remove('bg-green-500', 'bg-blue-500', 'bg-yellow-500', 'bg-red-500', 'bg-purple-500');
+                                        statusDropdownButton.classList.add(newBgClass);
+
+                                        // Hide the dropdown menu after selection
+                                        statusDropdownMenu.classList.add('hidden');
+                                    });
+                                });
+
+                                // Close the dropdown if clicking outside of it
+                                document.addEventListener('click', function (e) {
+                                    if (!statusDropdownButton.contains(e.target)) {
+                                        statusDropdownMenu.classList.add('hidden');
+                                    }
+                                });
+                            </script>
+
+                        </div>
+
+                        <hr class="my-4 border-gray-200" />
+
+                        <!-- 
+          2 columns on mobile (grid-cols-2), switch to 1 column (md:grid-cols-1) on bigger screens
+        -->
+                        <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
+                            <!-- Column 1 -->
+                            <div>
+                                <!-- Order Info -->
+                                <!-- Order Info -->
+                                <ul class="text-sm text-gray-700 space-y-2" id="orderInfo">
+                                    <h3 class="text-base font-semibold mb-2">Order Info</h3>
+                                    <li class="flex justify-between items-center">
+                                        <span class="font-medium">Billing Type:</span>
+                                        <span>Per Work Order</span>
+                                    </li>
+                                    <li class="flex justify-between items-center">
+                                        <span class="font-medium">Order Date:</span>
+                                        <div>
+                                            <span id="orderDate">2025-02-20</span>
+                                            <span id="orderDays" class="italic text-gray-500">(1 wk)</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex justify-between items-center">
+                                        <span class="font-medium">Due Date:</span>
+                                        <div>
+                                            <span id="dueDate" class="text-red-500">2025-02-20</span>
+                                            <span id="dueStatus" class="text-red-500"><i
+                                                    class="fas fa-exclamation text-red-500"></i> (1 wk)</span>
+                                        </div>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span class="font-medium">Parent Order:</span>
+                                        <a href="#" class="text-blue-600 hover:underline">PM-1999</a>
+                                    </li>
+                                </ul>
+
+
+                            </div>
+
+                            <!-- Column 2 -->
+                            <div>
+                                <!-- Customer Info -->
+                                <h3 class="text-base font-semibold mb-2">Customer Info</h3>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li class="flex items-center">
+                                        <i class="fa fa-user text-gray-500 w-4"></i>
+                                        <span class="ml-2">Jane Doe</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fa fa-building text-gray-500 w-4"></i>
+                                        <span class="ml-2">XYZ Properties</span>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fa fa-envelope text-gray-500 w-4"></i>
+                                        <a href="mailto:jane@xyzproperties.com"
+                                            class="ml-2 text-blue-600 hover:underline">
+                                            jane@xyzproperties.com
+                                        </a>
+                                    </li>
+                                    <li class="flex items-center">
+                                        <i class="fa fa-phone text-gray-500 w-4"></i>
+                                        <span class="ml-2">(555) 234-5678</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-gray-200 my-2"></div>
+
+                    <!-- Property Details Card -->
+                    <div class="max-w-md mx-auto bg-white rounded-md shadow overflow-hidden">
+                        <!-- Header -->
+                        <div class="p-4">
+                            <h2 class="text-lg font-semibold text-gray-800">Property Details</h2>
+                        </div>
+
+                        <!-- House Image and Full-Width Banner -->
+                        <div>
+                            <!-- House Image Placeholder -->
+                            <img class="w-full h-48 object-cover" src="https://via.placeholder.com/400x300?text=House"
+                                alt="House Placeholder" />
+
+                            <!-- Banner with Property Info (full width) -->
+                            <div class="w-full bg-green-600">
+                                <div class="p-3 text-white text-sm">
+                                    <!-- Address Row -->
+                                    <div class="flex items-center mb-2">
+                                        <i class="fas fa-map-marker-alt mr-2"></i>
+                                        <span class="font-medium">123 Greenway Dr, Springfield, IL</span>
+                                    </div>
+                                    <!-- Inline Details Row -->
+                                    <div class="flex items-center justify-between flex-wrap">
+                                        <div class="flex items-center mr-3">
+                                            <i class="fas fa-bed mr-1"></i>
+                                            <span>3 Beds</span>
+                                        </div>
+                                        <div class="flex items-center mr-3">
+                                            <i class="fas fa-bath mr-1"></i>
+                                            <span>2 Baths</span>
+                                        </div>
+                                        <div class="flex items-center mr-3">
+                                            <i class="fas fa-ruler-combined mr-1"></i>
+                                            <span>1,500 Sq Ft</span>
+                                        </div>
+                                        <div class="flex items-center">
+                                            <i class="fas fa-tree mr-1"></i>
+                                            <span>0.5 Acre</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Divider -->
+                        <hr class="my-4 border-white" />
+
+                        <!-- Information Grid (remains unchanged from your original code) -->
+                        <div class="px-4 pb-4 grid grid-cols-2 md:grid-cols-1 gap-4">
+                            <!-- Column 1: Property Info -->
+                            <div>
+                                <h3 class="text-base font-semibold mb-2">Property Info</h3>
+                                <ul class="text-sm text-gray-700 space-y-2">
+
+                                    <li class="flex justify-between">
+                                        <span class="font-medium">Lawn Size:</span>
+                                        <span>0.5 Acre</span>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span class="font-medium">Service Frequency:</span>
+                                        <span>Weekly</span>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span class="font-medium">Irrigation:</span>
+                                        <span>Yes</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!-- Column 2: Additional Details -->
+                            <div>
+                                <h3 class="text-base font-semibold mb-2">Additional Details</h3>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li class="flex justify-between">
+                                        <span class="font-medium">Last Service:</span>
+                                        <span>2025-02-15</span>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span class="font-medium">Next Service:</span>
+                                        <span>2025-02-22</span>
+                                    </li>
+                                    <li class="flex justify-between">
+                                        <span class="font-medium">Special Instructions:</span>
+                                        <span class="text-right">Mulching required</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- RIGHT COLUMN: Tabs & Detailed Content -->
+  <!-- RIGHT COLUMN: Tabs & Detailed Content -->
+<div class="w-full lg:w-3/4">
+    <!-- Wrap everything in a single white container -->
+    <div class="bg-white rounded shadow">
+  
+      <!-- NAVIGATION (burger + tabs) -->
+      <!-- Mobile Burger Toggle (visible only on mobile) -->
+      <div class="md:hidden relative px-4 pt-4">
+        <button
+          id="workorderTabsBurger"
+          class="flex items-center justify-between w-full px-4 py-2 bg-gray-100 rounded focus:outline-none"
+        >
+          <span id="workorderTabsBurgerLabel" class="text-sm font-medium text-gray-700">
+            Timeline
+          </span>
+          <svg
+            class="ml-2 h-5 w-5 text-gray-500"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <!-- Mobile Dropdown Menu -->
+        <div
+          id="workorderTabsDropdown"
+          class="absolute left-4 right-4 mt-1 bg-white border border-gray-200 rounded shadow-lg z-10 hidden"
+        >
+          <ul>
+            <li>
+              <button data-tab="timeline" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Timeline
+              </button>
+            </li>
+            <li>
+              <button data-tab="tasks" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Task Details &amp; Line Items
+              </button>
+            </li>
+            <li>
+              <button data-tab="procurement" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Material Procurement
+              </button>
+            </li>
+            <li>
+              <button data-tab="appointments" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Service Appointments
+              </button>
+            </li>
+            <li>
+              <button data-tab="notes" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Notes
+              </button>
+            </li>
+            <li>
+              <button data-tab="invoices" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                Invoices
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div> <!-- <-- Make sure this DIV is closed here! -->
+  
+      <!-- Desktop Horizontal Tabs (visible only on md and larger) -->
+      <ul class="hidden md:flex space-x-4 text-sm font-medium px-4 pt-4">
+        <li>
+          <button data-tab="timeline" class="tab-btn pb-2 border-b-2 border-green-500 text-green-600 hover:border-indigo-300 focus:border-indigo-600">
+            Timeline
+          </button>
+        </li>
+        <li>
+          <button data-tab="tasks" class="tab-btn pb-2 border-b-2 border-transparent hover:border-indigo-300 focus:border-indigo-600">
+            Task Details &amp; Line Items
+          </button>
+        </li>
+        <li>
+          <button data-tab="procurement" class="tab-btn pb-2 border-b-2 border-transparent hover:border-indigo-300 focus:border-indigo-600">
+            Material Procurement
+          </button>
+        </li>
+        <li>
+          <button data-tab="appointments" class="tab-btn pb-2 border-b-2 border-transparent hover:border-indigo-300 focus:border-indigo-600">
+            Service Appointments
+          </button>
+        </li>
+        <li>
+          <button data-tab="notes" class="tab-btn pb-2 border-b-2 border-transparent hover:border-indigo-300 focus:border-indigo-600">
+            Notes
+          </button>
+        </li>
+        <li>
+          <button data-tab="invoices" class="tab-btn pb-2 border-b-2 border-transparent hover:border-indigo-300 focus:border-indigo-600">
+            Invoices
+          </button>
+        </li>
+      </ul>
+  
+      <!-- Tabs Content -->
+      <div class="p-4 text-sm">
+        <!-- Timeline Tab -->
+        <div id="timeline" class="tab-content">
+          <h3 class="font-semibold mb-2">Timeline</h3>
+          <ul class="list-disc ml-5 space-y-1">
+            <li><strong>2025-01-28:</strong> Request received from landlord.</li>
+            <li><strong>2025-01-30:</strong> Initial inspection completed; issues identified.</li>
+            <li><strong>2025-02-02:</strong> Task list and line items approved by landlord.</li>
+            <li><strong>2025-02-05:</strong> Material procurement initiated.</li>
+            <li><strong>2025-02-10:</strong> First service appointment scheduled.</li>
+          </ul>
+        </div>
+  
+        <!-- Task Details & Line Items Tab -->
+        <div id="tasks" class="tab-content hidden">
+          <div class="flex justify-between items-center mb-4">
+            <p class="font-semibold">Task Details &amp; Line Items</p>
+            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xs">
+              Add Task
+            </button>
+          </div>
+          <table class="min-w-full text-left text-sm">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-3 py-2">Task Description</th>
+                <th class="px-3 py-2">Quantity</th>
+                <th class="px-3 py-2">Unit Price</th>
+                <th class="px-3 py-2">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="px-3 py-2">Deep Cleaning (vacant unit)</td>
+                <td class="px-3 py-2">1</td>
+                <td class="px-3 py-2">$250.00</td>
+                <td class="px-3 py-2">$250.00</td>
+              </tr>
+              <tr class="border-b bg-gray-50">
+                <td class="px-3 py-2">Minor Repairs (fixtures, door handles)</td>
+                <td class="px-3 py-2">1</td>
+                <td class="px-3 py-2">$150.00</td>
+                <td class="px-3 py-2">$150.00</td>
+              </tr>
+              <tr class="border-b">
+                <td class="px-3 py-2">Painting Touch-Up (hallway &amp; common areas)</td>
+                <td class="px-3 py-2">1</td>
+                <td class="px-3 py-2">$300.00</td>
+                <td class="px-3 py-2">$300.00</td>
+              </tr>
+              <tr class="font-semibold">
+                <td class="px-3 py-2">Grand Total</td>
+                <td class="px-3 py-2"></td>
+                <td class="px-3 py-2"></td>
+                <td class="px-3 py-2">$700.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <!-- Material Procurement Tab -->
+        <div id="procurement" class="tab-content hidden">
+          <div class="flex justify-between items-center mb-4">
+            <p class="font-semibold">Material Procurement</p>
+            <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded text-xs">
+              Add Material
+            </button>
+          </div>
+          <table class="min-w-full text-left text-sm">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-3 py-2">Material</th>
+                <th class="px-3 py-2">Quantity</th>
+                <th class="px-3 py-2">Cost</th>
+                <th class="px-3 py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="px-3 py-2">Cleaning Supplies</td>
+                <td class="px-3 py-2">1 Set</td>
+                <td class="px-3 py-2">$75.00</td>
+                <td class="px-3 py-2">Ordered</td>
+              </tr>
+              <tr class="border-b bg-gray-50">
+                <td class="px-3 py-2">Touch-up Paint</td>
+                <td class="px-3 py-2">2 Gallons</td>
+                <td class="px-3 py-2">$120.00</td>
+                <td class="px-3 py-2">Pending</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+  
+        <!-- Service Appointments Tab -->
+        <div id="appointments" class="tab-content hidden">
+          <div class="flex justify-between items-center mb-4">
+            <p class="font-semibold">Service Appointments</p>
+            <button class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded text-xs">
+              Schedule Appointment
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-left text-sm">
+              <thead class="bg-gray-100">
+                <tr>
+                  <th class="px-3 py-2">Appointment #</th>
+                  <th class="px-3 py-2">Date</th>
+                  <th class="px-3 py-2">Task</th>
+                  <th class="px-3 py-2">Assigned To</th>
+                  <th class="px-3 py-2">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b">
+                  <td class="px-3 py-2">A-001</td>
+                  <td class="px-3 py-2">2025-02-10</td>
+                  <td class="px-3 py-2">Initial Inspection</td>
+                  <td class="px-3 py-2">Inspector Bob</td>
+                  <td class="px-3 py-2">Completed</td>
+                </tr>
+                <tr class="border-b bg-gray-50">
+                  <td class="px-3 py-2">A-002</td>
+                  <td class="px-3 py-2">2025-02-15</td>
+                  <td class="px-3 py-2">Cleaning &amp; Repairs</td>
+                  <td class="px-3 py-2">Team Alpha</td>
+                  <td class="px-3 py-2">Scheduled</td>
+                </tr>
+                <tr>
+                  <td class="px-3 py-2">A-003</td>
+                  <td class="px-3 py-2">2025-02-18</td>
+                  <td class="px-3 py-2">Final Walk-through</td>
+                  <td class="px-3 py-2">Inspector Bob</td>
+                  <td class="px-3 py-2">Pending</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+  
+        <!-- Notes Tab -->
+        <div id="notes" class="tab-content hidden">
+          <h3 class="font-semibold mb-2">Notes</h3>
+          <ul class="list-disc ml-5 space-y-1">
+            <li>Document all damaged fixtures before repairs.</li>
+            <li>Verify vendor quotes for cleaning supplies.</li>
+            <li>Landlord requests detailed invoice breakdown upon completion.</li>
+          </ul>
+        </div>
+  
+        <!-- Invoices Tab -->
+        <div id="invoices" class="tab-content hidden">
+          <h3 class="font-semibold mb-2">Invoices</h3>
+          <table class="min-w-full text-left text-sm">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-3 py-2">Invoice #</th>
+                <th class="px-3 py-2">Date</th>
+                <th class="px-3 py-2">Amount</th>
+                <th class="px-3 py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b">
+                <td class="px-3 py-2">INV-2001</td>
+                <td class="px-3 py-2">2025-02-21</td>
+                <td class="px-3 py-2">$700.00</td>
+                <td class="px-3 py-2">Pending</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+      <!-- Tab Toggle Script -->
+  <script>
+    // Desktop tab toggler
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+  
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active classes from all desktop tab buttons
+        tabButtons.forEach(b => b.classList.remove('active', 'border-green-500', 'text-green-600'));
+        // Hide all tab contents
+        tabContents.forEach(tc => tc.classList.add('hidden'));
+        
+        // Activate clicked button and show its content
+        btn.classList.add('active', 'border-green-500', 'text-green-600');
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById(tabId).classList.remove('hidden');
+      });
+    });
+  
+    // Mobile burger toggle for this tab set
+    const workorderTabsBurger = document.getElementById('workorderTabsBurger');
+    const workorderTabsDropdown = document.getElementById('workorderTabsDropdown');
+    const mobileTabButtons = document.querySelectorAll('.mobile-tab-btn');
+    const workorderTabsBurgerLabel = document.getElementById('workorderTabsBurgerLabel');
+  
+    workorderTabsBurger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      workorderTabsDropdown.classList.toggle('hidden');
+    });
+  
+    mobileTabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Hide the mobile dropdown
+        workorderTabsDropdown.classList.add('hidden');
+        // Update burger label text to the selected tab
+        workorderTabsBurgerLabel.textContent = btn.textContent.trim();
+        // Trigger the corresponding tab content
+        const selectedTab = btn.getAttribute('data-tab');
+        // Remove active classes from desktop tab buttons (if any)
+        tabButtons.forEach(b => b.classList.remove('active', 'border-green-500', 'text-green-600'));
+        // Hide all tab contents
+        tabContents.forEach(tc => tc.classList.add('hidden'));
+        // Show the selected tab content
+        document.getElementById(selectedTab).classList.remove('hidden');
+      });
+    });
+  
+    // Hide mobile dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!workorderTabsBurger.contains(e.target)) {
+        workorderTabsDropdown.classList.add('hidden');
+      }
+    });
+  </script>
+  </div>
+  
+                </div>
+         
+
+            <!-- ========================================= -->
+            <!-- MAIN_CONTENT_END (docblock placeholder) -->
+            <!-- ========================================= -->
+
+        </main>
+        <!-- End main content area -->
+    </div>
+    <!-- end .flex-1 flex flex-col md:ml-64 -->
+
+    <!-- Toggle Script -->
+    <script>
+        const hamburgerBtn = document.querySelector("#hamburgerBtn");
+        const sidebar = document.querySelector("#sidebar");
+        const overlay = document.querySelector("#sidebarOverlay");
+
+        hamburgerBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("-translate-x-full");
+            overlay.classList.toggle("hidden");
+        });
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.add("-translate-x-full");
+            overlay.classList.add("hidden");
+        });
+    </script>
+</body>
+
+</html>

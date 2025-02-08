@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>My App - Lawn Care Service Order</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (Dev CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="bg-gray-100 text-gray-800 min-h-screen flex">
+  <!-- SIDEBAR (unchanged) -->
+  <aside id="sidebar" class="bg-gray-800 text-white fixed inset-y-0 left-0 w-64 transform -translate-x-full md:translate-x-0 transition-transform duration-200 z-50 flex flex-col">
+    <!-- Header / Logo -->
+    <div class="p-4 bg-gray-900 flex items-center">
+      <i class="fa fa-home mr-2"></i>
+      <span class="font-semibold text-lg">MyApp</span>
+    </div>
+    <!-- Main Menu (Scroll if needed) -->
+    <nav id="sidebarMenu" class="flex-1 overflow-y-auto px-2 py-3 space-y-1">
+      <!-- Example Parent #1 (No sub-items) -->
+      <a href="#" class="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition">
+        <i class="fa fa-tachometer-alt mr-2 w-4 text-center"></i>
+        <span>Dashboard</span>
+      </a>
+      <!-- Example Parent #2 with sub-levels -->
+      <div class="acc-parent">
+        <button class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition" data-accordion-btn>
+          <i class="fa fa-users mr-2 w-4 text-center"></i>
+          <span class="flex-1 text-left">Customers</span>
+          <i class="fa fa-chevron-down ml-auto transform transition-all duration-200"></i>
+        </button>
+        <div class="acc-children hidden flex-col ml-6 border-l border-gray-700" data-accordion-content>
+          <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+            All Customers
+          </a>
+          <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+            Add New
+          </a>
+        </div>
+      </div>
+      <!-- Example Parent #3 with sub-levels -->
+      <div class="acc-parent">
+        <button class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition" data-accordion-btn>
+          <i class="fa fa-file-invoice-dollar mr-2 w-4 text-center"></i>
+          <span class="flex-1 text-left">Invoices</span>
+          <i class="fa fa-chevron-down ml-auto transform transition-all duration-200"></i>
+        </button>
+        <div class="acc-children hidden flex-col ml-6 border-l border-gray-700" data-accordion-content>
+          <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+            Unpaid
+          </a>
+          <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+            Paid
+          </a>
+          <a href="#" class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700">
+            Overdue
+          </a>
+        </div>
+      </div>
+    </nav>
+    <!-- Footer w/ Profile Info -->
+    <div class="p-4 border-t border-gray-700 flex items-center space-x-3">
+      <img src="https://via.placeholder.com/40" alt="User" class="w-10 h-10 rounded-full" />
+      <div class="flex-1">
+        <div class="text-sm font-semibold">John Doe</div>
+        <div class="text-xs text-gray-300">Administrator</div>
+      </div>
+      <a href="#" class="hover:text-gray-400">
+        <i class="fa fa-sign-out-alt"></i>
+      </a>
+    </div>
+  </aside>
+
+  <script>
+    // Accordion logic with single-open behavior
+    const parentMenus = document.querySelectorAll('.acc-parent');
+    parentMenus.forEach((parent) => {
+      const toggleBtn = parent.querySelector('[data-accordion-btn]');
+      const childrenContainer = parent.querySelector('[data-accordion-content]');
+      if (toggleBtn && childrenContainer) {
+        toggleBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const siblings = parent.parentElement.querySelectorAll('.acc-parent');
+          siblings.forEach((sib) => {
+            if (sib !== parent) {
+              const sibBtn = sib.querySelector('[data-accordion-btn]');
+              const sibContent = sib.querySelector('[data-accordion-content]');
+              if (sibContent && !sibContent.classList.contains('hidden')) {
+                sibContent.classList.add('hidden');
+                const sibChevron = sibBtn.querySelector('.fa-chevron-down');
+                sibChevron && sibChevron.classList.remove('rotate-180');
+              }
+            }
+          });
+          childrenContainer.classList.toggle('hidden');
+          const chevron = toggleBtn.querySelector('.fa-chevron-down');
+          chevron && chevron.classList.toggle('rotate-180');
+        });
+      }
+    });
+  </script>
+
+  <!-- OVERLAY (mobile) -->
+  <div id="sidebarOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <div class="flex-1 flex flex-col md:ml-64">
+    <!-- Top Nav -->
+    <header class="bg-white text-gray-700 shadow-sm px-4 py-2 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <button id="hamburgerBtn" class="md:hidden text-gray-500 focus:outline-none">
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="page-heading py-1" id="pageHeading">
+          <h2 class="page-title text-xl font-semibold flex items-center space-x-2" id="pageTitle">
+            <i class="fa fa-lg fa-clipboard" aria-hidden="true"></i>
+            <span id="main-title">Lawn Care Order LC-3001</span>
+          </h2>
+        </div>
+      </div>
+      <div class="flex space-x-4 items-center text-gray-500">
+        <a href="/scheduler/add-new-todo" title="Create a To-Do" class="hover:text-gray-800">
+          <i class="fas fa-tasks" aria-hidden="true"></i>
+        </a>
+        <a href="#" id="messenger-open" class="relative hover:text-gray-800">
+          <i class="fas fa-comment" aria-hidden="true"></i>
+          <div id="notify-badge-msg" class="absolute top-0 right-0" style="display: none;">
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+        <a href="/settings" class="hover:text-gray-800">
+          <i class="fa fa-lg fa-cog" aria-hidden="true"></i>
+        </a>
+        <a href="/notifications" class="relative hover:text-gray-800">
+          <i class="fa fa-lg fa-bell" aria-hidden="true"></i>
+          <div id="notify-badge" class="absolute top-0 right-0" style="display: none;">
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+        <a href="/resources/employees/edit/62149" class="hover:text-gray-800">
+          <i class="fa fa-lg fa-user" aria-hidden="true"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="p-2 md:p-2">
+      <!-- Breadcrumb -->
+      <div class="md:block">
+        <nav class="py-2 text-sm" aria-label="Breadcrumb">
+          <ol class="flex items-center space-x-2">
+            <li>
+              <a href="/" class="text-blue-600 hover:underline hover:text-blue-800">Home</a>
+            </li>
+            <li class="text-gray-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </li>
+            <li>
+              <a href="/lawncare" class="text-blue-600 hover:underline hover:text-blue-800">Lawn Care</a>
+            </li>
+            <li class="text-gray-400">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            </li>
+            <li class="text-gray-500" aria-current="page">Service Order</li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- MAIN CONTENT START -->
+      <div class="flex flex-col lg:flex-row gap-4">
+        <!-- LEFT COLUMN: Lawn Care Order & Lawn Details -->
+        <div class="w-full lg:w-1/4 space-y-4">
+          <!-- Lawn Care Order Details Card -->
+          <div class="max-w-md mx-auto p-4 bg-white rounded-md shadow">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-800">Lawn Care Order Details</h2>
+            </div>
+            <div class="flex items-center justify-between mt-2">
+              <div>
+                <p class="text-base font-semibold text-gray-800">Order #LC-3001</p>
+                <p class="text-sm text-gray-600">Lawn Mowing &amp; Trimming</p>
+              </div>
+              <!-- Status Dropdown -->
+              <div class="relative inline-block text-left">
+                <button id="statusDropdownButton" type="button" class="inline-flex items-center justify-center rounded-full bg-green-500 px-3 py-1 text-xs font-semibold text-white focus:outline-none" aria-haspopup="true" aria-expanded="false">
+                  <span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                  In Progress
+                  <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <div id="statusDropdownMenu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden" role="menu" aria-orientation="vertical" aria-labelledby="statusDropdownButton">
+                  <div class="py-1">
+                    <a href="#" data-status="In Progress" data-bg="bg-green-500" class="dropdown-item block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100" role="menuitem">
+                      <span class="inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                      In Progress
+                    </a>
+                    <a href="#" data-status="Completed" data-bg="bg-blue-500" class="dropdown-item block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100" role="menuitem">
+                      <span class="inline-block w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+                      Completed
+                    </a>
+                    <a href="#" data-status="Scheduled" data-bg="bg-yellow-500" class="dropdown-item block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100" role="menuitem">
+                      <span class="inline-block w-2 h-2 rounded-full bg-yellow-500 mr-2"></span>
+                      Scheduled
+                    </a>
+                    <a href="#" data-status="Cancelled" data-bg="bg-red-500" class="dropdown-item block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100" role="menuitem">
+                      <span class="inline-block w-2 h-2 rounded-full bg-red-500 mr-2"></span>
+                      Cancelled
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <script>
+                const statusDropdownButton = document.getElementById('statusDropdownButton');
+                const statusDropdownMenu = document.getElementById('statusDropdownMenu');
+                const dropdownItems = document.querySelectorAll('.dropdown-item');
+                statusDropdownButton.addEventListener('click', function (e) {
+                  e.stopPropagation();
+                  statusDropdownMenu.classList.toggle('hidden');
+                });
+                dropdownItems.forEach((item) => {
+                  item.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const newStatus = this.getAttribute('data-status');
+                    const newBgClass = this.getAttribute('data-bg');
+                    statusDropdownButton.innerHTML =
+                      `<span class="inline-block w-2 h-2 rounded-full ${newBgClass} mr-2"></span>` +
+                      newStatus +
+                      ` <svg class="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                      </svg>`;
+                    statusDropdownButton.classList.remove('bg-green-500', 'bg-blue-500', 'bg-yellow-500', 'bg-red-500');
+                    statusDropdownButton.classList.add(newBgClass);
+                    statusDropdownMenu.classList.add('hidden');
+                  });
+                });
+                document.addEventListener('click', function (e) {
+                  if (!statusDropdownButton.contains(e.target)) {
+                    statusDropdownMenu.classList.add('hidden');
+                  }
+                });
+              </script>
+            </div>
+            <hr class="my-4 border-gray-200" />
+            <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
+              <div>
+                <ul class="text-sm text-gray-700 space-y-2" id="orderInfo">
+                  <h3 class="text-base font-semibold mb-2">Order Info</h3>
+                  <li class="flex justify-between items-center">
+                    <span class="font-medium">Billing Type:</span>
+                    <span>Per Service Visit</span>
+                  </li>
+                  <li class="flex justify-between items-center">
+                    <span class="font-medium">Order Date:</span>
+                    <div>
+                      <span id="orderDate">2025-03-01</span>
+                      <span id="orderDays" class="italic text-gray-500">(Today)</span>
+                    </div>
+                  </li>
+                  <li class="flex justify-between items-center">
+                    <span class="font-medium">Service Date:</span>
+                    <div>
+                      <span id="serviceDate" class="text-blue-500">2025-03-05</span>
+                      <span id="serviceStatus" class="text-blue-500"><i class="fas fa-info-circle"></i> (Scheduled)</span>
+                    </div>
+                  </li>
+                  <li class="flex justify-between">
+                    <span class="font-medium">Parent Order:</span>
+                    <a href="#" class="text-blue-600 hover:underline">LC-3000</a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="text-base font-semibold mb-2">Customer Info</h3>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li class="flex items-center">
+                    <i class="fa fa-user text-gray-500 w-4"></i>
+                    <span class="ml-2">Alice Green</span>
+                  </li>
+                  <li class="flex items-center">
+                    <i class="fa fa-building text-gray-500 w-4"></i>
+                    <span class="ml-2">Green Meadows Estates</span>
+                  </li>
+                  <li class="flex items-center">
+                    <i class="fa fa-envelope text-gray-500 w-4"></i>
+                    <a href="mailto:alice@greenmeadows.com" class="ml-2 text-blue-600 hover:underline">alice@greenmeadows.com</a>
+                  </li>
+                  <li class="flex items-center">
+                    <i class="fa fa-phone text-gray-500 w-4"></i>
+                    <span class="ml-2">(555) 987-6543</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Divider -->
+          <div class="border-t border-gray-200 my-2"></div>
+          <!-- Lawn Details Card -->
+          <div class="max-w-md lg:max-w-full mx-auto bg-white rounded-md shadow overflow-hidden">
+            <div class="p-4">
+              <h2 class="text-lg font-semibold text-gray-800">Lawn Details</h2>
+            </div>
+            <div>
+              <img class="w-full h-48 object-cover" src="https://via.placeholder.com/400x300?text=Lawn" alt="Lawn Placeholder" />
+              <div class="w-full bg-green-600">
+                <div class="p-3 text-white text-sm">
+                  <div class="flex items-center mb-2">
+                    <i class="fas fa-map-marker-alt mr-2"></i>
+                    <span class="font-medium">123 Greenway Dr, Springfield, IL</span>
+                  </div>
+                  <div class="flex items-center justify-between flex-wrap">
+                    <div class="flex items-center mr-3">
+                      <i class="fas fa-tree mr-1"></i>
+                      <span>0.75 Acre</span>
+                    </div>
+                    <div class="flex items-center mr-3">
+                      <i class="fas fa-leaf mr-1"></i>
+                      <span>Bermuda Grass</span>
+                    </div>
+                    <div class="flex items-center mr-3">
+                      <i class="fas fa-wind mr-1"></i>
+                      <span>Biweekly</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fas fa-sun mr-1"></i>
+                      <span>Sunny</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4 border-white" />
+            <div class="px-4 pb-4 grid grid-cols-2 md:grid-cols-1 gap-4">
+              <div>
+                <h3 class="text-base font-semibold mb-2">Lawn Info</h3>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li class="flex justify-between">
+                    <span class="font-medium">Lawn Area:</span>
+                    <span>0.75 Acre</span>
+                  </li>
+                  <li class="flex justify-between">
+                    <span class="font-medium">Mowing Frequency:</span>
+                    <span>Biweekly</span>
+                  </li>
+                  <li class="flex justify-between">
+                    <span class="font-medium">Irrigation:</span>
+                    <span>Yes</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 class="text-base font-semibold mb-2">Additional Details</h3>
+                <ul class="text-sm text-gray-700 space-y-2">
+                  <li class="flex justify-between">
+                    <span class="font-medium">Last Mowing:</span>
+                    <span>2025-02-25</span>
+                  </li>
+                  <li class="flex justify-between">
+                    <span class="font-medium">Next Mowing:</span>
+                    <span>2025-03-05</span>
+                  </li>
+                  <li class="flex justify-between">
+                    <span class="font-medium">Special Instructions:</span>
+                    <span class="text-right">Edge trimming required</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Tabs & Detailed Content -->
+        <div class="w-full lg:w-3/4 space-y-4">
+          <!-- Card Container for Tabs -->
+          <div class="w-full max-w-md mx-auto md:max-w-none md:mx-0 p-4 bg-white rounded-md shadow">
+            <!-- MOBILE NAVIGATION: Hamburger Icon & Title -->
+            <div class="md:hidden flex items-center px-4 pt-4">
+              <button id="lawnTabsBurger" class="p-2 bg-gray-100 rounded focus:outline-none">
+                <i class="fas fa-bars text-gray-700"></i>
+              </button>
+              <h3 id="lawnTabsTitle" class="ml-3 text-sm font-medium text-gray-700">
+                WO Overview
+              </h3>
+            </div>
+            <!-- MOBILE DROPDOWN MENU -->
+            <div id="lawnTabsDropdown" class="md:hidden relative px-4">
+              <!-- Notice: the inner dropdown container has the "hidden" class -->
+              <div class="mt-2 bg-white border border-gray-200 rounded shadow-lg z-10 hidden">
+                <ul>
+                  <li>
+                    <button data-tab="overview" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      WO Overview
+                    </button>
+                  </li>
+                  <li>
+                    <button data-tab="visits" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Visits
+                    </button>
+                  </li>
+                  <li>
+                    <button data-tab="notes" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Notes
+                    </button>
+                  </li>
+                  <li>
+                    <button data-tab="tasks" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Tasks
+                    </button>
+                  </li>
+                  <li>
+                    <button data-tab="supplies" class="mobile-tab-btn block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Supplies
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- DESKTOP NAVIGATION: Horizontal Tabs -->
+            <ul class="hidden md:flex space-x-4 text-sm font-medium px-4 pt-4">
+              <li>
+                <button data-tab="overview" class="tab-btn pb-2 border-b-2 border-green-500 text-green-600 hover:border-indigo-300 focus:border-indigo-600">
+                  WO Overview
+                </button>
+              </li>
+              <li>
+                <button data-tab="visits" class="tab-btn pb-2 border-b-2 border-transparent hover:border-indigo-300 focus:border-indigo-600">
+                  Visits
+                </button>
+              </li>
+              <li>
+                <button data-tab="notes" class="tab-btn pb-2 border-b-2 border-transparent hover:border-indigo-300 focus:border-indigo-600">
+                  Notes
+                </button>
+              </li>
+              <li>
+                <button data-tab="tasks" class="tab-btn pb-2 border-b-2 border-transparent hover:border-indigo-300 focus:border-indigo-600">
+                  Tasks
+                </button>
+              </li>
+              <li>
+                <button data-tab="supplies" class="tab-btn pb-2 border-b-2 border-transparent hover:border-indigo-300 focus:border-indigo-600">
+                  Supplies
+                </button>
+              </li>
+            </ul>
+            <!-- TABS CONTENT -->
+            <div class="p-4 text-sm">
+              <!-- WO Overview Tab -->
+              <div id="overview" class="tab-content">
+                <h3 class="font-semibold mb-2">WO Overview</h3>
+                <p>This section provides a comprehensive overview of the work order, including timeline, alerts, and flags.</p>
+              </div>
+              <!-- Visits Tab -->
+              <div id="visits" class="tab-content hidden">
+                <h3 class="font-semibold mb-2">Visits</h3>
+                <p>Here you will find a list of all service visits and appointments related to the work order.</p>
+              </div>
+              <!-- Notes Tab -->
+              <div id="notes" class="tab-content hidden">
+                <h3 class="font-semibold mb-2">Notes</h3>
+                <p>All work order related notes and communications are listed here.</p>
+              </div>
+              <!-- Tasks Tab -->
+              <div id="tasks" class="tab-content hidden">
+                <h3 class="font-semibold mb-2">Tasks</h3>
+                <p>List of tasks associated with the work order.</p>
+              </div>
+              <!-- Supplies Tab -->
+              <div id="supplies" class="tab-content hidden">
+                <h3 class="font-semibold mb-2">Supplies</h3>
+                <p>All supplies and equipment information related to the work order.</p>
+              </div>
+            </div>
+          </div>
+          <!-- End Right Column Tab Card Container -->
+        </div>
+      </div>
+      <!-- MAIN_CONTENT_END -->
+    </main>
+  </div>
+
+  <!-- Tab Toggle Script -->
+  <script>
+    // Desktop tab toggler
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabButtons.forEach(b => b.classList.remove('active', 'border-green-500', 'text-green-600'));
+        tabContents.forEach(tc => tc.classList.add('hidden'));
+        btn.classList.add('active', 'border-green-500', 'text-green-600');
+        const tabId = btn.getAttribute('data-tab');
+        document.getElementById(tabId).classList.remove('hidden');
+      });
+    });
+
+    // Mobile burger toggle for the tab set
+    const lawnTabsBurger = document.getElementById('lawnTabsBurger');
+    // Instead of toggling the outer container, we target the inner dropdown div.
+    const lawnTabsDropdownContent = document.querySelector('#lawnTabsDropdown > div');
+    const mobileTabButtons = document.querySelectorAll('.mobile-tab-btn');
+    const lawnTabsTitle = document.getElementById('lawnTabsTitle');
+    lawnTabsBurger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      lawnTabsDropdownContent.classList.toggle('hidden');
+    });
+    mobileTabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        lawnTabsDropdownContent.classList.add('hidden');
+        lawnTabsTitle.textContent = btn.textContent.trim();
+        tabContents.forEach(tc => tc.classList.add('hidden'));
+        const selectedTab = btn.getAttribute('data-tab');
+        document.getElementById(selectedTab).classList.remove('hidden');
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!lawnTabsBurger.contains(e.target) && !lawnTabsDropdownContent.contains(e.target)) {
+        lawnTabsDropdownContent.classList.add('hidden');
+      }
+    });
+  </script>
+
+  <!-- Toggle Script for Sidebar -->
+  <script>
+    const hamburgerBtn = document.querySelector("#hamburgerBtn");
+    const sidebar = document.querySelector("#sidebar");
+    const overlay = document.querySelector("#sidebarOverlay");
+    hamburgerBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("-translate-x-full");
+      overlay.classList.toggle("hidden");
+    });
+    overlay.addEventListener("click", () => {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    });
+  </script>
+</body>
+
+</html>

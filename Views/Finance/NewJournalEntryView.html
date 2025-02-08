@@ -66,6 +66,37 @@
           All Customers
         </a>
 
+        <!-- Child #2 has a third level -->
+        <div class="acc-parent">
+          <button
+            class="w-full flex items-center px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700 focus:outline-none transition"
+            data-accordion-btn
+          >
+            Segments
+            <i
+              class="fa fa-chevron-down ml-auto transform transition-all duration-200 text-xs"
+            ></i>
+          </button>
+
+          <!-- Level 3 Sub-items (stacked vertically / up-down) -->
+          <div
+            class="acc-children hidden flex-col ml-4 border-l border-gray-700"
+            data-accordion-content
+          >
+            <a
+              href="#"
+              class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+            >
+              Retail
+            </a>
+            <a
+              href="#"
+              class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+            >
+              Commercial
+            </a>
+          </div>
+        </div>
 
         <!-- Child #3 -->
         <a
@@ -119,14 +150,6 @@
           class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
         >
           Chart of Accounts
-        </a>
-
-        <!-- Child #3 -->
-        <a
-          href="#"
-          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
-        >
-          Reporting
         </a>
       </div>
     </div>
@@ -394,8 +417,198 @@
       <!-- MAIN_CONTENT_START (docblock placeholder) -->
       <!-- =========================================== -->
 
-      <!-- Put your page-specific content here... -->
-
+<!-- MAIN_CONTENT_START -->
+<div class="p-4 bg-white rounded shadow">
+    <h2 class="text-2xl font-bold mb-4">New Journal Entry</h2>
+    <form action="/create-journal-entry" method="POST" class="space-y-6">
+      <!-- Journal Entry Header Fields -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Journal Entry Number -->
+        <div>
+          <label for="journalNumber" class="block text-sm font-medium text-gray-700">Journal Entry Number</label>
+          <input type="text" name="journalNumber" id="journalNumber" placeholder="e.g. JE-2025-001" required
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+        </div>
+        <!-- Journal Date -->
+        <div>
+          <label for="journalDate" class="block text-sm font-medium text-gray-700">Journal Date</label>
+          <input type="date" name="journalDate" id="journalDate" required
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+        </div>
+        <!-- Journal Type -->
+        <div>
+          <label for="journalType" class="block text-sm font-medium text-gray-700">Journal Type</label>
+          <select name="journalType" id="journalType" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+            <option value="">Select Type</option>
+            <option value="Regular">Regular</option>
+            <option value="Adjustment">Adjustment</option>
+            <option value="Recurring">Recurring</option>
+          </select>
+        </div>
+        <!-- Reference Number -->
+        <div>
+          <label for="referenceNumber" class="block text-sm font-medium text-gray-700">Reference Number</label>
+          <input type="text" name="referenceNumber" id="referenceNumber" placeholder="Optional reference number"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2" />
+        </div>
+        <!-- Memo / Description -->
+        <div class="md:col-span-2">
+          <label for="memo" class="block text-sm font-medium text-gray-700">Memo / Description</label>
+          <textarea name="memo" id="memo" rows="3" placeholder="Enter a memo or description for this journal entry"
+            class="mt-1 block w-full border border-gray-300 rounded-md p-2"></textarea>
+        </div>
+      </div>
+  
+      <!-- Journal Lines Section -->
+      <div>
+        <h3 class="text-xl font-semibold mb-3">Journal Lines</h3>
+        <div class="overflow-x-auto">
+          <table class="min-w-full border-collapse text-sm">
+            <thead>
+              <tr class="bg-gray-200 text-gray-600 uppercase text-xs whitespace-nowrap">
+                <th class="py-2 px-3 text-left">Account</th>
+                <th class="py-2 px-3 text-left">Description</th>
+                <th class="py-2 px-3 text-right">Debit</th>
+                <th class="py-2 px-3 text-right">Credit</th>
+                <th class="py-2 px-3"></th>
+              </tr>
+            </thead>
+            <tbody id="journalLinesBody">
+              <!-- Initial Journal Line Row -->
+              <tr class="border-b">
+                <td class="py-2 px-3">
+                  <select name="journalLines[0][account]" class="w-full border border-gray-300 rounded-md p-1">
+                    <option value="">Select Account</option>
+                    <option value="1000">1000 - Cash on Hand</option>
+                    <option value="1100">1100 - Accounts Receivable</option>
+                    <!-- Additional account options -->
+                  </select>
+                </td>
+                <td class="py-2 px-3">
+                  <input type="text" name="journalLines[0][lineDescription]" placeholder="Line description"
+                    class="w-full border border-gray-300 rounded-md p-1" />
+                </td>
+                <td class="py-2 px-3">
+                  <input type="number" name="journalLines[0][debit]" placeholder="0.00" step="0.01"
+                    class="w-full border border-gray-300 rounded-md p-1 text-right" />
+                </td>
+                <td class="py-2 px-3">
+                  <input type="number" name="journalLines[0][credit]" placeholder="0.00" step="0.01"
+                    class="w-full border border-gray-300 rounded-md p-1 text-right" />
+                </td>
+                <td class="py-2 px-3 text-center">
+                  <button type="button" class="remove-line text-red-500 hover:text-red-700">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- Button to add new journal line -->
+        <div class="mt-3">
+          <button type="button" id="addLineBtn" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded flex items-center">
+            <i class="fa fa-plus mr-2"></i> Add Journal Line
+          </button>
+        </div>
+      </div>
+  
+      <!-- Totals Section -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+        <div class="md:col-start-2">
+          <div class="flex justify-between items-center border-t pt-3">
+            <span class="font-semibold">Total Debit:</span>
+            <span id="totalDebit" class="font-bold">0.00</span>
+          </div>
+          <div class="flex justify-between items-center border-t pt-3">
+            <span class="font-semibold">Total Credit:</span>
+            <span id="totalCredit" class="font-bold">0.00</span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <div>
+        <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white py-2 rounded flex items-center justify-center">
+          <i class="fa fa-plus mr-2"></i> Create Journal Entry
+        </button>
+      </div>
+    </form>
+  </div>
+  
+  <script>
+    // Dynamic Journal Lines Logic
+    let lineIndex = 1;
+    const addLineBtn = document.getElementById('addLineBtn');
+    const journalLinesBody = document.getElementById('journalLinesBody');
+    const totalDebitEl = document.getElementById('totalDebit');
+    const totalCreditEl = document.getElementById('totalCredit');
+  
+    function updateTotals() {
+      let totalDebit = 0;
+      let totalCredit = 0;
+      document.querySelectorAll('input[name^="journalLines"]').forEach(input => {
+        if (input.name.includes('[debit]')) {
+          totalDebit += parseFloat(input.value) || 0;
+        }
+        if (input.name.includes('[credit]')) {
+          totalCredit += parseFloat(input.value) || 0;
+        }
+      });
+      totalDebitEl.textContent = totalDebit.toFixed(2);
+      totalCreditEl.textContent = totalCredit.toFixed(2);
+    }
+  
+    function addJournalLine() {
+      const tr = document.createElement('tr');
+      tr.className = "border-b";
+      tr.innerHTML = `
+        <td class="py-2 px-3">
+          <select name="journalLines[${lineIndex}][account]" class="w-full border border-gray-300 rounded-md p-1">
+            <option value="">Select Account</option>
+            <option value="1000">1000 - Cash on Hand</option>
+            <option value="1100">1100 - Accounts Receivable</option>
+            <!-- Additional account options -->
+          </select>
+        </td>
+        <td class="py-2 px-3">
+          <input type="text" name="journalLines[${lineIndex}][lineDescription]" placeholder="Line description"
+            class="w-full border border-gray-300 rounded-md p-1" />
+        </td>
+        <td class="py-2 px-3">
+          <input type="number" name="journalLines[${lineIndex}][debit]" placeholder="0.00" step="0.01"
+            class="w-full border border-gray-300 rounded-md p-1 text-right" />
+        </td>
+        <td class="py-2 px-3">
+          <input type="number" name="journalLines[${lineIndex}][credit]" placeholder="0.00" step="0.01"
+            class="w-full border border-gray-300 rounded-md p-1 text-right" />
+        </td>
+        <td class="py-2 px-3 text-center">
+          <button type="button" class="remove-line text-red-500 hover:text-red-700">
+            <i class="fa fa-trash"></i>
+          </button>
+        </td>
+      `;
+      journalLinesBody.appendChild(tr);
+      lineIndex++;
+  
+      tr.querySelectorAll('input[type="number"]').forEach(input => {
+        input.addEventListener('input', updateTotals);
+      });
+      tr.querySelector('.remove-line').addEventListener('click', function() {
+        tr.remove();
+        updateTotals();
+      });
+    }
+  
+    addLineBtn.addEventListener('click', addJournalLine);
+  
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+      input.addEventListener('input', updateTotals);
+    });
+  </script>
+  <!-- MAIN_CONTENT_END -->
+  
       <!-- ========================================= -->
       <!-- MAIN_CONTENT_END (docblock placeholder) -->
       <!-- ========================================= -->

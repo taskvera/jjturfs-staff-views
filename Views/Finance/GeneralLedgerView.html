@@ -2,62 +2,425 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>General Ledger - Property & Lawn Care</title>
-
+  <title>My App - Sidebar Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Tailwind CSS (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome (Dev CDN) -->
-  <script 
+  <script
     src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"
-    crossorigin="anonymous">
-  </script>
-
-  <!-- Example: Some small inline custom CSS for scrollbars, etc. -->
-  <style>
-    /* Customize any overflow/scrollbar if you want */
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background-color: rgba(100, 100, 100, 0.4);
-      border-radius: 3px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    /* Simple dropdown utility in pure CSS (hover) for Excel button. 
-       For a more robust solution, consider a JS approach (e.g., Alpine.js). */
-    .dropdown:hover .dropdown-menu {
-      display: block;
-    }
-  </style>
+    crossorigin="anonymous"
+  ></script>
 </head>
 
-<body class="bg-gray-50 text-gray-800 overflow-x-hidden">
+<body class="bg-gray-100 text-gray-800 min-h-screen flex">
+<!-- SIDEBAR (Three-level, single-open accordion, footer profile) -->
+<aside
+  id="sidebar"
+  class="bg-gray-800 text-white fixed inset-y-0 left-0 w-64 transform
+         -translate-x-full md:translate-x-0
+         transition-transform duration-200 z-50 flex flex-col"
+>
+  <!-- Header / Logo -->
+  <div class="p-4 bg-gray-900 flex items-center">
+    <i class="fa fa-home mr-2"></i>
+    <span class="font-semibold text-lg">MyApp</span>
+  </div>
 
-  <!-- Top Navigation Bar -->
-  <nav class="bg-white shadow-sm p-4 flex items-center justify-between">
-    <div class="flex items-center space-x-2">
-      <i class="fa fa-building text-green-700 text-xl"></i>
-      <span class="font-bold text-xl text-gray-700">MyProperty & LawnCare</span>
-    </div>
-    <div class="flex items-center space-x-4">
+  <!-- Main Menu (Scroll if needed) -->
+  <nav id="sidebarMenu" class="flex-1 overflow-y-auto px-2 py-3 space-y-1">
+    <!-- Example Parent #1 (No sub-items) -->
+    <a
+      href="#"
+      class="flex items-center px-3 py-2 rounded hover:bg-gray-700 transition"
+    >
+      <i class="fa fa-tachometer-alt mr-2 w-4 text-center"></i>
+      <span>Dashboard</span>
+    </a>
+
+    <!-- Example Parent #2 with sub-levels -->
+    <div class="acc-parent">
+      <!-- Parent Title -->
       <button
-        class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+        class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition"
+        data-accordion-btn
       >
-        Add Transaction
+        <i class="fa fa-users mr-2 w-4 text-center"></i>
+        <span class="flex-1 text-left">Customers</span>
+        <!-- Chevron -->
+        <i
+          class="fa fa-chevron-down ml-auto transform transition-all duration-200"
+        ></i>
       </button>
+
+      <!-- Level 2 Sub-items -->
+      <div
+        class="acc-children hidden flex-col ml-6 border-l border-gray-700"
+        data-accordion-content
+      >
+        <!-- Child #1 -->
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          All Customers
+        </a>
+
+        <!-- Child #2 has a third level -->
+        <div class="acc-parent">
+          <button
+            class="w-full flex items-center px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700 focus:outline-none transition"
+            data-accordion-btn
+          >
+            Segments
+            <i
+              class="fa fa-chevron-down ml-auto transform transition-all duration-200 text-xs"
+            ></i>
+          </button>
+
+          <!-- Level 3 Sub-items (stacked vertically / up-down) -->
+          <div
+            class="acc-children hidden flex-col ml-4 border-l border-gray-700"
+            data-accordion-content
+          >
+            <a
+              href="#"
+              class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+            >
+              Retail
+            </a>
+            <a
+              href="#"
+              class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+            >
+              Commercial
+            </a>
+          </div>
+        </div>
+
+        <!-- Child #3 -->
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Add New
+        </a>
+      </div>
+    </div>    
+    
+    <!-- Example Parent #2 with sub-levels -->
+    <div class="acc-parent">
+      <!-- Parent Title -->
       <button
-        class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
+        class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition"
+        data-accordion-btn
       >
-        Settings
+        <i class="fas fa-calculator mr-2 w-4 text-center"></i>
+        <span class="flex-1 text-left">Accounting</span>
+        <!-- Chevron -->
+        <i
+          class="fa fa-chevron-down ml-auto transform transition-all duration-200"
+        ></i>
       </button>
+
+      <!-- Level 2 Sub-items -->
+      <div
+        class="acc-children hidden flex-col ml-6 border-l border-gray-700"
+        data-accordion-content
+      >
+      <!-- Child #1 -->
+      <a
+        href="#"
+        class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+      >
+        Journal Entries
+      </a>
+      <!-- Child #1 -->
+      <a
+        href="#"
+        class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+      >
+        General Ledger
+      </a>
+
+
+        <!-- Child #3 -->
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Chart of Accounts
+        </a>
+      </div>
     </div>
+
+    <!-- Example Parent #3 with sub-levels -->
+    <div class="acc-parent">
+      <button
+        class="w-full flex items-center px-3 py-2 rounded hover:bg-gray-700 focus:outline-none transition"
+        data-accordion-btn
+      >
+        <i class="fa fa-file-invoice-dollar mr-2 w-4 text-center"></i>
+        <span class="flex-1 text-left">Invoices</span>
+        <i
+          class="fa fa-chevron-down ml-auto transform transition-all duration-200"
+        ></i>
+      </button>
+      <div
+        class="acc-children hidden flex-col ml-6 border-l border-gray-700"
+        data-accordion-content
+      >
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Unpaid
+        </a>
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Paid
+        </a>
+        <a
+          href="#"
+          class="block px-3 py-1.5 mt-1 text-sm rounded hover:bg-gray-700"
+        >
+          Overdue
+        </a>
+      </div>
+    </div>
+    <!-- Add more parent items or children as needed -->
   </nav>
 
-  <!-- Main Content Container -->
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-8">
+  <!-- Footer w/ Profile Info -->
+  <div class="p-4 border-t border-gray-700 flex items-center space-x-3">
+    <!-- Example avatar -->
+    <img
+      src="https://via.placeholder.com/40"
+      alt="User"
+      class="w-10 h-10 rounded-full"
+    />
+    <div class="flex-1">
+      <div class="text-sm font-semibold">John Doe</div>
+      <div class="text-xs text-gray-300">Administrator</div>
+    </div>
+    <!-- Example logout icon -->
+    <a href="#" class="hover:text-gray-400">
+      <i class="fa fa-sign-out-alt"></i>
+    </a>
+  </div>
+</aside>
+
+<script>
+  // Accordion logic with single-open behavior
+  // For each .acc-parent, clicking [data-accordion-btn] toggles that sub-menu
+  // and closes siblings at the same level.
+  const parentMenus = document.querySelectorAll('.acc-parent');
+
+  parentMenus.forEach((parent) => {
+    const toggleBtn = parent.querySelector('[data-accordion-btn]');
+    const childrenContainer = parent.querySelector('[data-accordion-content]');
+
+    if (toggleBtn && childrenContainer) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        // Close siblings on the same level
+        const siblings = parent.parentElement.querySelectorAll('.acc-parent');
+        siblings.forEach((sib) => {
+          if (sib !== parent) {
+            const sibBtn = sib.querySelector('[data-accordion-btn]');
+            const sibContent = sib.querySelector('[data-accordion-content]');
+            if (sibContent && !sibContent.classList.contains('hidden')) {
+              sibContent.classList.add('hidden');
+              // Rotate chevron back
+              const sibChevron = sibBtn.querySelector('.fa-chevron-down');
+              sibChevron && sibChevron.classList.remove('rotate-180');
+            }
+          }
+        });
+
+        // Toggle this sub-menu
+        childrenContainer.classList.toggle('hidden');
+
+        // Rotate chevron
+        const chevron = toggleBtn.querySelector('.fa-chevron-down');
+        chevron && chevron.classList.toggle('rotate-180');
+      });
+    }
+  });
+</script>
+
+
+
+  <!-- OVERLAY (mobile) -->
+  <div
+    id="sidebarOverlay"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+  ></div>
+
+  <!-- MAIN CONTENT WRAPPER -->
+  <!-- Notice md:ml-64 here so on desktop, content is offset by 64px margin -->
+  <div class="flex-1 flex flex-col md:ml-64">
+    <!-- Top Nav -->
+    <header
+      class="bg-white text-gray-700 shadow-sm px-4 py-2 flex items-center justify-between"
+    >
+      <!-- Left side: title and mobile toggle -->
+      <div class="flex items-center space-x-3">
+        <!-- Hamburger toggle (mobile only) -->
+        <button
+          id="hamburgerBtn"
+          class="md:hidden text-gray-500 focus:outline-none"
+        >
+          <i class="fa fa-bars"></i>
+        </button>
+
+        <!-- Title / Page Heading -->
+        <div class="page-heading py-1" id="pageHeading">
+          <h2
+            class="page-title text-xl font-semibold flex items-center space-x-2"
+            id="pageTitle"
+          >
+            <i class="fa fa-lg fa-users" aria-hidden="true"></i>
+            <span id="main-title">Jeremy Evans</span>
+          </h2>
+        </div>
+      </div>
+
+      <!-- Right side: icon links -->
+      <div class="flex space-x-4 items-center text-gray-500">
+        <!-- To-Do List -->
+        <a
+          href="/scheduler/add-new-todo"
+          title="Create a To-Do"
+          class="hover:text-gray-800"
+        >
+          <i class="fas fa-tasks" aria-hidden="true"></i>
+        </a>
+
+        <!-- Messaging/Inbox -->
+        <a
+          href="#"
+          id="messenger-open"
+          class="relative hover:text-gray-800"
+        >
+          <i class="fas fa-comment" aria-hidden="true"></i>
+          <!-- If you need a badge/pulse for unread messages: -->
+          <div
+            id="notify-badge-msg"
+            class="absolute top-0 right-0"
+            style="display: none;"
+          >
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+
+        <!-- Settings -->
+        <a href="/settings" class="hover:text-gray-800">
+          <i class="fa fa-lg fa-cog" aria-hidden="true"></i>
+        </a>
+
+        <!-- Notifications -->
+        <a href="/notifications" class="relative hover:text-gray-800">
+          <i class="fa fa-lg fa-bell" aria-hidden="true"></i>
+          <!-- Notification badge if needed -->
+          <div
+            id="notify-badge"
+            class="absolute top-0 right-0"
+            style="display: none;"
+          >
+            <div class="notify-pulse"></div>
+            <div class="notify-marker"></div>
+          </div>
+        </a>
+
+        <!-- Profile -->
+        <a
+          href="/resources/employees/edit/62149"
+          class="hover:text-gray-800"
+        >
+          <i class="fa fa-lg fa-user" aria-hidden="true"></i>
+        </a>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="p-2 md:p-2">
+      <!-- Breadcrumb -->
+      <div class="md:block">
+        <nav class="py-2 text-sm" aria-label="Breadcrumb">
+          <ol class="flex items-center space-x-2">
+            <!-- Home -->
+            <li>
+              <a
+                href="/"
+                class="text-blue-600 hover:underline hover:text-blue-800"
+              >
+                Home
+              </a>
+            </li>
+            <!-- Separator -->
+            <li class="text-gray-400">
+              <svg
+                class="w-4 h-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 
+                  4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </li>
+
+            <!-- Customers -->
+            <li>
+              <a
+                href="/customers"
+                class="text-blue-600 hover:underline hover:text-blue-800"
+              >
+                Customers
+              </a>
+            </li>
+            <!-- Separator -->
+            <li class="text-gray-400">
+              <svg
+                class="w-4 h-4"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                aria-hidden="true"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 
+                  4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </li>
+
+            <!-- Current page -->
+            <li class="text-gray-500" aria-current="page">
+              Jeremy Evans
+            </li>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- =========================================== -->
+      <!-- MAIN_CONTENT_START (docblock placeholder) -->
+      <!-- =========================================== -->
+
+
+    <!-- MAIN_CONTENT_START -->
+<div class="p-4 bg-white rounded shadow">
+  <h2 class="text-2xl font-bold mb-4">General Ledger</h2>
 
     <!-- Summary Cards (Multi-column layout on desktop) -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -236,210 +599,75 @@
       </div>
     </div>
 
-    <!-- General Ledger Table -->
-    <div class="overflow-auto custom-scrollbar bg-white shadow rounded-lg">
-      <table class="min-w-full table-auto">
-        <thead class="bg-gray-100 border-b">
-          <tr class="text-left text-xs uppercase text-gray-500">
-            <th class="py-3 px-4">Date</th>
-            <th class="py-3 px-4">Transaction #</th>
-            <th class="py-3 px-4">Property / Lawn Service</th>
-            <th class="py-3 px-4">Type</th>
-            <th class="py-3 px-4">Category</th>
-            <th class="py-3 px-4">Description</th>
-            <th class="py-3 px-4">Amount</th>
-            <th class="py-3 px-4">Balance</th>
-          </tr>
-        </thead>
-        <tbody id="ledgerBody">
-          <!-- Dummy data rows; classes used for searching/filtering later -->
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-02</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1001</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Greenwood Apartments</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Rent</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">January rent payment (Unit #5)</td>
-            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$1,200</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$1,200</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-04</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1002</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Greenwood Apartments</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Maintenance</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">Plumbing repair (Unit #7 bathroom)</td>
-            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$150</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$1,050</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-05</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1003</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Pine Valley House</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Rent</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">January rent payment</td>
-            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$1,000</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$2,050</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-07</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1004</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">All Properties (Service)</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Lawn Service</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">
-              Routine lawn maintenance for 5 properties (Jan)
-            </td>
-            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$800</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$2,850</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-10</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1005</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Office Supply Store</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Office Supply</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">Printer ink, copy paper</td>
-            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$75</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$2,775</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-12</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1006</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Pine Valley House</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Maintenance</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">Roof inspection fee</td>
-            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$200</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$2,575</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-15</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1007</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Rosewood Duplex</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Rent</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">Late rent payment (Unit A)</td>
-            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$1,100</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$3,675</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-16</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1008</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Rosewood Duplex</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Utilities</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">Water bill (shared meter)</td>
-            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$60</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$3,615</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-18</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1009</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Greenwood Apartments</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Lawn Service</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">One-time landscaping add-on</td>
-            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$300</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$3,915</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-19</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1010</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Admin Fees</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Misc</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">Accounting software subscription</td>
-            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$50</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$3,865</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-22</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1011</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Pine Valley House</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Lawn Service</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">Tree trimming</td>
-            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$200</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$4,065</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-25</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1012</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Pine Valley House</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Utilities</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">Electric bill (vacant unit usage)</td>
-            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$120</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$3,945</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-28</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1013</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Greenwood Apartments</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Expense</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Misc</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">Advertising fees (vacant units)</td>
-            <td class="py-3 px-4 text-sm text-red-600" data-label="Amount">-$100</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$3,845</td>
-          </tr>
-          <tr class="border-b hover:bg-gray-50">
-            <td class="py-3 px-4 text-sm" data-label="Date">2025-01-30</td>
-            <td class="py-3 px-4 text-sm" data-label="Transaction #">TXN-1014</td>
-            <td class="py-3 px-4 text-sm" data-label="Property / Lawn Service">Rosewood Duplex</td>
-            <td class="py-3 px-4 text-sm" data-label="Type">Income</td>
-            <td class="py-3 px-4 text-sm" data-label="Category">Rent</td>
-            <td class="py-3 px-4 text-sm" data-label="Description">February rent payment (Unit B, early)</td>
-            <td class="py-3 px-4 text-sm text-green-600" data-label="Amount">$1,100</td>
-            <td class="py-3 px-4 text-sm" data-label="Balance">$4,945</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pagination or "Load More" placeholder (if needed) -->
-    <div class="flex justify-end mt-4">
-      <button
-        class="bg-gray-100 text-gray-700 py-2 px-4 rounded hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
-      >
-        Load More
-      </button>
-    </div>
+  
+  <!-- Ledger Table -->
+  <div class="mt-6 overflow-x-auto">
+    <table class="min-w-full border-collapse text-sm">
+      <thead>
+        <tr class="bg-gray-800 text-white uppercase text-xs whitespace-nowrap">
+          <th class="py-3 px-4 text-left">Date</th>
+          <th class="py-3 px-4 text-left">Journal Entry</th>
+          <th class="py-3 px-4 text-left">Account Code</th>
+          <th class="py-3 px-4 text-left">Account Name</th>
+          <th class="py-3 px-4 text-left">Description</th>
+          <th class="py-3 px-4 text-right">Debit</th>
+          <th class="py-3 px-4 text-right">Credit</th>
+          <th class="py-3 px-4 text-right">Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Example Ledger Entry Row -->
+        <tr class="border-b hover:bg-gray-100">
+          <td class="py-3 px-4">2025-01-15</td>
+          <td class="py-3 px-4">JE-2025-001</td>
+          <td class="py-3 px-4">1000</td>
+          <td class="py-3 px-4">Cash on Hand</td>
+          <td class="py-3 px-4 truncate" title="Initial cash deposit">Initial cash deposit</td>
+          <td class="py-3 px-4 text-right">10,000.00</td>
+          <td class="py-3 px-4 text-right">0.00</td>
+          <td class="py-3 px-4 text-right">10,000.00</td>
+        </tr>
+        <tr class="border-b hover:bg-gray-100">
+          <td class="py-3 px-4">2025-01-20</td>
+          <td class="py-3 px-4">JE-2025-002</td>
+          <td class="py-3 px-4">1100</td>
+          <td class="py-3 px-4">Accounts Receivable</td>
+          <td class="py-3 px-4 truncate" title="Invoice #INV-001">Invoice #INV-001</td>
+          <td class="py-3 px-4 text-right">0.00</td>
+          <td class="py-3 px-4 text-right">2,500.00</td>
+          <td class="py-3 px-4 text-right">7,500.00</td>
+        </tr>
+        <!-- Additional ledger rows can be dynamically added here -->
+      </tbody>
+    </table>
   </div>
+</div>
+<!-- MAIN_CONTENT_END -->
 
-  <!-- Lightweight JavaScript for Filtering/Search -->
+      <!-- ========================================= -->
+      <!-- MAIN_CONTENT_END (docblock placeholder) -->
+      <!-- ========================================= -->
+
+    </main>
+    <!-- End main content area -->
+  </div>
+  <!-- end .flex-1 flex flex-col md:ml-64 -->
+
+  <!-- Toggle Script -->
   <script>
-    function filterTable() {
-      const searchValue = document.getElementById("searchInput").value.toLowerCase();
-      const categoryValue = document.getElementById("categoryFilter").value.toLowerCase();
-      const tableBody = document.getElementById("ledgerBody");
-      const rows = tableBody.getElementsByTagName("tr");
+    const hamburgerBtn = document.querySelector("#hamburgerBtn");
+    const sidebar = document.querySelector("#sidebar");
+    const overlay = document.querySelector("#sidebarOverlay");
 
-      for (let i = 0; i < rows.length; i++) {
-        const row = rows[i];
-        const cells = row.getElementsByTagName("td");
+    hamburgerBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("-translate-x-full");
+      overlay.classList.toggle("hidden");
+    });
 
-        // Gather text content for searching
-        let rowText = "";
-        for (let j = 0; j < cells.length; j++) {
-          rowText += cells[j].textContent.toLowerCase() + " ";
-        }
-
-        // Check if row matches search and category
-        const matchesSearch = rowText.includes(searchValue);
-        const categoryCell = cells[4]?.textContent.toLowerCase() || "";
-        const matchesCategory =
-          !categoryValue || categoryCell.includes(categoryValue);
-
-        if (matchesSearch && matchesCategory) {
-          row.style.display = "";
-        } else {
-          row.style.display = "none";
-        }
-      }
-    }
+    overlay.addEventListener("click", () => {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("hidden");
+    });
   </script>
 </body>
 </html>
