@@ -446,71 +446,152 @@
                   </div>
 
                   <div class="w-full border border-gray-200 rounded-lg shadow-sm overflow-hidden">
-                    <!-- Header with subtle gradient -->
+                    <!-- Header with gradient and red alert pill -->
                     <div class="bg-gradient-to-r from-blue-600 to-blue-500 p-3 flex items-center justify-between">
                       <div class="flex items-center space-x-2 text-white">
-                        <i class="fa fa-file-invoice-dollar text-sm"></i>
-                        <h3 class="text-sm font-medium tracking-wide">Billing Overview</h3>
+                        <i class="fa fa-file-invoice-dollar text-lg"></i>
+                        <h3 class="text-lg font-medium tracking-wide">Billing Overview</h3>
                       </div>
-                      <div class="flex items-center space-x-1 text-red-100">
-                        <i class="fa fa-exclamation-triangle text-red-200"></i>
-                        <span class="text-xs font-semibold">Overdue</span>
+                      <div>
+                        <span class="inline-flex items-center px-2 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
+                          <i class="fa fa-exclamation-triangle mr-1"></i> Past Due
+                        </span>
                       </div>
                     </div>
                     <!-- Main content area -->
-                    <div class="p-3 bg-white text-gray-800">
-                      <div class="mb-2">
-                        <p class="text-xs uppercase text-gray-500 tracking-wide">Current Balance</p>
-                        <p class="text-xl font-semibold text-gray-900">$900.00</p>
-                      </div>
-                      <div class="grid grid-cols-2 gap-y-2 gap-x-3 text-xs sm:text-sm">
+                    <div class="p-4 bg-white text-gray-800">
+                      <div class="mb-4 flex items-center justify-between">
+                        <!-- Current Balance Information -->
                         <div>
-                          <p class="uppercase text-gray-400">Account #</p>
-                          <p class="mt-1 font-medium text-gray-700">001-ACME</p>
+                          <p class="text-xs uppercase text-gray-500 tracking-wide">Current Balance</p>
+                          <p class="text-2xl font-semibold text-gray-900">$900.00</p>
                         </div>
-                        <div>
-                          <p class="uppercase text-gray-400">Open Invoices</p>
-                          <p class="mt-1 font-medium text-gray-700">2</p>
-                        </div>
-                        <div>
-                          <p class="uppercase text-gray-400">Last Invoice</p>
-                          <p class="mt-1 font-medium text-gray-700">#INV-2025<br>Mar 20, 2025</p>
-                        </div>
-                        <div>
-                          <p class="uppercase text-gray-400">Last Payment</p>
-                          <p class="mt-1 font-medium text-gray-700">Mar 25, 2025<br>$300.00</p>
-                        </div>
-                        <div>
-                          <p class="uppercase text-gray-400">Terms</p>
-                          <p class="mt-1 font-medium text-gray-700">Net 30</p>
-                        </div>
-                        <div>
-                          <p class="uppercase text-gray-400">Next Due</p>
-                          <p class="mt-1 font-medium text-gray-700">Apr 20, 2025</p>
+                        <!-- Actions Dropdown -->
+                        <div class="relative inline-block text-left">
+                          <button type="button" id="balanceActionsDropdown" class="inline-flex items-center justify-center rounded-md border border-gray-300 shadow-sm px-3 py-1 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none" aria-haspopup="true">
+                            Actions
+                            <i class="fa fa-chevron-down ml-1"></i>
+                          </button>
+                          <!-- Dropdown panel (hidden by default) -->
+                          <div id="balanceActionsMenu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden" role="menu" aria-orientation="vertical" aria-labelledby="balanceActionsDropdown">
+                            <div class="py-1" role="none">
+                              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">View Details</a>
+                              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Download Statement</a>
+                              <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Export Data</a>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div class="mt-2 text-xs text-gray-600 border-t pt-2">
-                        <p class="uppercase text-gray-400 mb-1">Aging (days)</p>
-                        <div class="flex justify-between space-x-2">
-                          <span>30: <strong>$0</strong></span>
-                          <span>60: <strong>$200</strong></span>
-                          <span>90: <strong>$700</strong></span>
-                          <span>120+: <strong>$0</strong></span>
+                      
+                      <script>
+                        // Toggle the balance actions dropdown
+                        const balanceActionsDropdown = document.getElementById('balanceActionsDropdown');
+                        const balanceActionsMenu = document.getElementById('balanceActionsMenu');
+                      
+                        balanceActionsDropdown.addEventListener('click', function (e) {
+                          e.stopPropagation(); // Prevent the click from bubbling up
+                          balanceActionsMenu.classList.toggle('hidden');
+                        });
+                      
+                        // Close the dropdown if clicking outside
+                        document.addEventListener('click', function (e) {
+                          if (!balanceActionsDropdown.contains(e.target)) {
+                            balanceActionsMenu.classList.add('hidden');
+                          }
+                        });
+                      </script>
+                      
+                      <!-- Details Grid -->
+                      <div class="grid grid-cols-2 gap-y-4 gap-x-6 text-sm">
+                        <!-- Open Invoices -->
+                        <div class="flex items-center space-x-2">
+                          <i class="fa fa-file-alt text-blue-500"></i>
+                          <div>
+                            <p class="uppercase text-gray-400">Open Invoices</p>
+                            <p class="font-medium text-gray-700">2</p>
+                          </div>
+                        </div>
+                        <!-- Last Invoice -->
+                        <div class="flex items-center space-x-2">
+                          <i class="fa fa-file-invoice-dollar text-green-500"></i>
+                          <div>
+                            <p class="uppercase text-gray-400">Last Invoice</p>
+                            <p class="font-medium text-gray-700">#INV-2025<br><span class="text-xs">Mar 20, 2025</span></p>
+                          </div>
+                        </div>
+                        <!-- Last Payment -->
+                        <div class="flex items-center space-x-2">
+                          <i class="fa fa-money-check-alt text-purple-500"></i>
+                          <div>
+                            <p class="uppercase text-gray-400">Last Payment</p>
+                            <p class="font-medium text-gray-700">Mar 25, 2025<br><span class="text-xs">$300.00</span></p>
+                          </div>
+                        </div>
+                        <!-- Terms -->
+                        <div class="flex items-center space-x-2">
+                          <i class="fa fa-handshake text-indigo-500"></i>
+                          <div>
+                            <p class="uppercase text-gray-400">Terms</p>
+                            <p class="font-medium text-gray-700">Net 30</p>
+                          </div>
+                        </div>
+                        
+                        <!-- Next Statement Date -->
+                        <div class="flex items-center space-x-2">
+                          <i class="fa fa-calendar-alt text-teal-500"></i>
+                          <div>
+                            <p class="uppercase text-gray-400">Next Statement</p>
+                            <p class="font-medium text-gray-700">May 01, 2025</p>
+                          </div>
+                        </div>
+                        <!-- Next Due -->
+                        <div class="flex items-center space-x-2">
+                          <i class="fa fa-clock text-orange-500"></i>
+                          <div>
+                            <p class="uppercase text-gray-400">Next Due</p>
+                            <p class="font-medium text-gray-700">Apr 20, 2025</p>
+                          </div>
                         </div>
                       </div>
-                      <div class="mt-3 flex flex-wrap gap-2 justify-end">
-                        <button class="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700 focus:outline-none">
-                          <i class="fa fa-credit-card mr-1"></i> Pay Now
+                      <!-- Aging Information -->
+                      <div class="mt-4 text-xs text-gray-600 border-t pt-2">
+                        <p class="uppercase text-gray-400 mb-1">Invoice Aging Summary</p>
+                        <div class="flex flex-col gap-1">
+                          <div class="flex items-center justify-between">
+                            <span class="text-gray-600">0-30 days:</span>
+                            <span class="font-medium text-gray-700">$0</span>
+                          </div>
+                          <div class="flex items-center justify-between">
+                            <span class="text-gray-600">31-60 days:</span>
+                            <span class="font-medium text-gray-700">$200</span>
+                          </div>
+                          <div class="flex items-center justify-between">
+                            <span class="text-gray-600">61-90 days:</span>
+                            <span class="font-medium text-gray-700">$700</span>
+                          </div>
+                          <div class="flex items-center justify-between">
+                            <span class="text-gray-600">90+ days:</span>
+                            <span class="font-medium text-gray-700">$0</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Call-to-Action Buttons (smaller than before) -->
+                      <div class="mt-6 flex flex-col sm:flex-row sm:justify-end sm:items-center gap-3">
+                        <button class="w-full sm:w-auto px-2 py-2 bg-green-600 text-white text-base rounded hover:bg-green-700 focus:outline-none">
+                          <i class="fa fa-credit-card mr-2"></i> Pay Now
                         </button>
-                        <button class="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 focus:outline-none">
-                          <i class="fa fa-check-circle mr-1"></i> Enroll Auto Pay
+                        <button class="w-full sm:w-auto px-5 py-2 bg-blue-600 text-white text-base rounded hover:bg-blue-700 focus:outline-none">
+                          <i class="fa fa-check-circle mr-2"></i> Enroll Auto Pay
                         </button>
-                        <button class="px-3 py-1 border border-gray-300 text-xs text-gray-700 rounded hover:bg-gray-100 focus:outline-none">
-                          <i class="fa fa-sliders-h mr-1"></i> Payment Options
-                        </button>
+                      </div>
+                      <!-- Centered Payment Options Link -->
+                      <div class="mt-4 text-center">
+                        <a href="#" class="text-sm text-blue-500 hover:underline">Payment Options</a>
                       </div>
                     </div>
                   </div>
+                  
+                  
 
                 </div>
               </div>
