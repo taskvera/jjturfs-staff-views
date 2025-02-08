@@ -390,60 +390,81 @@
           <!-- Responsive Customer Grid (12-column) -->
           <div class="container mx-auto px-4 mt-6">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
-              <!-- Left Column (md:col-span-4) with two stacked cards -->
-              <div class="md:col-span-4 space-y-4">
                 <!-- Left Column with multiple, minimal cards -->
                 <div class="md:col-span-4 space-y-3">
-                  <!-- Customer Info / Profile Overview Card -->
                   <div class="w-full border border-gray-200 rounded-lg shadow-sm overflow-hidden">
                     <!-- Header with subtle gradient -->
                     <div class="bg-gradient-to-r from-purple-600 to-purple-500 p-3 flex items-center justify-between">
                       <div class="flex items-center space-x-2 text-white">
-                        <i class="fa fa-user text-sm"></i>
-                        <h3 class="text-sm font-medium tracking-wide">Customer Info</h3>
+                        <i class="fa fa-user text-lg"></i>
+                        <h3 class="text-lg font-medium tracking-wide">Customer Info</h3>
                       </div>
-                      <div class="flex items-center space-x-1 text-green-100">
-                        <i class="fa fa-check-circle text-green-200"></i>
-                        <span class="text-xs font-semibold">Active</span>
+                      <div class="flex items-center">
+                        <span class="inline-flex items-center px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">
+                          <i class="fa fa-check-circle mr-1"></i> Active
+                        </span>
                       </div>
                     </div>
                     <!-- Main content area -->
-                    <div class="p-3 bg-white text-gray-800">
-                      <div class="flex items-center space-x-3 mb-3">
+                    <div class="p-4 bg-white text-gray-800">
+                      <!-- Profile Row -->
+                      <div class="flex items-center space-x-3 mb-4">
                         <img src="https://via.placeholder.com/80x80" alt="Customer photo" class="w-12 h-12 rounded-full object-cover flex-shrink-0" />
                         <div>
                           <p class="text-base sm:text-lg font-semibold text-gray-900 leading-tight">Daniel Weber</p>
                           <p class="text-xs sm:text-sm text-gray-500">Landlord / Property Mgmt Client</p>
                         </div>
                       </div>
-                      <div class="grid grid-cols-2 gap-y-2 gap-x-3 text-xs sm:text-sm">
+                      <!-- Details Grid -->
+                      <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-sm">
+                        <!-- Phone -->
                         <div>
-                          <p class="uppercase text-gray-400">Phone</p>
+                          <p class="uppercase text-gray-400 flex items-center">
+                            <i class="fa fa-phone text-blue-500 mr-1"></i> Phone
+                          </p>
                           <p class="mt-1 font-medium text-gray-700">(555) 777-8899</p>
+                          <a href="#" class="text-xs text-blue-500 hover:underline">View all phones</a>
                         </div>
+                        <!-- Email -->
                         <div>
-                          <p class="uppercase text-gray-400">Email</p>
+                          <p class="uppercase text-gray-400 flex items-center">
+                            <i class="fa fa-envelope text-green-500 mr-1"></i> Email
+                          </p>
                           <p class="mt-1 font-medium text-gray-700">daniel.weber@example.com</p>
+                          <a href="#" class="text-xs text-blue-500 hover:underline">View all emails</a>
                         </div>
+                        <!-- Address -->
                         <div>
-                          <p class="uppercase text-gray-400">Address</p>
+                          <p class="uppercase text-gray-400 flex items-center">
+                            <i class="fa fa-map-marker-alt text-red-500 mr-1"></i> Address
+                          </p>
                           <p class="mt-1 font-medium text-gray-700">123 Main St, Anytown, USA</p>
                         </div>
+                        <!-- Lifetime Value -->
                         <div>
-                          <p class="uppercase text-gray-400">Properties Managed</p>
-                          <p class="mt-1 font-medium text-gray-700">3</p>
+                          <p class="uppercase text-gray-400 flex items-center">
+                            <i class="fa fa-dollar-sign text-indigo-500 mr-1"></i> Lifetime Value
+                          </p>
+                          <p class="mt-1 font-medium text-gray-700">$50,000</p>
                         </div>
+                        <!-- Customer Since -->
                         <div>
-                          <p class="uppercase text-gray-400">Last Payment</p>
-                          <p class="mt-1 font-medium text-gray-700">Mar 10, 2025</p>
+                          <p class="uppercase text-gray-400 flex items-center">
+                            <i class="fa fa-calendar-alt text-teal-500 mr-1"></i> Customer Since
+                          </p>
+                          <p class="mt-1 font-medium text-gray-700">Jan 01, 2018</p>
                         </div>
+                        <!-- Customer Length -->
                         <div>
-                          <p class="uppercase text-gray-400">Notes</p>
-                          <p class="mt-1 font-medium text-gray-700">Prefers email contact</p>
+                          <p class="uppercase text-gray-400 flex items-center">
+                            <i class="fa fa-hourglass-half text-yellow-500 mr-1"></i> Customer Length
+                          </p>
+                          <p class="mt-1 font-medium text-gray-700">5 years</p>
                         </div>
                       </div>
                     </div>
                   </div>
+                  
 
                   <div class="w-full border border-gray-200 rounded-lg shadow-sm overflow-hidden">
                     <!-- Header with gradient and red alert pill -->
@@ -594,7 +615,6 @@
                   
 
                 </div>
-              </div>
 
               <!-- Content & Tab Control (Right) -->
               <div class="md:col-span-8 bg-white p-4 rounded shadow">
