@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JJ Turfs - Monthly Statement</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    /* Custom styles to mimic a mailed PDF statement */
+    .statement-container {
+      max-width: 800px;
+      margin: 2rem auto;
+      border: 1px solid #e5e7eb;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    .statement-header {
+      background-color: #f9fafb;
+      padding: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .statement-section {
+      padding: 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .statement-section:last-child {
+      border-bottom: none;
+    }
+    .table-header {
+      background-color: #e5e7eb;
+    }
+    .text-primary {
+      color: #047857; /* green-700 */
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+  <!-- TOP NAVBAR -->
+  <header class="bg-green-700 text-white px-4 py-3 flex items-center justify-between shadow">
+    <div class="flex items-center space-x-2">
+      <i class="fa-solid fa-leaf text-2xl"></i>
+      <span class="font-bold text-xl">JJ Turfs</span>
+    </div>
+    <div class="relative">
+      <button class="flex items-center space-x-2 focus:outline-none">
+        <img src="https://via.placeholder.com/32" alt="User Avatar" class="w-8 h-8 rounded-full"/>
+        <span class="hidden sm:inline">JaneSmith</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN LAYOUT (Sidebar + Main Content) -->
+  <div class="flex flex-1">
+    <!-- SIDEBAR -->
+    <nav class="w-20 bg-white border-r border-gray-200 flex flex-col items-center py-4">
+      <!-- Dashboard Icon -->
+      <div class="group relative mb-6">
+        <a href="#" class="p-2 text-green-700 hover:bg-green-100 rounded-md transition-colors">
+          <i class="fa-solid fa-house text-xl"></i>
+        </a>
+        <div class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 whitespace-nowrap bg-green-700 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 pointer-events-none shadow-lg transition">
+          Dashboard
+        </div>
+      </div>
+      <!-- Billing Icon -->
+      <div class="group relative mb-6">
+        <a href="#" class="p-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
+          <i class="fa-solid fa-credit-card text-xl"></i>
+        </a>
+        <div class="absolute left-full top-1/2 transform -translate-y-1/2 ml-2 whitespace-nowrap bg-green-700 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 pointer-events-none shadow-lg transition">
+          Billing
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      <!-- Page Title & Back Link -->
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-green-800">Monthly Statement</h1>
+        <a href="#" class="inline-flex items-center text-sm text-green-700 hover:underline">
+          <i class="fa-solid fa-arrow-left mr-1"></i> Back to Billing
+        </a>
+      </div>
+
+      <!-- Statement Document Container -->
+      <div class="statement-container">
+        <!-- Statement Header -->
+        <div class="statement-header text-center">
+          <div class="flex justify-center items-center mb-2">
+            <i class="fa-solid fa-leaf text-3xl text-primary mr-2"></i>
+            <span class="text-2xl font-bold text-primary">JJ Turfs</span>
+          </div>
+          <h1 class="text-xl font-semibold">Monthly Statement</h1>
+          <p class="text-sm text-gray-600">Statement Period: Feb 1, 2025 - Feb 28, 2025</p>
+          <p class="text-sm text-gray-600">Statement Date: Mar 1, 2025</p>
+        </div>
+        <!-- Account Information -->
+        <div class="statement-section">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div>
+              <p><strong>Account Number:</strong> 987654321</p>
+              <p><strong>Customer Name:</strong> Jane Smith</p>
+              <p><strong>Email:</strong> jane@example.com</p>
+            </div>
+            <div>
+              <p><strong>Billing Address:</strong></p>
+              <p>1234 Elm Street</p>
+              <p>Anytown, USA 12345</p>
+            </div>
+          </div>
+        </div>
+        <!-- Invoice Details Section -->
+        <div class="statement-section">
+          <h2 class="text-lg font-semibold text-primary mb-4">Invoices for This Period</h2>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="table-header">
+                <tr>
+                  <th class="px-4 py-2 text-left">Invoice #</th>
+                  <th class="px-4 py-2 text-left">Issue Date</th>
+                  <th class="px-4 py-2 text-left">Due Date</th>
+                  <th class="px-4 py-2 text-right">Amount</th>
+                  <th class="px-4 py-2 text-center">Status</th>
+                  <th class="px-4 py-2 text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Paid Invoice -->
+                <tr class="border-b">
+                  <td class="px-4 py-2">INV-1001</td>
+                  <td class="px-4 py-2">Feb 05, 2025</td>
+                  <td class="px-4 py-2">Mar 05, 2025</td>
+                  <td class="px-4 py-2 text-right">$150.00</td>
+                  <td class="px-4 py-2 text-center text-green-700 font-bold">Paid</td>
+                  <td class="px-4 py-2 text-center">
+                    <button class="text-blue-600 text-sm hover:underline">View</button>
+                  </td>
+                </tr>
+                <!-- Unpaid Invoice (with Pay Now trigger) -->
+                <tr class="border-b">
+                  <td class="px-4 py-2">INV-1002</td>
+                  <td class="px-4 py-2">Feb 15, 2025</td>
+                  <td class="px-4 py-2">Mar 15, 2025</td>
+                  <td class="px-4 py-2 text-right">$120.00</td>
+                  <td class="px-4 py-2 text-center text-red-600 font-bold">Unpaid</td>
+                  <td class="px-4 py-2 text-center">
+                    <button class="payNowButton text-blue-600 text-sm hover:underline">Pay Now</button>
+                  </td>
+                </tr>
+                <!-- Another Paid Invoice -->
+                <tr>
+                  <td class="px-4 py-2">INV-1003</td>
+                  <td class="px-4 py-2">Feb 20, 2025</td>
+                  <td class="px-4 py-2">Mar 20, 2025</td>
+                  <td class="px-4 py-2 text-right">$130.00</td>
+                  <td class="px-4 py-2 text-center text-green-700 font-bold">Paid</td>
+                  <td class="px-4 py-2 text-center">
+                    <button class="text-blue-600 text-sm hover:underline">View</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="font-bold">
+                  <td colspan="3" class="px-4 py-2 text-right">Total Invoiced:</td>
+                  <td class="px-4 py-2 text-right">$400.00</td>
+                  <td colspan="2"></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <!-- Payment History Section -->
+        <div class="statement-section">
+          <h2 class="text-lg font-semibold text-primary mb-4">Payment History</h2>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="table-header">
+                <tr>
+                  <th class="px-4 py-2 text-left">Payment Date</th>
+                  <th class="px-4 py-2 text-left">Payment Method</th>
+                  <th class="px-4 py-2 text-right">Amount</th>
+                  <th class="px-4 py-2 text-left">Reference</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b">
+                  <td class="px-4 py-2">Feb 10, 2025</td>
+                  <td class="px-4 py-2">Credit Card</td>
+                  <td class="px-4 py-2 text-right">$150.00</td>
+                  <td class="px-4 py-2">TXN-5001</td>
+                </tr>
+                <tr class="border-b">
+                  <td class="px-4 py-2">Feb 25, 2025</td>
+                  <td class="px-4 py-2">Bank Transfer</td>
+                  <td class="px-4 py-2 text-right">$130.00</td>
+                  <td class="px-4 py-2">TXN-5002</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr class="font-bold">
+                  <td colspan="2" class="px-4 py-2 text-right">Total Payments:</td>
+                  <td class="px-4 py-2 text-right">$280.00</td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <!-- Footer Actions -->
+        <div class="statement-section text-center">
+          <button class="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition text-sm mr-2">
+            <i class="fa-solid fa-download mr-1"></i>Download PDF
+          </button>
+          <button class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-800 transition text-sm">
+            <i class="fa-solid fa-print mr-1"></i>Print Statement
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-green-700 text-white py-3 text-center text-sm mt-auto">
+    &copy; 2025 JJ Turfs. All rights reserved.
+  </footer>
+
+  <!-- Advanced Payment Modal (hidden by default) -->
+  <div id="paymentModalOverlay" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-4">
+      <div id="paymentModal" class="p-6">
+        <!-- STEP 1: Billing Address -->
+        <div id="step-1" class="step">
+          <h2 class="text-xl font-bold text-green-800 mb-4">Billing Address</h2>
+          <form id="billing-form">
+            <div class="grid grid-cols-1 gap-4">
+              <div class="flex flex-col md:flex-row md:space-x-4">
+                <div class="flex-1">
+                  <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                  <input type="text" id="firstName" name="firstName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="John" required>
+                </div>
+                <div class="flex-1">
+                  <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                  <input type="text" id="lastName" name="lastName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Doe" required>
+                </div>
+              </div>
+              <div>
+                <label for="emailModal" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="emailModal" name="email" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="john@example.com" required>
+              </div>
+              <div>
+                <label for="phoneModal" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                <input type="tel" id="phoneModal" name="phone" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="(555) 123-4567">
+              </div>
+              <div>
+                <label for="address1Modal" class="block text-sm font-medium text-gray-700">Address Line 1</label>
+                <input type="text" id="address1Modal" name="address1" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="123 Main St" required>
+              </div>
+              <div>
+                <label for="address2Modal" class="block text-sm font-medium text-gray-700">Address Line 2</label>
+                <input type="text" id="address2Modal" name="address2" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="Apartment, suite, etc.">
+              </div>
+              <div class="flex flex-col md:flex-row md:space-x-4">
+                <div class="flex-1">
+                  <label for="cityModal" class="block text-sm font-medium text-gray-700">City</label>
+                  <input type="text" id="cityModal" name="city" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                </div>
+                <div class="flex-1">
+                  <label for="stateModal" class="block text-sm font-medium text-gray-700">State</label>
+                  <input type="text" id="stateModal" name="state" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                </div>
+              </div>
+              <div class="flex flex-col md:flex-row md:space-x-4">
+                <div class="flex-1">
+                  <label for="zipModal" class="block text-sm font-medium text-gray-700">Zip Code</label>
+                  <input type="text" id="zipModal" name="zip" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                </div>
+                <div class="flex-1">
+                  <label for="countryModal" class="block text-sm font-medium text-gray-700">Country</label>
+                  <select id="countryModal" name="country" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" required>
+                    <option value="">Select Country</option>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="GB">United Kingdom</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+              <button type="button" id="to-step-2" class="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition">
+                Next
+              </button>
+            </div>
+          </form>
+        </div>
+        <!-- STEP 2: Card Information -->
+        <div id="step-2" class="step hidden">
+          <h2 class="text-xl font-bold text-green-800 mb-4">Payment Information</h2>
+          <form id="card-form">
+            <div class="grid grid-cols-1 gap-4">
+              <div>
+                <label for="cardNumber" class="block text-sm font-medium text-gray-700">Card Number</label>
+                <input type="text" id="cardNumber" name="cardNumber" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="1234 5678 9012 3456" required>
+              </div>
+              <div class="flex flex-col md:flex-row md:space-x-4">
+                <div class="flex-1">
+                  <label for="expiry" class="block text-sm font-medium text-gray-700">Expiry Date</label>
+                  <input type="text" id="expiry" name="expiry" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="MM/YY" required>
+                </div>
+                <div class="flex-1">
+                  <label for="cvv" class="block text-sm font-medium text-gray-700">CVV</label>
+                  <input type="text" id="cvv" name="cvv" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="123" required>
+                </div>
+              </div>
+              <div>
+                <label for="cardName" class="block text-sm font-medium text-gray-700">Name on Card</label>
+                <input type="text" id="cardName" name="cardName" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2" placeholder="John Doe" required>
+              </div>
+            </div>
+            <div class="mt-6 flex justify-between">
+              <button type="button" id="back-to-step-1" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition">
+                Back
+              </button>
+              <button type="button" id="to-step-3" class="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition">
+                Next
+              </button>
+            </div>
+          </form>
+        </div>
+        <!-- STEP 3: Auto Pay Enrollment -->
+        <div id="step-3" class="step hidden">
+          <h2 class="text-xl font-bold text-green-800 mb-4">Auto Pay Enrollment</h2>
+          <p class="text-gray-600 mb-4">Would you like to enroll in Auto Pay for future payments?</p>
+          <div class="flex items-center space-x-4">
+            <button type="button" id="auto-pay-yes" class="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition flex-1">
+              Yes, Enroll Me
+            </button>
+            <button type="button" id="auto-pay-no" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition flex-1">
+              No, Thanks
+            </button>
+          </div>
+          <div class="mt-6 flex justify-between">
+            <button type="button" id="back-to-step-2" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition">
+              Back
+            </button>
+          </div>
+        </div>
+        <!-- STEP 4: Success -->
+        <div id="step-4" class="step hidden text-center">
+          <i class="fa-solid fa-circle-check text-green-700 text-6xl mb-4"></i>
+          <h2 class="text-2xl font-bold text-green-800 mb-2">Payment Successful!</h2>
+          <p class="text-gray-600 mb-6">Thank you for your payment. Your transaction has been processed successfully.</p>
+          <button type="button" id="finish" class="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript for Modal Flow & Toggle -->
+  <script>
+    // Helper function to switch between steps within the modal
+    function switchStep(hideId, showId) {
+      document.getElementById(hideId).classList.add('hidden');
+      document.getElementById(showId).classList.remove('hidden');
+    }
+
+    // Step transitions
+    document.getElementById('to-step-2').addEventListener('click', function () {
+      // (Optionally add billing form validation here)
+      switchStep('step-1', 'step-2');
+    });
+    document.getElementById('back-to-step-1').addEventListener('click', function () {
+      switchStep('step-2', 'step-1');
+    });
+    document.getElementById('to-step-3').addEventListener('click', function () {
+      // (Optionally add card info validation here)
+      switchStep('step-2', 'step-3');
+    });
+    document.getElementById('back-to-step-2').addEventListener('click', function () {
+      switchStep('step-3', 'step-2');
+    });
+    document.getElementById('auto-pay-yes').addEventListener('click', function () {
+      // (Optionally handle auto-pay enrollment)
+      switchStep('step-3', 'step-4');
+    });
+    document.getElementById('auto-pay-no').addEventListener('click', function () {
+      switchStep('step-3', 'step-4');
+    });
+    document.getElementById('finish').addEventListener('click', function () {
+      document.getElementById('paymentModalOverlay').classList.add('hidden');
+    });
+
+    // Attach event listeners to all "Pay Now" buttons in the statement view
+    document.querySelectorAll('.payNowButton').forEach(function(button) {
+      button.addEventListener('click', function () {
+        document.getElementById('paymentModalOverlay').classList.remove('hidden');
+      });
+    });
+  </script>
+</body>
+</html>

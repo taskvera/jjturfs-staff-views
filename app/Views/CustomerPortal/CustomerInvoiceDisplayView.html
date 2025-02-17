@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>JJ Turf Management - Invoice #950</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome (Optional) -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    /* You can adjust these as needed */
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background-color: #f3f4f6; /* Tailwind's gray-100 */
+      margin: 0;
+      padding: 0;
+    }
+    .invoice-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #ffffff;
+      padding: 2rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    /* Top invoice header styles */
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 2rem;
+    }
+    .invoice-header .company-address {
+      max-width: 60%;
+    }
+    .invoice-header .company-address h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.25rem;
+    }
+    /* Invoice info (top-right) */
+    .invoice-info {
+      text-align: right;
+      font-size: 0.9rem;
+      color: #4b5563; /* gray-700 */
+    }
+    /* Middle Section: Customer info & table */
+    .customer-info {
+      margin-bottom: 1.5rem;
+    }
+    .customer-info strong {
+      font-size: 1rem;
+    }
+    /* Invoice Table */
+    .invoice-table th {
+      background-color: #f3f4f6; /* gray-100 */
+    }
+    .invoice-table th, .invoice-table td {
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb; /* gray-200 */
+    }
+    .invoice-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+    /* Subtotal table on the right */
+    .totals-table {
+      float: right;
+      width: 250px;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+    .totals-table th,
+    .totals-table td {
+      padding: 0.5rem;
+      text-align: right;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .totals-table tr:last-child td {
+      border-bottom: none;
+    }
+    /* Payment stub separation line */
+    .stub-separator {
+      border-top: 1px dashed #9ca3af; /* gray-400 */
+      margin: 2rem 0;
+    }
+    /* Payment Stub */
+    .payment-stub {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+    }
+    .payment-stub .customer-stub-address {
+      max-width: 55%;
+    }
+    .payment-stub .stub-totals {
+      text-align: right;
+      max-width: 40%;
+    }
+    .stub-totals table {
+      width: 100%;
+    }
+    .stub-totals td {
+      padding: 0.3rem 0;
+    }
+    /* "Pay Now" button styling */
+    .pay-now-btn {
+      background-color: #047857; /* green-700 */
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+    .pay-now-btn:hover {
+      background-color: #065f46; /* green-800 */
+    }
+
+    /* Hide modal by default */
+    #paymentModalOverlay.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR (Optional Global Layout) -->
+  <header class="bg-green-700 text-white p-4 flex items-center justify-between shadow">
+    <div class="flex items-center space-x-2">
+      <i class="fa-solid fa-leaf text-2xl"></i>
+      <span class="font-bold text-xl">JJ Turfs</span>
+    </div>
+    <div>
+      <button class="flex items-center space-x-2 focus:outline-none">
+        <img src="https://via.placeholder.com/32" alt="User Avatar" class="w-8 h-8 rounded-full"/>
+        <span class="hidden sm:inline">JaneSmith</span>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER (Sidebar + Content) - Optional for Global Layout -->
+  <div class="flex">
+    <!-- SIDEBAR (Optional) -->
+    <nav class="w-20 bg-white border-r border-gray-200 flex flex-col items-center py-4 hidden md:block">
+      <div class="group relative mb-6">
+        <a href="#" class="p-2 text-green-700 hover:bg-green-100 rounded-md transition-colors">
+          <i class="fa-solid fa-house text-xl"></i>
+        </a>
+      </div>
+      <div class="group relative mb-6">
+        <a href="#" class="p-2 text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
+          <i class="fa-solid fa-credit-card text-xl"></i>
+        </a>
+      </div>
+    </nav>
+
+    <!-- INVOICE CONTENT -->
+    <main class="flex-1 p-4">
+      <div class="invoice-container">
+        
+        <!-- Header -->
+        <div class="invoice-header">
+          <!-- Company Address & Logo -->
+          <div class="company-address">
+            <h2>J&J Turf Management, LLC.</h2>
+            <p>618 Highland Avenue<br>
+            Mansfield OH 44903-1849<br>
+            (614) 296-7784<br>
+            support@jjturfs.com<br>
+            www.jjturfs.com</p>
+          </div>
+          <!-- "Invoice" text + Right side details -->
+          <div class="text-right">
+            <img
+              src="https://via.placeholder.com/120x70?text=Your+Logo"
+              alt="Company Logo"
+              class="inline-block mb-2"
+            />
+            <h3 class="text-xl font-semibold mb-2">Invoice</h3>
+            <div class="invoice-info">
+              <p>Customer #: <strong>875232</strong></p>
+              <p>Invoice #: <strong>950</strong></p>
+              <p>Invoice Date / Due Date:<br>
+                 <strong>Feb 05, 2025</strong> / <strong>Mar 08, 2025</strong>
+              </p>
+              <p>Outstanding Balance: <strong class="text-red-600">$0.00</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bill To & Table -->
+        <div class="customer-info">
+          <strong>Rhinostar</strong><br>
+          3555 Willow Hill Road<br>
+          Mansfield OH 44904
+        </div>
+
+        <!-- Line Items Table -->
+        <div class="overflow-x-auto">
+          <table class="invoice-table w-full text-sm">
+            <thead>
+              <tr>
+                <th>Description</th>
+                <th>QTY/HR</th>
+                <th>Cost/Rate</th>
+                <th>Taxes %</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Property Address Row -->
+              <tr>
+                <td colspan="5" class="bg-gray-100 text-gray-800 font-semibold">
+                  Property Address: 3555 Willow Hill Road Mansfield OH, 44904
+                </td>
+              </tr>
+              <!-- Example line items (Snow removal & Salt application) -->
+              <tr>
+                <td>
+                  Jan 07, 2025 <br> Snow removal
+                </td>
+                <td>1.00</td>
+                <td>$35.00</td>
+                <td>0.000</td>
+                <td>$35.00</td>
+              </tr>
+              <tr>
+                <td>
+                  Jan 07, 2025 <br> Salt application
+                </td>
+                <td>1.00</td>
+                <td>$20.00</td>
+                <td>0.000</td>
+                <td>$20.00</td>
+              </tr>
+              <tr>
+                <td>
+                  Jan 11, 2025 <br> Snow removal
+                </td>
+                <td>1.00</td>
+                <td>$35.00</td>
+                <td>0.000</td>
+                <td>$35.00</td>
+              </tr>
+              <tr>
+                <td>
+                  Jan 11, 2025 <br> Salt application
+                </td>
+                <td>1.00</td>
+                <td>$20.00</td>
+                <td>0.000</td>
+                <td>$20.00</td>
+              </tr>
+              <tr>
+                <td>
+                  Jan 19, 2025 <br> Snow removal
+                </td>
+                <td>1.00</td>
+                <td>$35.00</td>
+                <td>0.000</td>
+                <td>$35.00</td>
+              </tr>
+              <tr>
+                <td>
+                  Jan 19, 2025 <br> Salt application
+                </td>
+                <td>1.00</td>
+                <td>$20.00</td>
+                <td>0.000</td>
+                <td>$20.00</td>
+              </tr>
+              <tr>
+                <td>
+                  Jan 20, 2025 <br> Snow removal
+                </td>
+                <td>1.00</td>
+                <td>$35.00</td>
+                <td>0.000</td>
+                <td>$35.00</td>
+              </tr>
+              <tr>
+                <td>
+                  Jan 20, 2025 <br> Salt application
+                </td>
+                <td>1.00</td>
+                <td>$20.00</td>
+                <td>0.000</td>
+                <td>$20.00</td>
+              </tr>
+              <tr>
+                <td>
+                  Jan 24, 2025 <br> Snow removal
+                </td>
+                <td>1.00</td>
+                <td>$35.00</td>
+                <td>0.000</td>
+                <td>$35.00</td>
+              </tr>
+              <tr>
+                <td>
+                  Jan 24, 2025 <br> Salt application for lots
+                </td>
+                <td>1.00</td>
+                <td>$20.00</td>
+                <td>0.000</td>
+                <td>$20.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Subtotals / Taxes / Total -->
+        <div class="mt-4">
+          <table class="totals-table">
+            <tbody>
+              <tr>
+                <th>Subtotal</th>
+                <td>$275.00</td>
+              </tr>
+              <tr>
+                <th>Taxes</th>
+                <td>$0.00</td>
+              </tr>
+              <tr>
+                <th>Total</th>
+                <td>$275.00</td>
+              </tr>
+              <tr>
+                <th>Amount Paid</th>
+                <td>$0.00</td>
+              </tr>
+              <tr>
+                <th>Total Due</th>
+                <td>$275.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Notes + Net 30 -->
+        <div class="mt-4 text-sm text-gray-600">
+          <p><strong>Notes:</strong> Thank you for your business. Please contact us with any questions regarding this invoice.</p>
+          <p class="mt-2 text-center text-red-600">Net 30</p>
+        </div>
+
+        <!-- Dotted line separation for Payment Stub -->
+        <div class="stub-separator"></div>
+
+        <!-- Payment Stub -->
+        <h4 class="text-lg font-semibold mb-2">PAYMENT STUB</h4>
+        <div class="payment-stub">
+          <div class="customer-stub-address">
+            <p><strong>Rhinostar</strong><br>
+              3555 Willow Hill Road<br>
+              Mansfield OH 44904
+            </p>
+            <br><br>
+            <address>
+              <strong>J&J Turf Management, LLC.</strong><br>
+              618 Highland Avenue<br>
+              Mansfield OH 44903-1849<br>
+              (614) 296-7784<br>
+              support@jjturfs.com<br>
+              www.jjturfs.com
+            </address>
+          </div>
+          <div class="stub-totals">
+            <table>
+              <tr>
+                <td><strong>Customer #</strong></td>
+                <td class="text-right">875232</td>
+              </tr>
+              <tr>
+                <td><strong>Customer</strong></td>
+                <td class="text-right">Rhinostar</td>
+              </tr>
+              <tr>
+                <td><strong>Invoice #</strong></td>
+                <td class="text-right">950</td>
+              </tr>
+              <tr>
+                <td><strong>Invoice Date / Due Date</strong></td>
+                <td class="text-right">Feb 05, 2025 / Mar 08, 2025</td>
+              </tr>
+              <tr><td colspan="2">&nbsp;</td></tr>
+              <tr><td colspan="2">&nbsp;</td></tr>
+              <tr class="border-t border-gray-300">
+                <td><strong>Outstanding Balance</strong></td>
+                <td class="text-right">$0.00</td>
+              </tr>
+              <tr>
+                <td><strong>This Invoice</strong></td>
+                <td class="text-right">$275.00</td>
+              </tr>
+              <tr>
+                <td><strong>Total Due on Account</strong></td>
+                <td class="text-right">$275.00</td>
+              </tr>
+              <tr><td colspan="2">&nbsp;</td></tr>
+              <tr>
+                <td><strong>Amount Paid</strong></td>
+                <td class="text-right" style="border-bottom:1px solid #ccc;">$0.00</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div><!-- .invoice-container -->
+
+      <!-- "Pay Now" Button (for demonstration) -->
+      <div class="mt-4 text-right">
+        <button
+          id="payNowButton"
+          class="pay-now-btn inline-flex items-center"
+        >
+          <i class="fa-solid fa-credit-card mr-2"></i>Pay Now
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER (Optional Global Layout) -->
+  <footer class="bg-green-700 text-white text-center text-sm p-3">
+    &copy; 2025 JJ Turfs. All rights reserved.
+  </footer>
+
+  <!-- Advanced Payment Modal (hidden by default) -->
+  <div
+    id="paymentModalOverlay"
+    class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"
+  >
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 p-6">
+      <!-- STEP 1: Billing Address -->
+      <div id="step-1" class="step">
+        <h2 class="text-xl font-bold text-green-800 mb-4">Billing Address</h2>
+        <form id="billing-form">
+          <div class="grid grid-cols-1 gap-4">
+            <div class="flex flex-col md:flex-row md:space-x-4">
+              <div class="flex-1">
+                <label
+                  for="firstName"
+                  class="block text-sm font-medium text-gray-700"
+                  >First Name</label
+                >
+                <input
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  required
+                />
+              </div>
+              <div class="flex-1">
+                <label
+                  for="lastName"
+                  class="block text-sm font-medium text-gray-700"
+                  >Last Name</label
+                >
+                <input
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                for="emailModal"
+                class="block text-sm font-medium text-gray-700"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="emailModal"
+                name="email"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="phoneModal"
+                class="block text-sm font-medium text-gray-700"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                id="phoneModal"
+                name="phone"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                placeholder="(555) 123-4567"
+              />
+            </div>
+            <div>
+              <label
+                for="address1Modal"
+                class="block text-sm font-medium text-gray-700"
+                >Address Line 1</label
+              >
+              <input
+                type="text"
+                id="address1Modal"
+                name="address1"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="address2Modal"
+                class="block text-sm font-medium text-gray-700"
+                >Address Line 2</label
+              >
+              <input
+                type="text"
+                id="address2Modal"
+                name="address2"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+              />
+            </div>
+            <div class="flex flex-col md:flex-row md:space-x-4">
+              <div class="flex-1">
+                <label
+                  for="cityModal"
+                  class="block text-sm font-medium text-gray-700"
+                  >City</label
+                >
+                <input
+                  type="text"
+                  id="cityModal"
+                  name="city"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  required
+                />
+              </div>
+              <div class="flex-1">
+                <label
+                  for="stateModal"
+                  class="block text-sm font-medium text-gray-700"
+                  >State</label
+                >
+                <input
+                  type="text"
+                  id="stateModal"
+                  name="state"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  required
+                />
+              </div>
+            </div>
+            <div class="flex flex-col md:flex-row md:space-x-4">
+              <div class="flex-1">
+                <label
+                  for="zipModal"
+                  class="block text-sm font-medium text-gray-700"
+                  >Zip Code</label
+                >
+                <input
+                  type="text"
+                  id="zipModal"
+                  name="zip"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  required
+                />
+              </div>
+              <div class="flex-1">
+                <label
+                  for="countryModal"
+                  class="block text-sm font-medium text-gray-700"
+                  >Country</label
+                >
+                <select
+                  id="countryModal"
+                  name="country"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  required
+                >
+                  <option value="">Select Country</option>
+                  <option value="US">United States</option>
+                  <option value="CA">Canada</option>
+                  <option value="GB">United Kingdom</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end">
+            <button
+              type="button"
+              id="to-step-2"
+              class="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition"
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- STEP 2: Card Information -->
+      <div id="step-2" class="hidden step">
+        <h2 class="text-xl font-bold text-green-800 mb-4">Payment Information</h2>
+        <form id="card-form">
+          <div class="grid grid-cols-1 gap-4">
+            <div>
+              <label
+                for="cardNumber"
+                class="block text-sm font-medium text-gray-700"
+                >Card Number</label
+              >
+              <input
+                type="text"
+                id="cardNumber"
+                name="cardNumber"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                placeholder="1234 5678 9012 3456"
+                required
+              />
+            </div>
+            <div class="flex flex-col md:flex-row md:space-x-4">
+              <div class="flex-1">
+                <label
+                  for="expiry"
+                  class="block text-sm font-medium text-gray-700"
+                  >Expiry Date</label
+                >
+                <input
+                  type="text"
+                  id="expiry"
+                  name="expiry"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  placeholder="MM/YY"
+                  required
+                />
+              </div>
+              <div class="flex-1">
+                <label
+                  for="cvv"
+                  class="block text-sm font-medium text-gray-700"
+                  >CVV</label
+                >
+                <input
+                  type="text"
+                  id="cvv"
+                  name="cvv"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                  placeholder="123"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                for="cardName"
+                class="block text-sm font-medium text-gray-700"
+                >Name on Card</label
+              >
+              <input
+                type="text"
+                id="cardName"
+                name="cardName"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+          </div>
+          <div class="mt-6 flex justify-between">
+            <button
+              type="button"
+              id="back-to-step-1"
+              class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
+            >
+              Back
+            </button>
+            <button
+              type="button"
+              id="to-step-3"
+              class="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition"
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- STEP 3: Auto Pay Enrollment -->
+      <div id="step-3" class="hidden step">
+        <h2 class="text-xl font-bold text-green-800 mb-4">Auto Pay Enrollment</h2>
+        <p class="text-gray-600 mb-4">
+          Would you like to enroll in Auto Pay for future payments?
+        </p>
+        <div class="flex items-center space-x-4">
+          <button
+            type="button"
+            id="auto-pay-yes"
+            class="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition flex-1"
+          >
+            Yes, Enroll Me
+          </button>
+          <button
+            type="button"
+            id="auto-pay-no"
+            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition flex-1"
+          >
+            No, Thanks
+          </button>
+        </div>
+        <div class="mt-6 flex justify-between">
+          <button
+            type="button"
+            id="back-to-step-2"
+            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+      <!-- STEP 4: Success -->
+      <div id="step-4" class="hidden step text-center">
+        <i class="fa-solid fa-circle-check text-green-700 text-6xl mb-4"></i>
+        <h2 class="text-2xl font-bold text-green-800 mb-2">Payment Successful!</h2>
+        <p class="text-gray-600 mb-6">
+          Thank you for your payment. Your transaction has been processed
+          successfully.
+        </p>
+        <button
+          type="button"
+          id="finish"
+          class="px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Basic Payment Modal JS -->
+  <script>
+    function switchStep(hideId, showId) {
+      document.getElementById(hideId).classList.add('hidden');
+      document.getElementById(showId).classList.remove('hidden');
+    }
+
+    document.getElementById('to-step-2').addEventListener('click', () => {
+      switchStep('step-1', 'step-2');
+    });
+    document.getElementById('back-to-step-1').addEventListener('click', () => {
+      switchStep('step-2', 'step-1');
+    });
+    document.getElementById('to-step-3').addEventListener('click', () => {
+      switchStep('step-2', 'step-3');
+    });
+    document.getElementById('back-to-step-2').addEventListener('click', () => {
+      switchStep('step-3', 'step-2');
+    });
+    document.getElementById('auto-pay-yes').addEventListener('click', () => {
+      switchStep('step-3', 'step-4');
+    });
+    document.getElementById('auto-pay-no').addEventListener('click', () => {
+      switchStep('step-3', 'step-4');
+    });
+    document.getElementById('finish').addEventListener('click', () => {
+      document.getElementById('paymentModalOverlay').classList.add('hidden');
+    });
+
+    document.getElementById('payNowButton').addEventListener('click', () => {
+      document.getElementById('paymentModalOverlay').classList.remove('hidden');
+    });
+  </script>
+</body>
+</html>
